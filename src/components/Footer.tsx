@@ -14,10 +14,10 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             <span className="text-xl">🦀</span>
             <span className="font-semibold" style={{ color: 'var(--text)' }}>
-              HHClaw Benchmark
+              ClawArena Benchmark
             </span>
             <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              — Human-in-the-Loop AI Evaluation
+              — Benchmarking AI Agents in Evolving Information Environments
             </span>
           </div>
 
@@ -69,7 +69,7 @@ export default function Footer() {
             color: 'var(--text-muted)',
           }}
         >
-          © 2026 HHClaw Project. Released under CC BY 4.0.
+          © 2026 ClawArena Project. Released under CC BY 4.0.
         </div>
       </div>
     </footer>

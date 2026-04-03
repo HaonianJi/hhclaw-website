@@ -5,11 +5,11 @@ const STEPS = [
     number: 1,
     icon: <Package size={20} />,
     title: 'Install the Evaluator',
-    description: 'Install the HHClaw evaluation harness via pip. Python 3.10+ required.',
-    code: `pip install hhclaw-eval
+    description: 'Install the ClawArena evaluation harness via pip. Python 3.10+ required.',
+    code: `pip install clawarena-eval
 
 # Verify installation
-hhclaw --version`,
+clawarena --version`,
   },
   {
     number: 2,
@@ -18,13 +18,13 @@ hhclaw --version`,
     description:
       'Point the evaluator at your agent endpoint. Use --subset 12 for the canonical subset or --full for all 64 scenarios.',
     code: `# Quick eval on 12-scenario subset
-hhclaw eval \\
+clawarena eval \\
   --agent your_agent_entrypoint.py \\
   --subset 12 \\
   --output results/
 
 # Full evaluation (64 scenarios)
-hhclaw eval \\
+clawarena eval \\
   --agent your_agent_entrypoint.py \\
   --full \\
   --output results/`,
@@ -36,7 +36,7 @@ hhclaw eval \\
     description:
       'Fork the leaderboard repo, add your results JSON to data/, and open a PR. We review submissions within 48 hours.',
     code: `# Fork and clone
-git clone https://github.com/hhclaw/leaderboard.git
+git clone https://github.com/clawarena/leaderboard.git
 cd leaderboard
 
 # Add your results
@@ -73,7 +73,7 @@ export default function SubmitPage() {
           Submit Your Results
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-          Evaluate your AI assistant on HHClaw and add it to the public leaderboard.
+          Evaluate your AI assistant on ClawArena and add it to the public leaderboard.
           The process takes about 30 minutes for the 12-scenario subset.
         </p>
       </div>
@@ -179,7 +179,7 @@ export default function SubmitPage() {
           Supported Frameworks
         </h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Any framework that implements the HHClaw agent interface can be evaluated.
+          Any framework that implements the ClawArena agent interface can be evaluated.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {FRAMEWORKS.map((fw) => (
@@ -224,12 +224,12 @@ export default function SubmitPage() {
         >
           <ul className="space-y-3">
             {[
-              'Results must be generated using the official hhclaw-eval harness (v0.3+)',
+              'Results must be generated using the official clawarena-eval harness (v0.3+)',
               'Agent must be publicly available or described in a preprint/paper',
               'Include the framework name, model name/version, and provider',
               'EC Pass scores require code to run in the provided sandboxed environment',
               'ZeroClaw-style entries (no tool access) may omit EC Pass scores',
-              'Results are verified by the HHClaw team before appearing on the leaderboard',
+              'Results are verified by the ClawArena team before appearing on the leaderboard',
             ].map((req) => (
               <li
                 key={req}

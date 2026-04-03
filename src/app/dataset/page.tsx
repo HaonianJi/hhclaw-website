@@ -5,7 +5,7 @@ const DOWNLOADS = [
     icon: '📦',
     title: 'Full Dataset',
     description:
-      'Complete HHClaw evaluation set with all 64 scenarios across 8 domains, including questions, specs, and reference answers.',
+      'Complete ClawArena evaluation set with all 64 scenarios across 8 domains, including questions, specs, and reference answers.',
     size: '~42 MB',
     files: ['questions.json', 'specs/', 'reference_answers/'],
     primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: 'https://github.com' },
@@ -25,7 +25,7 @@ const DOWNLOADS = [
     icon: '📋',
     title: 'Spec Templates',
     description:
-      'The 6-layer specification template system (L0–L4 + GUIDE) used to author HHClaw scenarios. Extend it for new domains.',
+      'The 6-layer specification template system (L0–L4 + GUIDE) used to author ClawArena scenarios. Extend it for new domains.',
     size: '~1 MB',
     files: ['spec_templates/', 'guide.md'],
     primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: 'https://github.com' },
@@ -62,7 +62,7 @@ export default function DatasetPage() {
           Dataset
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-          All HHClaw data is publicly available under the{' '}
+          All ClawArena data is publicly available under the{' '}
           <strong style={{ color: 'var(--text)' }}>CC BY 4.0</strong> license.
           Download the full benchmark, the 12-scenario subset, or the spec template system.
         </p>

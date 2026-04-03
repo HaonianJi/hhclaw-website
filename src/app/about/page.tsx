@@ -3,64 +3,65 @@ import BibTexCopy from '@/components/BibTexCopy';
 /* ─── Data ──────────────────────────────────────────────────── */
 const EVAL_DIMS = [
   {
-    id: 'MS-R',
-    name: 'Multi-Step Reasoning',
-    icon: '🧠',
+    id: 'MS',
+    name: 'Multi-Source Conflict Reasoning',
+    icon: '⚡',
     color: '#6366f1',
     bg: '#eef2ff',
-    darkBg: '#1e1b4b',
     description:
-      'Evaluates the agent\'s ability to chain multiple reasoning steps, retrieve relevant context from prior turns, and maintain coherent task state across a conversation.',
+      'Evaluates the agent\'s ability to reconcile contradictory information from multiple sources. Covers four conflict types: C1 (factual), C2 (authority), C3 (non-conflict), and C4 (temporal/process).',
   },
   {
     id: 'DU',
-    name: 'Decision Under Uncertainty',
-    icon: '⚖️',
+    name: 'Dynamic Belief Revision',
+    icon: '🔄',
     color: '#0891b2',
     bg: '#ecfeff',
-    darkBg: '#083344',
     description:
-      'Measures how well agents handle ambiguous instructions, missing context, or conflicting preferences — including appropriate clarification-seeking behavior.',
+      'Measures how well agents update their beliefs when workspace files and session histories are modified via dynamic update packages. Difficulty is governed by update design strategy, not volume.',
   },
   {
     id: 'P',
-    name: 'Planning',
-    icon: '🗂️',
+    name: 'Implicit Personalization',
+    icon: '👤',
     color: '#059669',
     bg: '#ecfdf5',
-    darkBg: '#052e16',
     description:
-      'Tests structured task decomposition and goal-directed planning — especially for multi-step workflows like scheduling, delegation, and priority management.',
-  },
-  {
-    id: 'EC',
-    name: 'Executable Code',
-    icon: '⚡',
-    color: '#d97706',
-    bg: '#fffbeb',
-    darkBg: '#292524',
-    description:
-      'Requires agents to produce working code that passes automated test suites. Covers data processing, automation scripts, and tool-use within sandboxed environments.',
-  },
-  {
-    id: 'NON',
-    name: 'Non-Task Handling',
-    icon: '🛡️',
-    color: '#dc2626',
-    bg: '#fef2f2',
-    darkBg: '#2d1515',
-    description:
-      'Assesses graceful handling of out-of-scope requests, safety boundaries, refusals, and appropriate escalation — critical for production personal assistants.',
+      'Tests whether agents can infer unstated user preferences from behavioral patterns in session histories — explicit preferences alone are insufficient for top performance.',
   },
 ];
 
+const QUESTION_TAXONOMY = [
+  { dim: 'MS',     recall: true,  reasoning: true  },
+  { dim: 'DU',     recall: true,  reasoning: true  },
+  { dim: 'P',      recall: true,  reasoning: true  },
+  { dim: 'MS×DU',  recall: true,  reasoning: true  },
+  { dim: 'MS×P',   recall: true,  reasoning: true  },
+  { dim: 'DU×P',   recall: true,  reasoning: true  },
+  { dim: 'All',    recall: true,  reasoning: true  },
+];
+
+const CONFLICT_TYPES = [
+  { id: 'C1', name: 'Factual Conflict',        desc: 'Two or more sources assert contradictory facts about the same entity or event.' },
+  { id: 'C2', name: 'Authority Conflict',       desc: 'Sources with different authority levels (e.g., official policy vs. user preference) disagree.' },
+  { id: 'C3', name: 'Non-Conflict',             desc: 'Sources are consistent; tests whether agents correctly avoid hallucinating conflicts.' },
+  { id: 'C4', name: 'Temporal / Process Conflict', desc: 'Information becomes outdated or process steps conflict across time-stamped sources.' },
+];
+
 const SPEC_LAYERS = [
-  { id: 'L0', label: 'Global Rules',   desc: 'Universal constraints applicable to every scenario across all domains.' },
-  { id: 'L1', label: 'Domain Rules',   desc: 'Domain-specific norms and expectations for each of the 8 life domains.' },
-  { id: 'L2', label: 'Persona',        desc: 'User identity, preferences, communication style, and persistent context.' },
-  { id: 'L3', label: 'Scenario Setup', desc: 'Per-scenario initial state, tools available, and background knowledge.' },
-  { id: 'L4', label: 'Task Spec',      desc: 'Specific task instructions, expected outputs, and evaluation rubrics.' },
-  { id: 'GUIDE', label: 'Evaluator Guide', desc: 'Human and LLM judge guidelines for consistent, calibrated scoring.' },
+  { id: 'L0', label: 'Narrative Bible (hidden)', desc: 'Hidden ground-truth world model defining all canonical facts for the scenario. Not visible to the agent.' },
+  { id: 'L1', label: 'Workspace Files',          desc: 'Structured files accessible to the agent — documents, calendars, databases, and reference materials.' },
+  { id: 'L2', label: 'Session Histories',        desc: 'Prior conversation logs that encode implicit user preferences and behavioral patterns.' },
+  { id: 'L3', label: 'Evaluation Questions',     desc: 'Per-scenario questions across all 14 taxonomy categories, with reference answers.' },
+  { id: 'L4', label: 'Update Packages',          desc: 'Dynamic updates that modify L1/L2 mid-evaluation to test belief revision capabilities.' },
+  { id: 'Guide', label: 'Evaluator Guide',       desc: 'Human and LLM judge guidelines for consistent, calibrated scoring across all configurations.' },
+];
+
+const PIPELINE_STEPS = [
+  { step: '01', label: 'Seed Construction',    desc: 'Domain experts author canonical scenario seeds with ground-truth world models (L0 Narrative Bible).' },
+  { step: '02', label: 'Meta-Spec Induction',  desc: 'Structured meta-specifications are induced from seeds to define the generation space for each scenario.' },
+  { step: '03', label: 'Batch Generation',     desc: 'LLM-assisted generation populates workspace files (L1), session histories (L2), questions (L3), and update packages (L4) at scale.' },
+  { step: '04', label: 'Validation',           desc: 'Automated consistency checks and human review ensure factual accuracy, conflict fidelity, and evaluation quality.' },
 ];
 
 const DOMAINS = [
@@ -85,7 +86,7 @@ export default function AboutPage() {
           className="font-bold tracking-tight mb-4"
           style={{ fontSize: '2rem', color: 'var(--text)' }}
         >
-          About HHClaw
+          About ClawArena
         </h1>
         <div
           className="rounded-xl p-6"
@@ -96,34 +97,35 @@ export default function AboutPage() {
           }}
         >
           <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.75 }}>
-            <strong style={{ color: 'var(--text)' }}>HHClaw</strong> (Human-in-the-Loop Claw) is a rigorous
-            evaluation framework designed to measure how well AI assistants perform as personal productivity
-            tools in realistic, multi-turn interaction settings. Unlike benchmarks that evaluate isolated
-            capabilities, HHClaw tests agents on complete <em>workflow scenarios</em> — from scheduling and
-            email triage to code generation and decision support — across 8 distinct life domains with
-            4 English-speaking and 4 Chinese-speaking user personas.
+            <strong style={{ color: 'var(--text)' }}>ClawArena</strong> is a rigorous evaluation
+            framework for benchmarking AI agents in evolving information environments. Unlike benchmarks
+            that test static knowledge, ClawArena places agents in scenarios where information
+            changes — requiring <em>multi-source conflict reasoning</em>, <em>dynamic belief revision</em>,
+            and <em>implicit personalization</em> across 64 professional scenarios in 8 domains.
           </p>
           <p className="mt-4" style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.75 }}>
             The benchmark comprises <strong style={{ color: 'var(--text)' }}>64 scenarios</strong>,{' '}
-            <strong style={{ color: 'var(--text)' }}>1,879 evaluation rounds</strong>, and a
-            hierarchical 6-layer specification system (L0–L4 + GUIDE) that ensures consistent,
-            auditable evaluation across all configurations.
+            <strong style={{ color: 'var(--text)' }}>1,879 evaluation rounds</strong>,{' '}
+            <strong style={{ color: 'var(--text)' }}>365 dynamic updates</strong>, and a
+            hierarchical 6-layer specification system (L0 Narrative Bible → L1–L4 → Guide) that ensures
+            consistent, auditable evaluation across all configurations. Under review at{' '}
+            <strong style={{ color: 'var(--text)' }}>COLM 2026</strong>.
           </p>
         </div>
       </section>
 
-      {/* Evaluation Dimensions */}
+      {/* 3 Evaluation Dimensions */}
       <section className="mb-14">
         <h2
           className="font-bold mb-2"
           style={{ fontSize: '1.375rem', color: 'var(--text)' }}
         >
-          5 Evaluation Dimensions
+          3 Evaluation Dimensions
         </h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Each scenario is scored across five orthogonal capability dimensions.
+          Each scenario is scored across three orthogonal capability dimensions (Section 2 of the paper).
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {EVAL_DIMS.map((dim) => (
             <div
               key={dim.id}
@@ -164,17 +166,109 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* 14-Category Question Taxonomy */}
+      <section className="mb-14">
+        <h2
+          className="font-bold mb-2"
+          style={{ fontSize: '1.375rem', color: 'var(--text)' }}
+        >
+          14-Category Question Taxonomy (Table 1)
+        </h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Seven dimension combinations × two question types (Recall and Reasoning) = 14 fine-grained
+          evaluation categories. This structure allows aggregate scores to be decomposed into
+          qualitatively distinct failure modes.
+        </p>
+        <div
+          className="rounded-xl overflow-hidden"
+          style={{ border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}
+        >
+          <div
+            className="grid font-semibold px-4 py-2.5"
+            style={{
+              gridTemplateColumns: '1fr 1fr 1fr',
+              background: 'var(--surface-alt)',
+              borderBottom: '1px solid var(--border)',
+              fontSize: '0.8125rem',
+              color: 'var(--text-secondary)',
+            }}
+          >
+            <span>Dimension Combination</span>
+            <span>Recall</span>
+            <span>Reasoning</span>
+          </div>
+          {QUESTION_TAXONOMY.map((row, idx) => (
+            <div
+              key={row.dim}
+              className="grid px-4 py-3 hover:bg-[var(--primary-light)] transition-colors"
+              style={{
+                gridTemplateColumns: '1fr 1fr 1fr',
+                background: idx % 2 === 0 ? 'var(--surface)' : 'var(--surface-alt)',
+                borderBottom: idx < QUESTION_TAXONOMY.length - 1 ? '1px solid var(--border)' : 'none',
+                fontSize: '0.875rem',
+              }}
+            >
+              <span className="font-mono font-bold" style={{ color: 'var(--primary)' }}>{row.dim}</span>
+              <span style={{ color: 'var(--text)' }}>✓ {row.dim}-Recall</span>
+              <span style={{ color: 'var(--text)' }}>✓ {row.dim}-Reasoning</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4 Conflict Types */}
+      <section className="mb-14">
+        <h2
+          className="font-bold mb-2"
+          style={{ fontSize: '1.375rem', color: 'var(--text)' }}
+        >
+          Four Conflict Types
+        </h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          The MS dimension is further subdivided by conflict type to capture qualitatively distinct
+          reasoning challenges.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {CONFLICT_TYPES.map((ct) => (
+            <div
+              key={ct.id}
+              className="rounded-xl p-4"
+              style={{
+                background: 'var(--bg)',
+                border: '1px solid var(--border)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="font-mono font-bold text-xs px-2 py-1 rounded"
+                  style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}
+                >
+                  {ct.id}
+                </span>
+                <span className="font-semibold" style={{ fontSize: '0.875rem', color: 'var(--text)' }}>
+                  {ct.name}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {ct.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 6-Layer Spec System */}
       <section className="mb-14">
         <h2
           className="font-bold mb-2"
           style={{ fontSize: '1.375rem', color: 'var(--text)' }}
         >
-          6-Layer Specification System
+          6-Layer Specification System (Section 2.3)
         </h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          HHClaw uses a hierarchical specification system to ensure reproducible and fair evaluation.
-          Each layer narrows scope from global rules down to task-specific rubrics.
+          ClawArena uses a hierarchical specification system to ensure reproducible and fair evaluation.
+          Each layer narrows scope from a hidden ground-truth model down to dynamic update packages.
         </p>
         <div
           className="rounded-xl overflow-hidden"
@@ -223,6 +317,46 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Construction Pipeline */}
+      <section className="mb-14">
+        <h2
+          className="font-bold mb-2"
+          style={{ fontSize: '1.375rem', color: 'var(--text)' }}
+        >
+          Construction Pipeline (Section 2.4)
+        </h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          ClawArena scenarios are constructed via a four-stage pipeline that balances expert authorship
+          with LLM-assisted generation.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {PIPELINE_STEPS.map((ps) => (
+            <div
+              key={ps.step}
+              className="rounded-xl p-4"
+              style={{
+                background: 'var(--bg)',
+                border: '1px solid var(--border)',
+                boxShadow: 'var(--shadow-sm)',
+              }}
+            >
+              <div
+                className="font-bold font-mono text-2xl mb-2"
+                style={{ color: 'var(--primary)', opacity: 0.4 }}
+              >
+                {ps.step}
+              </div>
+              <div className="font-semibold mb-1" style={{ fontSize: '0.875rem', color: 'var(--text)' }}>
+                {ps.label}
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                {ps.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 8 Domain Cards */}
       <section className="mb-14">
         <h2
@@ -232,7 +366,7 @@ export default function AboutPage() {
           8 Evaluation Domains
         </h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Four English and four Chinese domains, each with a distinct persona and real-world context.
+          Four English and four Chinese domains, each with a distinct professional persona and real-world context.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {DOMAINS.map((domain) => (
@@ -291,7 +425,7 @@ export default function AboutPage() {
           Citation
         </h2>
         <p className="mb-4" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          If you use HHClaw in your research, please cite our paper:
+          If you use ClawArena in your research, please cite our paper:
         </p>
         <BibTexCopy />
       </section>

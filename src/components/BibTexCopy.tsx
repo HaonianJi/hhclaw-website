@@ -3,14 +3,11 @@
 import { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 
-const BIBTEX = `@misc{hhclaw2026,
-  title        = {HHClaw: A Human-in-the-Loop Benchmark for Personal AI Assistants},
-  author       = {HHClaw Team},
-  year         = {2026},
-  eprint       = {2026.xxxxx},
-  archivePrefix= {arXiv},
-  primaryClass = {cs.AI},
-  url          = {https://arxiv.org/abs/2026.xxxxx}
+const BIBTEX = `@inproceedings{clawarena2026,
+  title={ClawArena: Benchmarking AI Agents in Evolving Information Environments},
+  author={Anonymous},
+  booktitle={Under review at COLM 2026},
+  year={2026}
 }`;
 
 export default function BibTexCopy() {

@@ -44,7 +44,7 @@ export default function NavBar() {
                 letterSpacing: '-0.02em',
               }}
             >
-              HHClaw
+              ClawArena
             </span>
           </Link>
 

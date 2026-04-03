@@ -4,17 +4,18 @@
     "framework": "OpenClaw",
     "model": "Opus 4.6",
     "provider": "Anthropic",
-    "overall": 0.820,
+    "overall": 0.735,
     "mc_em": 0.829,
-    "mc_partial": 0.944,
+    "mc_partial": null,
     "ec_pass": 0.478,
-    "avg_fp": 0.06,
-    "avg_fn": 0.39,
+    "avg_fp": null,
+    "avg_fn": null,
     "rounds": 125,
-    "complete": "4/12",
+    "complete": "12/12",
     "per_scenario": {
-      "hil_c6": 0.583, "hil_d6": 0.933, "hil_e6": 0.700, "hil_f1": 0.967,
-      "hil_f5": 0.773
+      "hil_c6": 0.583, "hil_d2": 0.750, "hil_d6": 0.933, "hil_e6": 0.700,
+      "hil_f1": 0.967, "hil_f5": 0.773, "hil_g7": 0.800, "hil_h3": 0.720,
+      "hil_i2": 0.667, "hil_i4": 0.833, "hil_j4": 0.800, "hil_j8": 0.933
     }
   },
   {
@@ -22,17 +23,18 @@
     "framework": "OpenClaw",
     "model": "Sonnet 4.6",
     "provider": "Anthropic",
-    "overall": 0.774,
+    "overall": 0.708,
     "mc_em": 0.782,
-    "mc_partial": 0.928,
+    "mc_partial": null,
     "ec_pass": 0.489,
-    "avg_fp": 0.03,
-    "avg_fn": 0.52,
+    "avg_fp": null,
+    "avg_fn": null,
     "rounds": 136,
-    "complete": "3/12",
+    "complete": "12/12",
     "per_scenario": {
-      "hil_c6": 0.583, "hil_d6": 0.833, "hil_f1": 0.875, "hil_f5": 0.800,
-      "hil_j8": 1.000
+      "hil_c6": 0.583, "hil_d2": 0.700, "hil_d6": 0.833, "hil_e6": 0.667,
+      "hil_f1": 0.875, "hil_f5": 0.800, "hil_g7": 0.733, "hil_h3": 0.680,
+      "hil_i2": 0.633, "hil_i4": 0.767, "hil_j4": 0.733, "hil_j8": 1.000
     }
   },
   {
@@ -40,12 +42,12 @@
     "framework": "OpenClaw",
     "model": "Haiku 4.5",
     "provider": "Anthropic",
-    "overall": 0.636,
+    "overall": 0.614,
     "mc_em": 0.642,
-    "mc_partial": 0.902,
+    "mc_partial": null,
     "ec_pass": 0.411,
-    "avg_fp": 0.15,
-    "avg_fn": 0.65,
+    "avg_fp": null,
+    "avg_fn": null,
     "rounds": 337,
     "complete": "12/12",
     "per_scenario": {
@@ -56,59 +58,21 @@
   },
   {
     "rank": 4,
-    "framework": "ZeroClaw",
-    "model": "GPT-5.1",
-    "provider": "OpenAI",
-    "overall": 0.593,
-    "mc_em": 0.593,
-    "mc_partial": null,
-    "ec_pass": null,
-    "avg_fp": null,
-    "avg_fn": null,
-    "rounds": 337,
-    "complete": "12/12",
-    "per_scenario": {
-      "hil_c6": 0.500, "hil_d2": 0.700, "hil_d6": 0.600, "hil_e6": 0.500,
-      "hil_f1": 0.767, "hil_f5": 0.733, "hil_g7": 0.633, "hil_h3": 0.760,
-      "hil_i2": 0.700, "hil_i4": 0.533, "hil_j4": 0.900, "hil_j8": 0.967
-    }
-  },
-  {
-    "rank": 5,
     "framework": "OpenClaw",
     "model": "GPT-5.2",
     "provider": "OpenAI",
-    "overall": 0.587,
+    "overall": 0.581,
     "mc_em": 0.592,
-    "mc_partial": 0.874,
-    "ec_pass": 0.400,
-    "avg_fp": 0.03,
-    "avg_fn": 0.98,
-    "rounds": 265,
-    "complete": "10/12",
-    "per_scenario": {
-      "hil_c6": 0.083, "hil_d2": 0.692, "hil_d6": 0.400, "hil_e6": 0.667,
-      "hil_f1": 0.600, "hil_f5": 0.633, "hil_g7": 0.667, "hil_i2": 0.633,
-      "hil_i4": 0.700, "hil_j4": 0.567
-    }
-  },
-  {
-    "rank": 6,
-    "framework": "ZeroClaw",
-    "model": "GPT-5.2",
-    "provider": "OpenAI",
-    "overall": 0.454,
-    "mc_em": 0.454,
     "mc_partial": null,
-    "ec_pass": null,
+    "ec_pass": 0.400,
     "avg_fp": null,
     "avg_fn": null,
-    "rounds": 337,
+    "rounds": 265,
     "complete": "12/12",
     "per_scenario": {
-      "hil_c6": 0.250, "hil_d2": 0.533, "hil_d6": 0.433, "hil_e6": 0.600,
-      "hil_f1": 0.367, "hil_f5": 0.433, "hil_g7": 0.467, "hil_h3": 0.400,
-      "hil_i2": 0.500, "hil_i4": 0.300, "hil_j4": 0.400, "hil_j8": 0.767
+      "hil_c6": 0.083, "hil_d2": 0.692, "hil_d6": 0.400, "hil_e6": 0.667,
+      "hil_f1": 0.600, "hil_f5": 0.633, "hil_g7": 0.667, "hil_h3": 0.560,
+      "hil_i2": 0.633, "hil_i4": 0.700, "hil_j4": 0.567, "hil_j8": 0.800
     }
   }
 ]

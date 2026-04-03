@@ -34,7 +34,7 @@ export default function LeaderboardPage() {
           Leaderboard
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginTop: 6 }}>
-          Model rankings on the HHClaw benchmark. Click any row to view per-scenario breakdown.
+          Model rankings on the ClawArena benchmark. Click any row to view per-scenario breakdown.
         </p>
       </div>
 
@@ -44,8 +44,8 @@ export default function LeaderboardPage() {
         style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
       >
         {([
-          { id: 'exp2' as Tab, label: 'Experiment 2: 12-scenario', badge: `${exp2Data.length}` },
-          { id: 'exp1' as Tab, label: 'Experiment 1: hil_s1',      badge: `${exp1Data.length}` },
+          { id: 'exp2' as Tab, label: 'Cross-Model (12 scenarios)', badge: `${exp2Data.length}` },
+          { id: 'exp1' as Tab, label: 'Cross-Framework (hil_s1)',   badge: `${exp1Data.length}` },
         ] as { id: Tab; label: string; badge: string }[]).map(({ id, label, badge }) => (
           <button
             key={id}
@@ -89,14 +89,15 @@ export default function LeaderboardPage() {
         <Info size={15} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 1 }} />
         {activeTab === 'exp2' ? (
           <span>
-            <strong style={{ color: 'var(--text)' }}>Experiment 2</strong> evaluates agents on
-            12 fixed scenarios from the 64-scenario set (subset_12). Scores include MC EM, MC Partial,
-            and EC Pass metrics. Click any row for a per-scenario heatmap.
+            <strong style={{ color: 'var(--text)' }}>Cross-Model Comparison</strong> (Table 4) evaluates
+            four backbone models with the OpenClaw framework on 12 fixed scenarios. Scores include MC EM and
+            EC Pass metrics. Click any row for a per-scenario heatmap.
           </span>
         ) : (
           <span>
-            <strong style={{ color: 'var(--text)' }}>Experiment 1</strong> (hil_s1 format) evaluates
-            agents across all 64 scenarios. ZeroClaw entries do not have EC Pass scores.
+            <strong style={{ color: 'var(--text)' }}>Cross-Framework Comparison</strong> (Table 2) evaluates
+            multiple agent frameworks on the hil_s1 format across all 64 scenarios. Scores are Overall,
+            MC (multiple choice), and EC (executable code) pass rates.
           </span>
         )}
       </div>

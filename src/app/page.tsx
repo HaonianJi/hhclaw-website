@@ -5,7 +5,7 @@ import QuickLeaderboard from '@/components/QuickLeaderboard';
 export default function LandingPage() {
   return (
     <div>
-      {/* ─── Hero ──────────────────────────────────────────────── */}
+      {/* ─── Hero ──────────────────────────────────────────────────── */}
       <section
         style={{
           background: 'linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%)',
@@ -24,7 +24,7 @@ export default function LandingPage() {
               }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-              Live Benchmark — April 2026
+              Under review at COLM 2026
             </span>
           </div>
 
@@ -37,30 +37,40 @@ export default function LandingPage() {
                 color: 'var(--text)',
               }}
             >
-              <span className="mr-3">🦀</span>HHClaw Benchmark
+              <span className="mr-3">🦀</span>ClawArena
             </h1>
             <p
-              className="mt-5 mx-auto max-w-2xl leading-relaxed"
+              className="mt-3 mx-auto max-w-2xl font-semibold"
               style={{
                 fontSize: '1.125rem',
+                color: 'var(--text-secondary)',
+              }}
+            >
+              Benchmarking AI Agents in Evolving Information Environments
+            </p>
+            <p
+              className="mt-4 mx-auto max-w-2xl leading-relaxed"
+              style={{
+                fontSize: '1rem',
                 color: 'var(--text-secondary)',
                 lineHeight: 1.7,
               }}
             >
-              A rigorous{' '}
-              <strong style={{ color: 'var(--text)' }}>Human-in-the-Loop evaluation</strong> framework
-              for personal AI assistants — measuring real-world task completion across{' '}
-              <strong style={{ color: 'var(--text)' }}>8 life domains</strong> with
-              multi-step reasoning, dynamic updates, and code execution.
+              A rigorous evaluation framework for AI agents — measuring reasoning under{' '}
+              <strong style={{ color: 'var(--text)' }}>multi-source conflicts</strong>,{' '}
+              <strong style={{ color: 'var(--text)' }}>dynamic belief revision</strong>, and{' '}
+              <strong style={{ color: 'var(--text)' }}>implicit personalization</strong> across
+              64 evolving scenarios in 8 professional domains.
             </p>
           </div>
 
           {/* Stat Cards */}
-          <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-10">
+          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mt-10">
             {[
-              { value: '64',    label: 'Scenarios', sublabel: 'across 8 domains' },
-              { value: '8',     label: 'Domains',   sublabel: 'EN & ZH personas' },
-              { value: '1,879', label: 'Rounds',    sublabel: 'evaluation turns'  },
+              { value: '64',    label: 'Scenarios',  sublabel: 'across 8 domains' },
+              { value: '8',     label: 'Domains',    sublabel: 'professional settings' },
+              { value: '1,879', label: 'Eval Rounds', sublabel: 'evaluation turns'  },
+              { value: '365',   label: 'Updates',    sublabel: 'dynamic spec changes' },
             ].map(({ value, label, sublabel }) => (
               <div
                 key={label}
@@ -74,7 +84,7 @@ export default function LandingPage() {
                 <div
                   className="font-bold stat-number tabular-nums"
                   style={{
-                    fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                    fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
                     color: 'var(--primary)',
                     lineHeight: 1.1,
                   }}
@@ -83,13 +93,13 @@ export default function LandingPage() {
                 </div>
                 <div
                   className="font-semibold mt-1"
-                  style={{ fontSize: '0.875rem', color: 'var(--text)' }}
+                  style={{ fontSize: '0.8rem', color: 'var(--text)' }}
                 >
                   {label}
                 </div>
                 <div
                   className="hidden sm:block mt-0.5"
-                  style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}
+                  style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}
                 >
                   {sublabel}
                 </div>
@@ -153,7 +163,7 @@ export default function LandingPage() {
               Top Rankings
             </h2>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              Experiment 2: 12-scenario subset — sorted by overall score
+              Cross-Model comparison on 12 scenarios (OpenClaw framework) — sorted by overall score
             </p>
           </div>
           <Link
@@ -169,7 +179,7 @@ export default function LandingPage() {
         <QuickLeaderboard />
       </section>
 
-      {/* ─── Feature Cards ──────────────────────────────────────── */}
+      {/* ─── Key Findings ───────────────────────────────────────── */}
       <section
         style={{
           background: 'var(--surface)',
@@ -182,7 +192,54 @@ export default function LandingPage() {
             className="text-center font-bold mb-10"
             style={{ fontSize: '1.5rem', color: 'var(--text)' }}
           >
-            What Makes HHClaw Different
+            Key Findings
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {KEY_FINDINGS.map((f) => (
+              <div
+                key={f.title}
+                className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+                style={{
+                  background: 'var(--bg)',
+                  border: '1px solid var(--border)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+              >
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-lg"
+                  style={{ background: 'var(--primary-light)' }}
+                >
+                  {f.icon}
+                </div>
+                <h3
+                  className="font-semibold mb-2"
+                  style={{ fontSize: '0.9375rem', color: 'var(--text)' }}
+                >
+                  {f.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: '0.8125rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {f.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Feature Cards ──────────────────────────────────────── */}
+      <section>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <h2
+            className="text-center font-bold mb-10"
+            style={{ fontSize: '1.5rem', color: 'var(--text)' }}
+          >
+            What Makes ClawArena Different
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {FEATURES.map((f) => (
@@ -225,41 +282,62 @@ export default function LandingPage() {
   );
 }
 
-const FEATURES = [
+const KEY_FINDINGS = [
   {
-    icon: '🎯',
-    title: 'Realistic Task Scenarios',
+    icon: '📊',
+    title: 'Model Capability Dominates',
     description:
-      'Multi-turn interactions drawn from real personal assistant workflows — email triage, scheduling, data analysis, and more.',
+      'Model capability accounts for a 15.4% performance range, outweighing framework design effects (6.8% range) — choosing the right model matters more than the framework.',
   },
   {
     icon: '🔄',
-    title: 'Dynamic Update Testing',
+    title: 'Update Design Over Volume',
     description:
-      'Scenarios include spec updates mid-run to measure how well agents adapt to changing user preferences and rules.',
+      'Belief revision difficulty is governed by update design strategy rather than update volume — how updates are structured matters more than how many there are.',
+  },
+  {
+    icon: '⚠️',
+    title: 'Aggregate Scores Can Mislead',
+    description:
+      'Aggregate scores can mask qualitatively different failure modes — models with similar overall scores may fail on entirely different question types and conflict categories.',
+  },
+];
+
+const FEATURES = [
+  {
+    icon: '🧠',
+    title: 'Multi-Source Conflict Reasoning',
+    description:
+      'Agents must reconcile contradictory information from multiple sources — factual conflicts (C1), authority conflicts (C2), non-conflicts (C3), and temporal/process conflicts (C4).',
+  },
+  {
+    icon: '🔄',
+    title: 'Dynamic Belief Revision',
+    description:
+      '365 dynamic update packages test how well agents revise their beliefs when workspace files and session histories are updated mid-evaluation.',
+  },
+  {
+    icon: '👤',
+    title: 'Implicit Personalization',
+    description:
+      'Agents must infer unstated user preferences from behavioral patterns in session histories — explicit preferences alone are insufficient.',
+  },
+  {
+    icon: '📋',
+    title: '14-Category Question Taxonomy',
+    description:
+      'Questions span 7 dimension combinations (MS, DU, P, MS×DU, MS×P, DU×P, All) × 2 types (Recall, Reasoning), yielding 14 fine-grained evaluation categories.',
   },
   {
     icon: '⚡',
     title: 'Code Execution Evaluation',
     description:
-      'Beyond text matching — agents must produce working code that passes automated test suites in sandboxed environments.',
-  },
-  {
-    icon: '🌏',
-    title: 'Bilingual (EN + ZH)',
-    description:
-      '4 domains in English and 4 in Chinese, covering diverse cultural contexts and real user persona profiles.',
-  },
-  {
-    icon: '📊',
-    title: '5 Evaluation Dimensions',
-    description:
-      'MS-R, DU, P, EC, and NON dimensions capture multi-step reasoning, decision understanding, planning, and more.',
+      'Beyond text matching — agents must produce working code that passes automated test suites in sandboxed environments (EC Pass@1).',
   },
   {
     icon: '🏗️',
-    title: '6-Layer Spec System',
+    title: '6-Layer Specification System',
     description:
-      'Hierarchical specification system (L0–L4 + GUIDE) ensures consistent, auditable evaluation across all scenarios.',
+      'Hierarchical specification system (L0 Narrative Bible → L1 Workspace Files → L2 Sessions → L3 Questions → L4 Updates → Guide) ensures auditable evaluation.',
   },
 ];

@@ -18,14 +18,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'HHClaw Benchmark',
+  title: 'ClawArena Benchmark',
   description:
-    'Human-in-the-Loop Evaluation for Personal AI Assistants — 64 scenarios, 8 domains, 1,879 evaluation rounds.',
-  keywords: ['AI benchmark', 'human-in-the-loop', 'evaluation', 'LLM', 'personal assistant'],
+    'ClawArena: Benchmarking AI Agents in Evolving Information Environments — 64 scenarios, 8 domains, 1,879 evaluation rounds.',
+  keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena', 'COLM 2026'],
   openGraph: {
-    title: 'HHClaw Benchmark',
+    title: 'ClawArena Benchmark',
     description:
-      'Human-in-the-Loop Evaluation for Personal AI Assistants',
+      'ClawArena: Benchmarking AI Agents in Evolving Information Environments',
     type: 'website',
   },
 };
