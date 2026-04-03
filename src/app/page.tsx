@@ -261,99 +261,103 @@ export default function LandingPage() {
       {/* ─── Key Findings ───────────────────────────────────────── */}
       <section
         style={{
-          background: 'var(--surface)',
           borderTop: '1px solid var(--border)',
           borderBottom: '1px solid var(--border)',
         }}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <h2
             ref={addRevealRef}
-            className="scroll-reveal text-center font-bold mb-10"
-            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
+            className="scroll-reveal font-bold mb-12"
+            style={{ fontSize: '1.75rem', color: 'var(--text)', letterSpacing: '-0.03em' }}
           >
-            Key Findings
+            What we found
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-0">
             {KEY_FINDINGS.map((f, i) => (
               <div
-                key={f.title}
+                key={f.num}
                 ref={addRevealRef}
-                className="scroll-reveal glass-card rounded-xl p-5"
-                style={{ transitionDelay: `${i * 80}ms` }}
+                className="scroll-reveal flex gap-6 py-6"
+                style={{
+                  transitionDelay: `${i * 80}ms`,
+                  borderBottom: i < KEY_FINDINGS.length - 1 ? '1px solid var(--border)' : 'none',
+                }}
               >
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-lg"
-                  style={{
-                    background: 'rgba(255,107,53,0.1)',
-                    border: '1px solid rgba(255,107,53,0.15)',
-                  }}
+                <span
+                  className="font-mono font-bold shrink-0"
+                  style={{ fontSize: '3rem', lineHeight: 1, color: 'rgba(255,107,53,0.2)', width: 60, textAlign: 'right' }}
                 >
-                  {f.icon}
+                  {f.num}
+                </span>
+                <div>
+                  <h3 className="font-semibold mb-1" style={{ fontSize: '1.05rem', color: 'var(--text)', letterSpacing: '-0.01em' }}>
+                    {f.title}
+                  </h3>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+                    {f.description}
+                  </p>
                 </div>
-                <h3
-                  className="font-semibold mb-2"
-                  style={{ fontSize: '0.9375rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
-                >
-                  {f.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: '0.8125rem',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.65,
-                  }}
-                >
-                  {f.description}
-                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── Feature Cards ──────────────────────────────────────── */}
+      {/* ─── Evaluation Dimensions ──────────────────────────────── */}
       <section>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <h2
             ref={addRevealRef}
-            className="scroll-reveal text-center font-bold mb-10"
-            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
+            className="scroll-reveal font-bold mb-4"
+            style={{ fontSize: '1.75rem', color: 'var(--text)', letterSpacing: '-0.03em' }}
           >
-            What Makes ClawArena Different
+            Three coupled challenges
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {FEATURES.map((f, i) => (
+          <p
+            ref={addRevealRef}
+            className="scroll-reveal mb-10"
+            style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: 560 }}
+          >
+            Real information environments are multi-source, dynamic, and personalized. ClawArena evaluates all three jointly.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: 'var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+            {DIMENSIONS.map((d, i) => (
               <div
-                key={f.title}
+                key={d.tag}
                 ref={addRevealRef}
-                className="scroll-reveal glass-card rounded-xl p-5"
-                style={{ transitionDelay: `${i * 60}ms` }}
+                className="scroll-reveal"
+                style={{
+                  background: 'var(--bg)',
+                  padding: '28px 24px',
+                  transitionDelay: `${i * 60}ms`,
+                }}
               >
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-lg"
-                  style={{
-                    background: 'rgba(255,107,53,0.08)',
-                    border: '1px solid rgba(255,107,53,0.12)',
-                  }}
+                <span
+                  className="font-mono font-bold"
+                  style={{ fontSize: '0.7rem', color: d.color, letterSpacing: '0.08em', textTransform: 'uppercase' as const }}
                 >
-                  {f.icon}
-                </div>
-                <h3
-                  className="font-semibold mb-2"
-                  style={{ fontSize: '0.9375rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
-                >
-                  {f.title}
+                  {d.tag}
+                </span>
+                <h3 className="font-semibold mt-2 mb-2" style={{ fontSize: '1rem', color: 'var(--text)' }}>
+                  {d.title}
                 </h3>
-                <p
-                  style={{
-                    fontSize: '0.8125rem',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.65,
-                  }}
-                >
-                  {f.description}
+                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>
+                  {d.description}
                 </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional capabilities - compact list */}
+          <div
+            ref={addRevealRef}
+            className="scroll-reveal mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6"
+          >
+            {EXTRAS.map((e) => (
+              <div key={e.title}>
+                <h4 className="font-semibold mb-1" style={{ fontSize: '0.875rem', color: 'var(--text)' }}>{e.title}</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{e.description}</p>
               </div>
             ))}
           </div>
@@ -365,60 +369,54 @@ export default function LandingPage() {
 
 const KEY_FINDINGS = [
   {
-    icon: '📊',
-    title: 'Model Capability Dominates',
-    description:
-      'Model capability accounts for a 15.4% performance range, outweighing framework design effects (6.8% range) — choosing the right model matters more than the framework.',
+    num: '01',
+    title: 'Model capability dominates framework design',
+    description: 'Across four frameworks and five models, model choice accounts for a 15.4% performance range while framework design accounts for 6.8%. The right model matters roughly twice as much as the right framework.',
   },
   {
-    icon: '🔄',
-    title: 'Update Design Over Volume',
-    description:
-      'Belief revision difficulty is governed by update design strategy rather than update volume — how updates are structured matters more than how many there are.',
+    num: '02',
+    title: 'Belief revision depends on update design, not volume',
+    description: 'Concentrated, targeted updates cause 0.28–0.36 score drops. Distributed updates across 12 scenarios show only +1.7% change. How updates are structured matters far more than how many there are.',
   },
   {
-    icon: '⚠️',
-    title: 'Aggregate Scores Can Mislead',
-    description:
-      'Aggregate scores can mask qualitatively different failure modes — models with similar overall scores may fail on entirely different question types and conflict categories.',
+    num: '03',
+    title: 'Aggregate scores mask divergent failures',
+    description: 'Two configurations scoring 0.833 on the same question fail on structurally opposite options — one misses a genuine conflict, the other over-flags a non-conflict. Per-option diagnostics are essential.',
   },
 ];
 
-const FEATURES = [
+const DIMENSIONS = [
   {
-    icon: '🧠',
-    title: 'Multi-Source Conflict Reasoning',
-    description:
-      'Agents must reconcile contradictory information from multiple sources — factual conflicts (C1), authority conflicts (C2), non-conflicts (C3), and temporal/process conflicts (C4).',
+    tag: 'MS',
+    title: 'Multi-Source Conflict',
+    description: 'Evidence is scattered across heterogeneous sources that may contradict each other. The agent must judge source reliability across four canonical conflict types.',
+    color: '#ff6b35',
   },
   {
-    icon: '🔄',
+    tag: 'DU',
     title: 'Dynamic Belief Revision',
-    description:
-      '365 dynamic update packages test how well agents revise their beliefs when workspace files and session histories are updated mid-evaluation.',
+    description: 'New evidence can invalidate previously correct conclusions. 365 staged update packages test whether agents revise rather than simply accumulate.',
+    color: '#f7c948',
   },
   {
-    icon: '👤',
+    tag: 'P',
     title: 'Implicit Personalization',
-    description:
-      'Agents must infer unstated user preferences from behavioral patterns in session histories — explicit preferences alone are insufficient.',
+    description: 'User preferences surface through corrections and behavioral patterns, not explicit instructions. A four-stage protocol ends in silent-exam rounds.',
+    color: '#e2336b',
+  },
+];
+
+const EXTRAS = [
+  {
+    title: '14-category taxonomy',
+    description: '7 dimension combinations × 2 types (Recall, Reasoning) prevent systems from scoring well by solving only one dimension.',
   },
   {
-    icon: '📋',
-    title: '14-Category Question Taxonomy',
-    description:
-      'Questions span 7 dimension combinations (MS, DU, P, MS×DU, MS×P, DU×P, All) × 2 types (Recall, Reasoning), yielding 14 fine-grained evaluation categories.',
+    title: 'Executable checks',
+    description: 'Shell-based verification of workspace file state. Agents must produce working artifacts, not just text answers.',
   },
   {
-    icon: '⚡',
-    title: 'Code Execution Evaluation',
-    description:
-      'Beyond text matching — agents must produce working code that passes automated test suites in sandboxed environments (EC Pass@1).',
-  },
-  {
-    icon: '🏗️',
-    title: '6-Layer Specification System',
-    description:
-      'Hierarchical specification system (L0 Narrative Bible → L1 Workspace Files → L2 Sessions → L3 Questions → L4 Updates → Guide) ensures auditable evaluation.',
+    title: '6-layer specifications',
+    description: 'Hidden ground truth (L0) is never shown to agents. Observable layers are noisy, partial reflections of the same underlying reality.',
   },
 ];
