@@ -1,0 +1,15 @@
+{
+  "total_scenarios": 64,
+  "total_rounds": 1879,
+  "domains": [
+    {"id":"C","name":"Tech/HR Startup","persona":"Alex Rivera (CEO)","lang":"EN","scenarios":8,"rounds":204},
+    {"id":"D","name":"Hospital Admin","persona":"Dr. Kenji Tanaka","lang":"EN","scenarios":8,"rounds":240},
+    {"id":"E","name":"Nonprofit/NGO","persona":"Sarah Chen","lang":"EN","scenarios":8,"rounds":240},
+    {"id":"F","name":"Family/Personal","persona":"赵磊 (Quant Trader)","lang":"ZH","scenarios":8,"rounds":240},
+    {"id":"G","name":"Tech Corporate","persona":"陈静 (HR Manager)","lang":"ZH","scenarios":8,"rounds":240},
+    {"id":"H","name":"Campus/Student","persona":"王明 (CS Undergrad)","lang":"ZH","scenarios":8,"rounds":235},
+    {"id":"I","name":"Clinical/Medical","persona":"林逸 (ER Attending)","lang":"ZH","scenarios":8,"rounds":240},
+    {"id":"J","name":"Community/MCN","persona":"周芳 (Food Blogger)","lang":"ZH","scenarios":8,"rounds":240}
+  ],
+  "subset_12": ["hil_c6","hil_d2","hil_d6","hil_e6","hil_f1","hil_f5","hil_g7","hil_h3","hil_i2","hil_i4","hil_j4","hil_j8"]
+}

@@ -1,0 +1,151 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { type Exp1Row, type Exp2Row, Exp1Table, Exp2Table } from '@/components/LeaderboardTable';
+import { Info } from 'lucide-react';
+
+type Tab = 'exp1' | 'exp2';
+
+export default function LeaderboardPage() {
+  const [activeTab, setActiveTab] = useState<Tab>('exp2');
+  const [exp1Data, setExp1Data] = useState<Exp1Row[]>([]);
+  const [exp2Data, setExp2Data] = useState<Exp2Row[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/data/leaderboard_exp1.json').then((r) => r.json()),
+      fetch('/data/leaderboard_exp2.json').then((r) => r.json()),
+    ]).then(([d1, d2]) => {
+      setExp1Data(d1);
+      setExp2Data(d2);
+      setLoading(false);
+    });
+  }, []);
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Page header */}
+      <div className="mb-8">
+        <h1
+          className="font-bold tracking-tight"
+          style={{ fontSize: '2rem', color: 'var(--text)' }}
+        >
+          Leaderboard
+        </h1>
+        <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginTop: 6 }}>
+          Model rankings on the HHClaw benchmark. Click any row to view per-scenario breakdown.
+        </p>
+      </div>
+
+      {/* Tab switcher */}
+      <div
+        className="flex gap-2 mb-6 p-1 rounded-xl w-fit"
+        style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+      >
+        {([
+          { id: 'exp2' as Tab, label: 'Experiment 2: 12-scenario', badge: `${exp2Data.length}` },
+          { id: 'exp1' as Tab, label: 'Experiment 1: hil_s1',      badge: `${exp1Data.length}` },
+        ] as { id: Tab; label: string; badge: string }[]).map(({ id, label, badge }) => (
+          <button
+            key={id}
+            onClick={() => setActiveTab(id)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200"
+            style={{
+              fontSize: '0.875rem',
+              background: activeTab === id ? 'var(--primary)' : 'transparent',
+              color: activeTab === id ? '#fff' : 'var(--text-secondary)',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            {label}
+            {badge !== '0' && (
+              <span
+                className="rounded-full px-1.5 py-0.5 text-xs font-semibold"
+                style={{
+                  background: activeTab === id ? 'rgba(255,255,255,0.25)' : 'var(--surface-alt)',
+                  color: activeTab === id ? '#fff' : 'var(--text-muted)',
+                  fontSize: '0.65rem',
+                }}
+              >
+                {badge}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Info banner */}
+      <div
+        className="flex items-start gap-3 rounded-lg p-3 mb-6"
+        style={{
+          background: 'var(--primary-light)',
+          border: '1px solid #bfdbfe',
+          fontSize: '0.8125rem',
+          color: 'var(--text-secondary)',
+        }}
+      >
+        <Info size={15} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 1 }} />
+        {activeTab === 'exp2' ? (
+          <span>
+            <strong style={{ color: 'var(--text)' }}>Experiment 2</strong> evaluates agents on
+            12 fixed scenarios from the 64-scenario set (subset_12). Scores include MC EM, MC Partial,
+            and EC Pass metrics. Click any row for a per-scenario heatmap.
+          </span>
+        ) : (
+          <span>
+            <strong style={{ color: 'var(--text)' }}>Experiment 1</strong> (hil_s1 format) evaluates
+            agents across all 64 scenarios. ZeroClaw entries do not have EC Pass scores.
+          </span>
+        )}
+      </div>
+
+      {/* Table */}
+      {loading ? (
+        <div
+          className="rounded-xl p-12 text-center"
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            color: 'var(--text-muted)',
+          }}
+        >
+          <div className="inline-block w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin mb-3" />
+          <div style={{ fontSize: '0.875rem' }}>Loading leaderboard data...</div>
+        </div>
+      ) : (
+        <div key={activeTab} className="animate-fade-in">
+          {activeTab === 'exp2' ? (
+            <Exp2Table data={exp2Data} />
+          ) : (
+            <Exp1Table data={exp1Data} />
+          )}
+        </div>
+      )}
+
+      {/* Legend */}
+      <div
+        className="flex flex-wrap items-center gap-4 mt-5"
+        style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}
+      >
+        <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Score color:</span>
+        {[
+          { color: '#22c55e', label: '≥ 75%' },
+          { color: '#84cc16', label: '55–75%' },
+          { color: '#f59e0b', label: '40–55%' },
+          { color: '#ef4444', label: '< 40%' },
+        ].map(({ color, label }) => (
+          <span key={label} className="flex items-center gap-1.5">
+            <span
+              className="inline-block w-3 h-3 rounded-sm"
+              style={{ background: color }}
+            />
+            {label}
+          </span>
+        ))}
+        <span className="ml-2">— = not evaluated</span>
+      </div>
+    </div>
+  );
+}
