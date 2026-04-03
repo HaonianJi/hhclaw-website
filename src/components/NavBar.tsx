@@ -50,7 +50,7 @@ export default function NavBar() {
             style={{ textDecoration: 'none' }}
           >
             <img
-              src="/clawarena-logo.jpg"
+              src="/clawarena-logo.png"
               alt="ClawArena"
               width={32}
               height={32}

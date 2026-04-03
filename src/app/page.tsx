@@ -90,7 +90,7 @@ export default function LandingPage() {
               }}
             >
               <img
-                src="/clawarena-logo.jpg"
+                src="/clawarena-logo.png"
                 alt="ClawArena"
                 width={80}
                 height={80}

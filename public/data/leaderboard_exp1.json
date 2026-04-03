@@ -1,8 +1,10 @@
 [
-  {"rank":1,"framework":"OpenClaw","model":"Sonnet 4.6","overall":0.681,"em_rate":null,"mc_score":0.840,"ec_pass":0.617},
-  {"rank":2,"framework":"Claude Code","model":"Sonnet 4.6","overall":0.660,"em_rate":null,"mc_score":0.766,"ec_pass":0.617},
-  {"rank":3,"framework":"OpenClaw","model":"GPT-5.1","overall":0.579,"em_rate":null,"mc_score":0.854,"ec_pass":0.468},
-  {"rank":4,"framework":"Claude Code","model":"GPT-5.1","overall":0.566,"em_rate":null,"mc_score":0.810,"ec_pass":0.468},
-  {"rank":5,"framework":"PicoClaw","model":"GPT-5.1","overall":0.515,"em_rate":null,"mc_score":0.789,"ec_pass":0.404},
-  {"rank":6,"framework":"NanoBot","model":"GPT-5.1","overall":0.511,"em_rate":null,"mc_score":0.774,"ec_pass":0.404}
+  {"rank":1,"framework":"OpenClaw","model":"Sonnet 4.6","overall":0.681,"em_rate":null,"mc_score":0.840,"ec_pass":0.617,"note":null},
+  {"rank":2,"framework":"Claude Code","model":"Sonnet 4.6","overall":0.660,"em_rate":null,"mc_score":0.766,"ec_pass":0.617,"note":"via Claude Code Router"},
+  {"rank":3,"framework":"MetaClaw + OpenClaw","model":"GPT-5.1","overall":0.603,"em_rate":0.515,"mc_score":0.832,"ec_pass":0.511,"note":"skill-openclaw-2"},
+  {"rank":4,"framework":"OpenClaw","model":"GPT-5.1","overall":0.579,"em_rate":null,"mc_score":0.854,"ec_pass":0.468,"note":null},
+  {"rank":5,"framework":"Claude Code","model":"GPT-5.1","overall":0.566,"em_rate":null,"mc_score":0.810,"ec_pass":0.468,"note":"via Claude Code Router"},
+  {"rank":6,"framework":"MetaClaw + NanoBot","model":"GPT-5.1","overall":0.563,"em_rate":0.485,"mc_score":0.746,"ec_pass":0.489,"note":"skill-nanobot"},
+  {"rank":7,"framework":"PicoClaw","model":"GPT-5.1","overall":0.515,"em_rate":null,"mc_score":0.789,"ec_pass":0.404,"note":null},
+  {"rank":8,"framework":"NanoBot","model":"GPT-5.1","overall":0.511,"em_rate":null,"mc_score":0.774,"ec_pass":0.404,"note":null}
 ]

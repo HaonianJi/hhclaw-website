@@ -20,6 +20,7 @@ export interface Exp1Row {
   em_rate: number | null;
   mc_score: number;
   ec_pass: number;
+  note: string | null;
 }
 
 export interface Exp2Row {
@@ -368,12 +369,19 @@ export function Exp1Table({ data }: { data: Exp1Row[] }) {
         accessorFn: (r) => `${r.framework} ${r.model}`,
         cell: ({ row }) => (
           <div>
-            <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
-              {row.original.framework}
-            </span>
-            <span className="ml-1" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-              + {row.original.model}
-            </span>
+            <div>
+              <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
+                {row.original.framework}
+              </span>
+              <span className="ml-1" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+                + {row.original.model}
+              </span>
+            </div>
+            {row.original.note && (
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 2 }}>
+                {row.original.note}
+              </div>
+            )}
           </div>
         ),
         enableSorting: false,
