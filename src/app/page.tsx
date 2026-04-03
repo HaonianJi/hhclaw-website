@@ -92,8 +92,8 @@ export default function LandingPage() {
               <img
                 src="/clawarena-logo.png"
                 alt="ClawArena"
-                width={80}
-                height={80}
+                width={120}
+                height={120}
                 style={{
                   display: 'inline-block',
                   marginRight: '0.2em',

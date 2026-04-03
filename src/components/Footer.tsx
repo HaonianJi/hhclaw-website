@@ -19,8 +19,8 @@ export default function Footer() {
               <img
                 src="/clawarena-logo.png"
                 alt="ClawArena"
-                width={24}
-                height={24}
+                width={32}
+                height={32}
                 className="rounded"
                 style={{ filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.35))' }}
               />

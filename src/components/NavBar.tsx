@@ -52,8 +52,8 @@ export default function NavBar() {
             <img
               src="/clawarena-logo.png"
               alt="ClawArena"
-              width={32}
-              height={32}
+              width={40}
+              height={40}
               className="select-none rounded-md"
               style={{
                 filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.4))',
