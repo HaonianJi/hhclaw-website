@@ -49,15 +49,17 @@ export default function NavBar() {
             className="flex items-center gap-2 no-underline group"
             style={{ textDecoration: 'none' }}
           >
-            <span
-              className="text-2xl select-none"
+            <img
+              src="/clawarena-logo.jpg"
+              alt="ClawArena"
+              width={32}
+              height={32}
+              className="select-none rounded-md"
               style={{
                 filter: 'drop-shadow(0 0 8px rgba(255,107,53,0.4))',
                 transition: 'filter 0.2s ease',
               }}
-            >
-              🦀
-            </span>
+            />
             <span
               className="font-bold"
               style={{

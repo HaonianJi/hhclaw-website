@@ -89,15 +89,19 @@ export default function LandingPage() {
                 lineHeight: 1.05,
               }}
             >
-              <span
+              <img
+                src="/clawarena-logo.jpg"
+                alt="ClawArena"
+                width={80}
+                height={80}
                 style={{
                   display: 'inline-block',
                   marginRight: '0.2em',
+                  verticalAlign: 'middle',
+                  borderRadius: '12px',
                   filter: 'drop-shadow(0 0 16px rgba(255,107,53,0.5))',
                 }}
-              >
-                🦀
-              </span>
+              />
               <span className="gradient-text">ClawArena</span>
             </h1>
             <p

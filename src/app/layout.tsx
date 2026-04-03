@@ -21,12 +21,17 @@ export const metadata: Metadata = {
   title: 'ClawArena Benchmark',
   description:
     'ClawArena: Benchmarking AI Agents in Evolving Information Environments — 64 scenarios, 8 domains, 1,879 evaluation rounds.',
-  keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena', ],
+  keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena'],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'ClawArena Benchmark',
     description:
       'ClawArena: Benchmarking AI Agents in Evolving Information Environments',
     type: 'website',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
 };
 

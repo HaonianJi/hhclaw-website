@@ -16,12 +16,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span
-                className="text-xl"
+              <img
+                src="/clawarena-logo.jpg"
+                alt="ClawArena"
+                width={24}
+                height={24}
+                className="rounded"
                 style={{ filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.35))' }}
-              >
-                🦀
-              </span>
+              />
               <span
                 className="font-bold"
                 style={{
