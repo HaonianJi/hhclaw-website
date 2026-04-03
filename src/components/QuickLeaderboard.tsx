@@ -58,9 +58,9 @@ export default function QuickLeaderboard() {
   const [rows, setRows] = useState<Exp2Row[]>([]);
 
   useEffect(() => {
-    fetch('/data/leaderboard_exp2.json')
+    fetch('/data/leaderboard_exp1.json')
       .then((r) => r.json())
-      .then((data: Exp2Row[]) => setRows(data.slice(0, 5)));
+      .then((data: Exp2Row[]) => setRows(data));
   }, []);
 
   if (rows.length === 0) {

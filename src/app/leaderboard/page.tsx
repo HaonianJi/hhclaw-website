@@ -7,7 +7,7 @@ import { Info } from 'lucide-react';
 type Tab = 'exp1' | 'exp2';
 
 export default function LeaderboardPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('exp2');
+  const [activeTab, setActiveTab] = useState<Tab>('exp1');
   const [exp1Data, setExp1Data] = useState<Exp1Row[]>([]);
   const [exp2Data, setExp2Data] = useState<Exp2Row[]>([]);
   const [loading, setLoading] = useState(true);

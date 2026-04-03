@@ -125,8 +125,7 @@ export default function AboutPage() {
             <strong style={{ color: 'var(--text)' }}>1,879 evaluation rounds</strong>,{' '}
             <strong style={{ color: 'var(--text)' }}>365 dynamic updates</strong>, and a
             hierarchical 6-layer specification system (L0 Narrative Bible → L1–L4 → Guide) that ensures
-            consistent, auditable evaluation across all configurations. Under review at{' '}
-            <strong style={{ color: '#ff6b35' }}>COLM 2026</strong>.
+            consistent, auditable evaluation across all configurations.{' '}
           </p>
         </div>
       </section>

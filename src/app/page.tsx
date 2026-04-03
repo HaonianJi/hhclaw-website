@@ -75,7 +75,7 @@ export default function LandingPage() {
                   animation: 'pulse-dot 2s ease-in-out infinite',
                 }}
               />
-              Under review at COLM 2026
+              Benchmark for AI Agents in Evolving Environments
             </span>
           </div>
 

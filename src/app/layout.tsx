@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: 'ClawArena Benchmark',
   description:
     'ClawArena: Benchmarking AI Agents in Evolving Information Environments — 64 scenarios, 8 domains, 1,879 evaluation rounds.',
-  keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena', 'COLM 2026'],
+  keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena', ],
   openGraph: {
     title: 'ClawArena Benchmark',
     description:

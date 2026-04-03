@@ -45,7 +45,7 @@ export default function Footer() {
               }}
             >
               Benchmarking AI Agents in Evolving Information Environments.
-              Under review at COLM 2026.
+              A benchmark for AI agents in evolving information environments.
             </p>
           </div>
 
