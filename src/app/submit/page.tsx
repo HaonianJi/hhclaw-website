@@ -50,15 +50,15 @@ gh pr create \\
 ];
 
 const FRAMEWORKS = [
-  { name: 'OpenClaw',    status: 'Official',  badge: 'bg-blue-100 text-blue-700' },
-  { name: 'ZeroClaw',   status: 'Official',  badge: 'bg-blue-100 text-blue-700' },
-  { name: 'NanoBot',    status: 'Community', badge: 'bg-green-100 text-green-700' },
-  { name: 'PicoClaw',   status: 'Community', badge: 'bg-green-100 text-green-700' },
-  { name: 'Claude Code',status: 'Community', badge: 'bg-purple-100 text-purple-700' },
-  { name: 'AutoAgent',  status: 'Custom',    badge: 'bg-gray-100 text-gray-700' },
-  { name: 'LangChain',  status: 'Custom',    badge: 'bg-gray-100 text-gray-700' },
-  { name: 'CrewAI',     status: 'Custom',    badge: 'bg-gray-100 text-gray-700' },
-  { name: 'Custom',     status: 'Plugin API', badge: 'bg-orange-100 text-orange-700' },
+  { name: 'OpenClaw',    status: 'Official',   color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)' },
+  { name: 'ZeroClaw',   status: 'Official',   color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)' },
+  { name: 'NanoBot',    status: 'Community',  color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)' },
+  { name: 'PicoClaw',   status: 'Community',  color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)' },
+  { name: 'Claude Code',status: 'Community',  color: '#c084fc',  bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.2)' },
+  { name: 'AutoAgent',  status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
+  { name: 'LangChain',  status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
+  { name: 'CrewAI',     status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
+  { name: 'Custom',     status: 'Plugin API', color: '#ff6b35',  bg: 'rgba(255,107,53,0.1)',  border: 'rgba(255,107,53,0.2)' },
 ];
 
 export default function SubmitPage() {
@@ -84,23 +84,20 @@ export default function SubmitPage() {
           {STEPS.map((step, idx) => (
             <div
               key={step.number}
-              className="rounded-xl overflow-hidden"
-              style={{
-                border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-md)',
-              }}
+              className="glass-card rounded-xl overflow-hidden"
+              style={{}}
             >
               {/* Step header */}
               <div
                 className="flex items-center gap-4 px-6 py-4"
                 style={{
-                  background: 'var(--surface)',
+                  background: 'rgba(255,107,53,0.05)',
                   borderBottom: '1px solid var(--border)',
                 }}
               >
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white flex-shrink-0"
-                  style={{ background: 'var(--primary)', fontSize: '0.875rem' }}
+                  style={{ background: 'linear-gradient(135deg, #ff6b35, #e2336b)', fontSize: '0.875rem', boxShadow: '0 0 12px rgba(255,107,53,0.35)' }}
                 >
                   {step.number}
                 </div>
@@ -121,7 +118,7 @@ export default function SubmitPage() {
               {/* Step body */}
               <div
                 className="px-6 py-4"
-                style={{ background: 'var(--bg)' }}
+                style={{ background: 'var(--surface)' }}
               >
                 <p
                   className="mb-4"
@@ -161,8 +158,8 @@ export default function SubmitPage() {
 
               {/* Connector line (not on last) */}
               {idx < STEPS.length - 1 && (
-                <div className="flex justify-center py-2" style={{ background: 'var(--bg)' }}>
-                  <div className="w-px h-4" style={{ background: 'var(--border)' }} />
+                <div className="flex justify-center py-2" style={{ background: 'var(--surface)' }}>
+                  <div className="w-px h-4" style={{ background: 'rgba(255,107,53,0.25)' }} />
                 </div>
               )}
             </div>
@@ -185,11 +182,8 @@ export default function SubmitPage() {
           {FRAMEWORKS.map((fw) => (
             <div
               key={fw.name}
-              className="flex items-center justify-between rounded-lg px-4 py-3 transition-colors duration-150 hover:bg-[var(--primary-light)]"
-              style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-              }}
+              className="glass-card flex items-center justify-between rounded-lg px-4 py-3"
+              style={{}}
             >
               <span
                 className="font-semibold"
@@ -198,7 +192,8 @@ export default function SubmitPage() {
                 {fw.name}
               </span>
               <span
-                className={`text-xs font-medium px-2 py-0.5 rounded-full ${fw.badge}`}
+                className="text-xs font-medium px-2 py-0.5 rounded-full"
+                style={{ background: fw.bg, color: fw.color, border: `1px solid ${fw.border}` }}
               >
                 {fw.status}
               </span>
@@ -216,11 +211,8 @@ export default function SubmitPage() {
           Submission Requirements
         </h2>
         <div
-          className="rounded-xl p-5"
-          style={{
-            background: 'var(--surface)',
-            border: '1px solid var(--border)',
-          }}
+          className="glass-card rounded-xl p-5"
+          style={{}}
         >
           <ul className="space-y-3">
             {[

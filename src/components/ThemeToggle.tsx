@@ -28,7 +28,7 @@ export default function ThemeToggle() {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="w-9 h-9 rounded-md flex items-center justify-center transition-all duration-150 hover:scale-105"
       style={{
-        background: 'var(--surface-alt)',
+        background: 'rgba(255,255,255,0.06)',
         border: '1px solid var(--border)',
         color: 'var(--text-secondary)',
       }}

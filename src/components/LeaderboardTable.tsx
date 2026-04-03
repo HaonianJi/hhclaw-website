@@ -40,10 +40,10 @@ export interface Exp2Row {
 
 /* ─── Helpers ───────────────────────────────────────────────── */
 function scoreColor(v: number): string {
-  if (v >= 0.75) return '#22c55e';
-  if (v >= 0.55) return '#84cc16';
-  if (v >= 0.40) return '#f59e0b';
-  return '#ef4444';
+  if (v >= 0.75) return 'linear-gradient(90deg, #22c55e, #16a34a)';
+  if (v >= 0.55) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
+  if (v >= 0.40) return 'linear-gradient(90deg, #f59e0b, #f97316)';
+  return 'linear-gradient(90deg, #ef4444, #e2336b)';
 }
 
 function fmtNum(v: number | null | undefined) {
@@ -66,7 +66,7 @@ function ScoreBar({ value }: { value: number | null }) {
       <div className="score-bar-track">
         <div
           className="score-bar-fill"
-          style={{ width: `${Math.round(value * 100)}%`, background: scoreColor(value) }}
+          style={{ width: `${Math.round(value * 100)}%`, background: scoreColor(value), boxShadow: value >= 0.55 ? '0 0 6px rgba(255,107,53,0.3)' : 'none' }}
         />
       </div>
       <span
@@ -106,14 +106,14 @@ function ExpandPanel({ row }: { row: Exp2Row }) {
       <td
         colSpan={9}
         style={{
-          background: 'var(--surface)',
-          borderBottom: '2px solid var(--primary)',
+          background: 'rgba(255,107,53,0.03)',
+          borderBottom: '2px solid rgba(255,107,53,0.4)',
           padding: '0',
         }}
       >
         <div
           className="animate-slide-down px-5 py-4"
-          style={{ borderTop: '1px solid var(--border)' }}
+          style={{ borderTop: '1px solid rgba(255,107,53,0.15)' }}
         >
           <div
             className="font-semibold mb-3"

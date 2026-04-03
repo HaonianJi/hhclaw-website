@@ -1,92 +1,161 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 import { ArrowRight, Database, BarChart3, BookOpen } from 'lucide-react';
 import QuickLeaderboard from '@/components/QuickLeaderboard';
 
 export default function LandingPage() {
+  const revealRefs = useRef<HTMLElement[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const addRevealRef = (el: HTMLElement | null) => {
+    if (el && !revealRefs.current.includes(el)) {
+      revealRefs.current.push(el);
+    }
+  };
+
   return (
     <div>
       {/* ─── Hero ──────────────────────────────────────────────────── */}
       <section
         style={{
-          background: 'linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%)',
+          position: 'relative',
+          overflow: 'hidden',
+          background:
+            'radial-gradient(ellipse at 30% 0%, rgba(120,50,255,0.15) 0%, transparent 50%), ' +
+            'radial-gradient(ellipse at 70% 0%, rgba(255,100,50,0.10) 0%, transparent 50%), ' +
+            'var(--bg)',
           borderBottom: '1px solid var(--border)',
         }}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        {/* Animated background orbs */}
+        <div className="hero-orb hero-orb-1" />
+        <div className="hero-orb hero-orb-2" />
+        <div className="hero-orb hero-orb-3" />
+
+        {/* Dot grid */}
+        <div className="hero-grid" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32" style={{ position: 'relative', zIndex: 1 }}>
           {/* Live badge */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-8">
             <span
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold pulse-badge-anim"
               style={{
-                background: 'var(--primary-light)',
-                color: 'var(--primary)',
-                border: '1px solid #bfdbfe',
+                background: 'rgba(255,107,53,0.1)',
+                color: '#ff6b35',
+                border: '1px solid rgba(255,107,53,0.3)',
+                letterSpacing: '0.02em',
               }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{
+                  background: '#ff6b35',
+                  boxShadow: '0 0 6px rgba(255,107,53,0.8)',
+                  animation: 'pulse-dot 2s ease-in-out infinite',
+                }}
+              />
               Under review at COLM 2026
             </span>
           </div>
 
           {/* Title */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-8">
             <h1
-              className="font-bold tracking-tight leading-tight"
+              className="font-bold tracking-tight leading-tight mb-4"
               style={{
-                fontSize: 'clamp(2.25rem, 5vw, 3rem)',
-                color: 'var(--text)',
+                fontSize: 'clamp(3rem, 7vw, 5rem)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
               }}
             >
-              <span className="mr-3">🦀</span>ClawArena
+              <span
+                style={{
+                  display: 'inline-block',
+                  marginRight: '0.2em',
+                  filter: 'drop-shadow(0 0 16px rgba(255,107,53,0.5))',
+                }}
+              >
+                🦀
+              </span>
+              <span className="gradient-text">ClawArena</span>
             </h1>
             <p
-              className="mt-3 mx-auto max-w-2xl font-semibold"
+              className="mx-auto max-w-2xl font-semibold"
               style={{
-                fontSize: '1.125rem',
+                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                 color: 'var(--text-secondary)',
+                letterSpacing: '-0.01em',
               }}
             >
               Benchmarking AI Agents in Evolving Information Environments
             </p>
             <p
-              className="mt-4 mx-auto max-w-2xl leading-relaxed"
+              className="mt-5 mx-auto max-w-2xl leading-relaxed"
               style={{
                 fontSize: '1rem',
                 color: 'var(--text-secondary)',
-                lineHeight: 1.7,
+                lineHeight: 1.75,
               }}
             >
               A rigorous evaluation framework for AI agents — measuring reasoning under{' '}
-              <strong style={{ color: 'var(--text)' }}>multi-source conflicts</strong>,{' '}
-              <strong style={{ color: 'var(--text)' }}>dynamic belief revision</strong>, and{' '}
-              <strong style={{ color: 'var(--text)' }}>implicit personalization</strong> across
+              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>multi-source conflicts</strong>,{' '}
+              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>dynamic belief revision</strong>, and{' '}
+              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>implicit personalization</strong> across
               64 evolving scenarios in 8 professional domains.
             </p>
           </div>
 
-          {/* Stat Cards */}
-          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mt-10">
+          {/* Stat Cards — glass morphism */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mt-12">
             {[
-              { value: '64',    label: 'Scenarios',  sublabel: 'across 8 domains' },
-              { value: '8',     label: 'Domains',    sublabel: 'professional settings' },
-              { value: '1,879', label: 'Eval Rounds', sublabel: 'evaluation turns'  },
-              { value: '365',   label: 'Updates',    sublabel: 'dynamic spec changes' },
-            ].map(({ value, label, sublabel }) => (
+              { value: '64',    label: 'Scenarios',    sublabel: 'across 8 domains' },
+              { value: '8',     label: 'Domains',      sublabel: 'professional settings' },
+              { value: '1,879', label: 'Eval Rounds',  sublabel: 'evaluation turns' },
+              { value: '365',   label: 'Updates',      sublabel: 'dynamic spec changes' },
+            ].map(({ value, label, sublabel }, i) => (
               <div
                 key={label}
                 className="text-center rounded-xl p-4 sm:p-5"
                 style={{
-                  background: 'var(--bg)',
-                  border: '1px solid var(--border)',
-                  boxShadow: 'var(--shadow-md)',
+                  background: 'rgba(255,255,255,0.04)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+                  animationDelay: `${i * 80}ms`,
                 }}
               >
                 <div
                   className="font-bold stat-number tabular-nums"
                   style={{
-                    fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
-                    color: 'var(--primary)',
+                    fontSize: 'clamp(1.375rem, 3vw, 2rem)',
+                    background: 'linear-gradient(135deg, #ff6b35, #f7c948)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     lineHeight: 1.1,
+                    fontFeatureSettings: '"tnum"',
                   }}
                 >
                   {value}
@@ -111,11 +180,12 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10">
             <Link
               href="/leaderboard"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white transition-all duration-150 hover:scale-[1.02] hover:shadow-lg"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 hover:scale-[1.03] hover:shadow-xl"
               style={{
-                background: 'var(--primary)',
+                background: 'linear-gradient(135deg, #ff6b35, #e2336b)',
                 fontSize: '0.9375rem',
-                boxShadow: '0 2px 8px rgba(37,99,235,0.3)',
+                boxShadow: '0 4px 16px rgba(255,107,53,0.35)',
+                letterSpacing: '-0.01em',
               }}
             >
               <BarChart3 size={16} />
@@ -124,12 +194,13 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold transition-all duration-150 hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-[1.03]"
               style={{
-                border: '1.5px solid var(--primary)',
-                color: 'var(--primary)',
-                background: 'transparent',
+                border: '1px solid rgba(255,107,53,0.35)',
+                color: '#ff6b35',
+                background: 'rgba(255,107,53,0.06)',
                 fontSize: '0.9375rem',
+                letterSpacing: '-0.01em',
               }}
             >
               <BookOpen size={16} />
@@ -137,12 +208,13 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/dataset"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold transition-all duration-150 hover:scale-[1.02]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-[1.03]"
               style={{
-                border: '1.5px solid var(--border)',
+                border: '1px solid var(--border)',
                 color: 'var(--text-secondary)',
-                background: 'transparent',
+                background: 'rgba(255,255,255,0.03)',
                 fontSize: '0.9375rem',
+                letterSpacing: '-0.01em',
               }}
             >
               <Database size={16} />
@@ -153,12 +225,15 @@ export default function LandingPage() {
       </section>
 
       {/* ─── Quick Leaderboard Preview ──────────────────────────── */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section
+        ref={addRevealRef}
+        className="scroll-reveal max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+      >
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2
               className="font-bold"
-              style={{ fontSize: '1.5rem', color: 'var(--text)' }}
+              style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
             >
               Top Rankings
             </h2>
@@ -168,7 +243,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/leaderboard"
-            className="inline-flex items-center gap-1.5 font-medium text-sm transition-colors duration-150 hover:underline"
+            className="inline-flex items-center gap-1.5 font-medium text-sm transition-all duration-150 hover:gap-2"
             style={{ color: 'var(--primary)' }}
           >
             Full leaderboard
@@ -189,31 +264,32 @@ export default function LandingPage() {
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <h2
-            className="text-center font-bold mb-10"
-            style={{ fontSize: '1.5rem', color: 'var(--text)' }}
+            ref={addRevealRef}
+            className="scroll-reveal text-center font-bold mb-10"
+            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
           >
             Key Findings
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {KEY_FINDINGS.map((f) => (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {KEY_FINDINGS.map((f, i) => (
               <div
                 key={f.title}
-                className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
-                style={{
-                  background: 'var(--bg)',
-                  border: '1px solid var(--border)',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
+                ref={addRevealRef}
+                className="scroll-reveal glass-card rounded-xl p-5"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-lg"
-                  style={{ background: 'var(--primary-light)' }}
+                  style={{
+                    background: 'rgba(255,107,53,0.1)',
+                    border: '1px solid rgba(255,107,53,0.15)',
+                  }}
                 >
                   {f.icon}
                 </div>
                 <h3
                   className="font-semibold mb-2"
-                  style={{ fontSize: '0.9375rem', color: 'var(--text)' }}
+                  style={{ fontSize: '0.9375rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
                 >
                   {f.title}
                 </h3>
@@ -221,7 +297,7 @@ export default function LandingPage() {
                   style={{
                     fontSize: '0.8125rem',
                     color: 'var(--text-secondary)',
-                    lineHeight: 1.6,
+                    lineHeight: 1.65,
                   }}
                 >
                   {f.description}
@@ -236,31 +312,32 @@ export default function LandingPage() {
       <section>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <h2
-            className="text-center font-bold mb-10"
-            style={{ fontSize: '1.5rem', color: 'var(--text)' }}
+            ref={addRevealRef}
+            className="scroll-reveal text-center font-bold mb-10"
+            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
           >
             What Makes ClawArena Different
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURES.map((f) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {FEATURES.map((f, i) => (
               <div
                 key={f.title}
-                className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
-                style={{
-                  background: 'var(--bg)',
-                  border: '1px solid var(--border)',
-                  boxShadow: 'var(--shadow-sm)',
-                }}
+                ref={addRevealRef}
+                className="scroll-reveal glass-card rounded-xl p-5"
+                style={{ transitionDelay: `${i * 60}ms` }}
               >
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center mb-4 text-lg"
-                  style={{ background: 'var(--primary-light)' }}
+                  style={{
+                    background: 'rgba(255,107,53,0.08)',
+                    border: '1px solid rgba(255,107,53,0.12)',
+                  }}
                 >
                   {f.icon}
                 </div>
                 <h3
                   className="font-semibold mb-2"
-                  style={{ fontSize: '0.9375rem', color: 'var(--text)' }}
+                  style={{ fontSize: '0.9375rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
                 >
                   {f.title}
                 </h3>
@@ -268,7 +345,7 @@ export default function LandingPage() {
                   style={{
                     fontSize: '0.8125rem',
                     color: 'var(--text-secondary)',
-                    lineHeight: 1.6,
+                    lineHeight: 1.65,
                   }}
                 >
                   {f.description}

@@ -32,7 +32,7 @@ export default function BibTexCopy() {
       <div
         className="flex items-center justify-between px-4 py-2.5"
         style={{
-          background: 'var(--surface-alt)',
+          background: 'rgba(255,107,53,0.05)',
           borderBottom: '1px solid var(--border)',
         }}
       >
@@ -47,9 +47,9 @@ export default function BibTexCopy() {
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md font-medium transition-all duration-150 hover:scale-[1.02]"
           style={{
             fontSize: '0.75rem',
-            background: copied ? '#dcfce7' : 'var(--primary-light)',
-            color: copied ? '#16a34a' : 'var(--primary)',
-            border: `1px solid ${copied ? '#86efac' : '#bfdbfe'}`,
+            background: copied ? 'rgba(34,197,94,0.12)' : 'rgba(255,107,53,0.1)',
+            color: copied ? '#4ade80' : 'var(--primary)',
+            border: `1px solid ${copied ? 'rgba(74,222,128,0.3)' : 'rgba(255,107,53,0.25)'}`,
           }}
         >
           {copied ? <Check size={12} /> : <Copy size={12} />}

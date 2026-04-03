@@ -16,10 +16,9 @@ interface Exp2Row {
 }
 
 function scoreColor(v: number): string {
-  // Green (good) → Yellow → Red (bad), clamped 0–1
-  if (v >= 0.7) return '#22c55e';
-  if (v >= 0.5) return '#f59e0b';
-  return '#ef4444';
+  if (v >= 0.7) return 'linear-gradient(90deg, #22c55e, #16a34a)';
+  if (v >= 0.5) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
+  return 'linear-gradient(90deg, #ef4444, #e2336b)';
 }
 
 function RankBadge({ rank }: { rank: number }) {

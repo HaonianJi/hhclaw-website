@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
       <div className="mb-8">
         <h1
           className="font-bold tracking-tight"
-          style={{ fontSize: '2rem', color: 'var(--text)' }}
+          style={{ fontSize: '2rem', color: 'var(--text)', letterSpacing: '-0.03em' }}
         >
           Leaderboard
         </h1>
@@ -40,8 +40,12 @@ export default function LeaderboardPage() {
 
       {/* Tab switcher */}
       <div
-        className="flex gap-2 mb-6 p-1 rounded-xl w-fit"
-        style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+        className="flex gap-1.5 mb-6 p-1 rounded-xl w-fit"
+        style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid var(--border)',
+          backdropFilter: 'blur(10px)',
+        }}
       >
         {([
           { id: 'exp2' as Tab, label: 'Cross-Model (12 scenarios)', badge: `${exp2Data.length}` },
@@ -53,10 +57,13 @@ export default function LeaderboardPage() {
             className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200"
             style={{
               fontSize: '0.875rem',
-              background: activeTab === id ? 'var(--primary)' : 'transparent',
+              background: activeTab === id
+                ? 'linear-gradient(135deg, #ff6b35, #e2336b)'
+                : 'transparent',
               color: activeTab === id ? '#fff' : 'var(--text-secondary)',
               border: 'none',
               cursor: 'pointer',
+              boxShadow: activeTab === id ? '0 4px 12px rgba(255,107,53,0.25)' : 'none',
             }}
           >
             {label}
@@ -64,7 +71,7 @@ export default function LeaderboardPage() {
               <span
                 className="rounded-full px-1.5 py-0.5 text-xs font-semibold"
                 style={{
-                  background: activeTab === id ? 'rgba(255,255,255,0.25)' : 'var(--surface-alt)',
+                  background: activeTab === id ? 'rgba(255,255,255,0.2)' : 'var(--surface-alt)',
                   color: activeTab === id ? '#fff' : 'var(--text-muted)',
                   fontSize: '0.65rem',
                 }}
@@ -78,13 +85,8 @@ export default function LeaderboardPage() {
 
       {/* Info banner */}
       <div
-        className="flex items-start gap-3 rounded-lg p-3 mb-6"
-        style={{
-          background: 'var(--primary-light)',
-          border: '1px solid #bfdbfe',
-          fontSize: '0.8125rem',
-          color: 'var(--text-secondary)',
-        }}
+        className="info-banner flex items-start gap-3 mb-6"
+        style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}
       >
         <Info size={15} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 1 }} />
         {activeTab === 'exp2' ? (
@@ -112,7 +114,10 @@ export default function LeaderboardPage() {
             color: 'var(--text-muted)',
           }}
         >
-          <div className="inline-block w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin mb-3" />
+          <div
+            className="inline-block w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mb-3"
+            style={{ borderColor: 'rgba(255,107,53,0.3)', borderTopColor: 'transparent' }}
+          />
           <div style={{ fontSize: '0.875rem' }}>Loading leaderboard data...</div>
         </div>
       ) : (
@@ -133,7 +138,7 @@ export default function LeaderboardPage() {
         <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Score color:</span>
         {[
           { color: '#22c55e', label: '≥ 75%' },
-          { color: '#84cc16', label: '55–75%' },
+          { color: '#f7c948', label: '55–75%' },
           { color: '#f59e0b', label: '40–55%' },
           { color: '#ef4444', label: '< 40%' },
         ].map(({ color, label }) => (

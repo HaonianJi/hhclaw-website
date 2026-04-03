@@ -74,12 +74,8 @@ export default function DatasetPage() {
           {DOWNLOADS.map((dl) => (
             <div
               key={dl.title}
-              className="rounded-xl p-5 flex flex-col transition-all duration-200 hover:shadow-lg"
-              style={{
-                background: 'var(--bg)',
-                border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-md)',
-              }}
+              className="glass-card rounded-xl p-5 flex flex-col"
+              style={{}}
             >
               <div className="text-4xl mb-4">{dl.icon}</div>
               <h3
@@ -122,8 +118,9 @@ export default function DatasetPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all duration-150 hover:scale-[1.01]"
                   style={{
-                    background: 'var(--primary)',
+                    background: 'linear-gradient(135deg, #ff6b35, #e2336b)',
                     fontSize: '0.8125rem',
+                    boxShadow: '0 2px 10px rgba(255,107,53,0.3)',
                   }}
                 >
                   {dl.primary.icon}
@@ -137,9 +134,9 @@ export default function DatasetPage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-150 hover:scale-[1.01]"
                     style={{
-                      border: '1.5px solid var(--border)',
-                      color: 'var(--text-secondary)',
-                      background: 'transparent',
+                      border: '1px solid rgba(255,107,53,0.25)',
+                      color: 'var(--primary)',
+                      background: 'rgba(255,107,53,0.05)',
                       fontSize: '0.8125rem',
                     }}
                   >
@@ -156,8 +153,7 @@ export default function DatasetPage() {
       {/* Format spec */}
       <section className="mb-14">
         <h2
-          className="font-bold mb-2"
-          style={{ fontSize: '1.375rem', color: 'var(--text)' }}
+          className="section-heading mb-2"
         >
           Data Format
         </h2>
@@ -171,7 +167,7 @@ export default function DatasetPage() {
           <div
             className="flex items-center justify-between px-4 py-2.5"
             style={{
-              background: 'var(--surface-alt)',
+              background: 'rgba(255,107,53,0.05)',
               borderBottom: '1px solid var(--border)',
             }}
           >
@@ -183,7 +179,7 @@ export default function DatasetPage() {
             </span>
             <span
               className="px-2 py-0.5 rounded text-xs font-mono"
-              style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}
+              style={{ background: 'rgba(255,107,53,0.12)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}
             >
               JSON
             </span>
@@ -197,8 +193,7 @@ export default function DatasetPage() {
       {/* Evaluation types */}
       <section>
         <h2
-          className="font-bold mb-4"
-          style={{ fontSize: '1.375rem', color: 'var(--text)' }}
+          className="section-heading mb-4"
         >
           Evaluation Types
         </h2>
@@ -227,16 +222,13 @@ export default function DatasetPage() {
           ].map(({ type, name, desc }) => (
             <div
               key={type}
-              className="rounded-xl p-4"
-              style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-              }}
+              className="glass-card rounded-xl p-4"
+              style={{}}
             >
               <div className="flex items-center gap-2 mb-2">
                 <span
                   className="font-mono font-bold text-xs px-2 py-1 rounded"
-                  style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}
+                  style={{ background: 'rgba(255,107,53,0.12)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}
                 >
                   {type}
                 </span>

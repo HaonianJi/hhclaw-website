@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 export default function Footer() {
@@ -9,53 +11,71 @@ export default function Footer() {
         color: 'var(--text-secondary)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🦀</span>
-            <span className="font-semibold" style={{ color: 'var(--text)' }}>
-              ClawArena Benchmark
-            </span>
-            <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              — Benchmarking AI Agents in Evolving Information Environments
-            </span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span
+                className="text-xl"
+                style={{ filter: 'drop-shadow(0 0 6px rgba(255,107,53,0.35))' }}
+              >
+                🦀
+              </span>
+              <span
+                className="font-bold"
+                style={{
+                  fontSize: '1rem',
+                  letterSpacing: '-0.02em',
+                  background: 'linear-gradient(135deg, #ff6b35, #f7c948)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                ClawArena
+              </span>
+            </div>
+            <p
+              style={{
+                fontSize: '0.8125rem',
+                color: 'var(--text-muted)',
+                maxWidth: 300,
+                lineHeight: 1.5,
+              }}
+            >
+              Benchmarking AI Agents in Evolving Information Environments.
+              Under review at COLM 2026.
+            </p>
           </div>
 
-          <div className="flex items-center gap-6 text-sm">
-            <Link
-              href="/leaderboard"
-              className="transition-colors duration-150 hover:underline"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Leaderboard
-            </Link>
-            <Link
-              href="/about"
-              className="transition-colors duration-150 hover:underline"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              About
-            </Link>
-            <Link
-              href="/dataset"
-              className="transition-colors duration-150 hover:underline"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Dataset
-            </Link>
-            <Link
-              href="/submit"
-              className="transition-colors duration-150 hover:underline"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Submit
-            </Link>
+          {/* Nav links */}
+          <div className="flex items-center gap-5 text-sm flex-wrap">
+            {[
+              { href: '/leaderboard', label: 'Leaderboard' },
+              { href: '/about', label: 'About' },
+              { href: '/dataset', label: 'Dataset' },
+              { href: '/submit', label: 'Submit' },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="transition-colors duration-150"
+                style={{ color: 'var(--text-secondary)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#ff6b35')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+              >
+                {label}
+              </Link>
+            ))}
             <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors duration-150 hover:underline"
+              className="transition-colors duration-150"
               style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#ff6b35')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
             >
               GitHub
             </a>
@@ -63,13 +83,20 @@ export default function Footer() {
         </div>
 
         <div
-          className="mt-6 pt-6 text-center text-xs"
+          className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
           style={{
             borderTop: '1px solid var(--border)',
             color: 'var(--text-muted)',
           }}
         >
-          © 2026 ClawArena Project. Released under CC BY 4.0.
+          <span>© 2026 ClawArena Project. Released under CC BY 4.0.</span>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: '#22c55e', boxShadow: '0 0 6px rgba(34,197,94,0.6)' }}
+            />
+            <span>All systems operational</span>
+          </div>
         </div>
       </div>
     </footer>
