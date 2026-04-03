@@ -50,15 +50,15 @@ gh pr create \\
 ];
 
 const FRAMEWORKS = [
-  { name: 'OpenClaw',    status: 'Official',   color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)' },
-  { name: 'ZeroClaw',   status: 'Official',   color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)' },
-  { name: 'NanoBot',    status: 'Community',  color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)' },
-  { name: 'PicoClaw',   status: 'Community',  color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)' },
-  { name: 'Claude Code',status: 'Community',  color: '#c084fc',  bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.2)' },
-  { name: 'AutoAgent',  status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
-  { name: 'LangChain',  status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
-  { name: 'CrewAI',     status: 'Custom',     color: '#8b8b9e',  bg: 'rgba(139,139,158,0.1)', border: 'rgba(139,139,158,0.2)' },
-  { name: 'Custom',     status: 'Plugin API', color: '#ff6b35',  bg: 'rgba(255,107,53,0.1)',  border: 'rgba(255,107,53,0.2)' },
+  { name: 'OpenClaw',     status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/anthropics/openclaw' },
+  { name: 'ZeroClaw',    status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/zeroclaw-labs/zeroclaw' },
+  { name: 'IronClaw',    status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/nearai/ironclaw' },
+  { name: 'Claude Code',status: 'Supported', color: '#c084fc',  bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.2)', url: 'https://docs.anthropic.com/en/docs/claude-code' },
+  { name: 'NanoBot',     status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
+  { name: 'PicoClaw',    status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
+  { name: 'CoPaw',       status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
+  { name: 'Codex CLI',   status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: 'https://github.com/openai/codex' },
+  { name: 'Custom',      status: 'Plugin API',color: '#ff6b35',  bg: 'rgba(255,107,53,0.1)',  border: 'rgba(255,107,53,0.2)', url: null },
 ];
 
 export default function SubmitPage() {
@@ -179,26 +179,46 @@ export default function SubmitPage() {
           Any framework that implements the ClawArena agent interface can be evaluated.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {FRAMEWORKS.map((fw) => (
-            <div
-              key={fw.name}
-              className="glass-card flex items-center justify-between rounded-lg px-4 py-3"
-              style={{}}
-            >
-              <span
-                className="font-semibold"
-                style={{ fontSize: '0.875rem', color: 'var(--text)' }}
+          {FRAMEWORKS.map((fw) => {
+            const inner = (
+              <>
+                <span
+                  className="font-semibold"
+                  style={{ fontSize: '0.875rem', color: 'var(--text)' }}
+                >
+                  {fw.name}
+                  {fw.url && (
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginLeft: 6 }}>↗</span>
+                  )}
+                </span>
+                <span
+                  className="text-xs font-medium px-2 py-0.5 rounded-full"
+                  style={{ background: fw.bg, color: fw.color, border: `1px solid ${fw.border}` }}
+                >
+                  {fw.status}
+                </span>
+              </>
+            );
+            return fw.url ? (
+              <a
+                key={fw.name}
+                href={fw.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card flex items-center justify-between rounded-lg px-4 py-3 no-underline"
+                style={{ textDecoration: 'none', transition: 'border-color 0.15s ease' }}
               >
-                {fw.name}
-              </span>
-              <span
-                className="text-xs font-medium px-2 py-0.5 rounded-full"
-                style={{ background: fw.bg, color: fw.color, border: `1px solid ${fw.border}` }}
+                {inner}
+              </a>
+            ) : (
+              <div
+                key={fw.name}
+                className="glass-card flex items-center justify-between rounded-lg px-4 py-3"
               >
-                {fw.status}
-              </span>
-            </div>
-          ))}
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </section>
 
