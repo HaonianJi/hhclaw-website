@@ -11,8 +11,9 @@ interface Exp2Row {
   mc_em: number;
   mc_partial: number | null;
   ec_pass: number | null;
-  rounds: number;
+  rounds: number | null;
   complete: string;
+  note: string | null;
 }
 
 function scoreColor(v: number): string {
@@ -117,12 +118,14 @@ export default function QuickLeaderboard() {
                     + {row.model}
                   </span>
                 </div>
-                <div
-                  className="mt-0.5"
-                  style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}
-                >
-                  {row.provider}
-                </div>
+                {row.note && (
+                  <div
+                    className="mt-0.5"
+                    style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}
+                  >
+                    {row.note}
+                  </div>
+                )}
               </td>
               <td>
                 <ScoreBar value={row.overall} />

@@ -1,7 +1,7 @@
 [
-  {"rank":1,"framework":"MetaClaw","model":"GPT-5.1","provider":"OpenAI","overall":0.603,"em_rate":null,"mc_score":0.832,"mc_em":0.832,"ec_pass":0.511,"rounds":null,"note":null},
-  {"rank":2,"framework":"OpenClaw","model":"GPT-5.1","provider":"OpenAI","overall":0.579,"em_rate":null,"mc_score":0.854,"mc_em":0.854,"ec_pass":0.468,"rounds":null,"note":null},
-  {"rank":3,"framework":"Claude Code","model":"GPT-5.1","provider":"OpenAI","overall":0.566,"em_rate":null,"mc_score":0.810,"mc_em":0.810,"ec_pass":0.468,"rounds":null,"note":"via Claude Code Router"},
-  {"rank":4,"framework":"PicoClaw","model":"GPT-5.1","provider":"OpenAI","overall":0.515,"em_rate":null,"mc_score":0.789,"mc_em":0.789,"ec_pass":0.404,"rounds":null,"note":null},
-  {"rank":5,"framework":"NanoBot","model":"GPT-5.1","provider":"OpenAI","overall":0.511,"em_rate":null,"mc_score":0.774,"mc_em":0.774,"ec_pass":0.404,"rounds":null,"note":null}
+  {"rank":1,"framework":"MetaClaw (on OpenClaw)","model":"GPT-5.1","provider":"OpenAI","overall":0.603,"em_rate":0.515,"mc_score":0.832,"mc_em":0.832,"ec_pass":0.511,"rounds":null,"note":"skills-only mode"},
+  {"rank":2,"framework":"OpenClaw","model":"GPT-5.1","provider":"OpenAI","overall":0.579,"em_rate":0.500,"mc_score":0.854,"mc_em":0.854,"ec_pass":0.468,"rounds":null,"note":null},
+  {"rank":3,"framework":"Claude Code","model":"GPT-5.1","provider":"OpenAI","overall":0.566,"em_rate":0.439,"mc_score":0.810,"mc_em":0.810,"ec_pass":0.468,"rounds":null,"note":"via Claude Code Router"},
+  {"rank":4,"framework":"PicoClaw","model":"GPT-5.1","provider":"OpenAI","overall":0.515,"em_rate":0.394,"mc_score":0.789,"mc_em":0.789,"ec_pass":0.404,"rounds":null,"note":null},
+  {"rank":5,"framework":"NanoBot","model":"GPT-5.1","provider":"OpenAI","overall":0.511,"em_rate":0.348,"mc_score":0.774,"mc_em":0.774,"ec_pass":0.404,"rounds":null,"note":null}
 ]
