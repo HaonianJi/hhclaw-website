@@ -11,7 +11,7 @@ const DOWNLOADS = [
     size: '~42 MB',
     files: ['data/clawarena/eval/', 'data/clawarena/openclaw/', 'data/clawarena/tests.json'],
     primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: REPO_URL },
-    secondary: null,
+    secondary: { label: 'HuggingFace', href: 'https://huggingface.co/datasets/Haonian/ClawArena' },
   },
   {
     icon: '📋',
