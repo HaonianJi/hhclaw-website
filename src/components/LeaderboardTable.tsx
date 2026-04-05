@@ -223,19 +223,6 @@ export function Exp2Table({ data }: { data: Exp2Row[] }) {
         cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
       },
       {
-        id: 'mc_partial',
-        header: 'MC Partial',
-        accessorKey: 'mc_partial',
-        cell: ({ getValue }) => {
-          const v = getValue() as number | null;
-          return v != null ? (
-            <span className="tabular-nums font-mono" style={{ fontSize: '0.8125rem' }}>{v.toFixed(3)}</span>
-          ) : (
-            <span style={{ color: 'var(--text-muted)' }}>—</span>
-          );
-        },
-      },
-      {
         id: 'ec_pass',
         header: 'EC Pass',
         accessorKey: 'ec_pass',
@@ -343,12 +330,6 @@ export function Exp1Table({ data }: { data: Exp1Row[] }) {
         header: 'Overall ▾',
         accessorKey: 'overall',
         cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-      {
-        id: 'em_rate',
-        header: 'EM Rate',
-        accessorKey: 'em_rate',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number | null} />,
       },
       {
         id: 'mc_score',
