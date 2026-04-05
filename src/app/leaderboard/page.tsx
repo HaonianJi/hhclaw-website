@@ -49,7 +49,7 @@ export default function LeaderboardPage() {
       >
         {([
           { id: 'exp2' as Tab, label: 'Cross-Model', badge: `${exp2Data.length}` },
-          { id: 'exp1' as Tab, label: 'Cross-Framework (hil_s1)',   badge: `${exp1Data.length}` },
+          { id: 'exp1' as Tab, label: 'Cross-Framework', badge: `${exp1Data.length}` },
         ] as { id: Tab; label: string; badge: string }[]).map(({ id, label, badge }) => (
           <button
             key={id}
