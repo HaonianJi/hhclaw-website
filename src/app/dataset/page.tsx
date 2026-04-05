@@ -1,51 +1,63 @@
-import { Download, GitBranch, ExternalLink } from 'lucide-react';
+import { Download, GitBranch, ExternalLink, FileText } from 'lucide-react';
+
+const REPO_URL = 'https://github.com/aiming-lab/ClawArena';
 
 const DOWNLOADS = [
   {
     icon: '📦',
     title: 'Full Dataset',
     description:
-      'Complete ClawArena evaluation set with all 64 scenarios across 8 domains, including questions, specs, and reference answers.',
+      'Complete ClawArena benchmark with 64 scenarios across 8 domains, 1,879 evaluation rounds, workspace files, session histories, and dynamic updates.',
     size: '~42 MB',
-    files: ['questions.json', 'specs/', 'reference_answers/'],
-    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: 'https://github.com' },
-    secondary: { label: 'HuggingFace', href: 'https://huggingface.co' },
-  },
-  {
-    icon: '🎯',
-    title: '12-Scenario Subset',
-    description:
-      'The canonical 12-scenario evaluation subset (subset_12) used in Experiment 2, designed for quick, reproducible benchmarking.',
-    size: '~8 MB',
-    files: ['subset_12_questions.json', 'subset_12_specs/'],
-    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: 'https://github.com' },
-    secondary: { label: 'HuggingFace', href: 'https://huggingface.co' },
+    files: ['data/clawarena/eval/', 'data/clawarena/openclaw/', 'data/clawarena/tests.json'],
+    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: REPO_URL },
+    secondary: null,
   },
   {
     icon: '📋',
     title: 'Spec Templates',
     description:
-      'The 6-layer specification template system (L0–L4 + GUIDE) used to author ClawArena scenarios. Extend it for new domains.',
+      'The 6-layer specification system (L0\u2013L4 + GUIDE) used to author all 64 scenarios. Extend it for new domains or personas.',
     size: '~1 MB',
-    files: ['spec_templates/', 'guide.md'],
-    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: 'https://github.com' },
+    files: ['docs/specs/data-spec/'],
+    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: `${REPO_URL}/tree/main/docs/specs/data-spec` },
+    secondary: null,
+  },
+  {
+    icon: '🔌',
+    title: 'Plugin System',
+    description:
+      'Add new agent frameworks via the plugin adapter interface. No core code modification needed.',
+    size: '—',
+    files: ['docs/plugin.md', 'src/clawarena/plugins/'],
+    primary: { label: 'Documentation', icon: <FileText size={14} />, href: `${REPO_URL}/blob/main/docs/plugin.md` },
     secondary: null,
   },
 ];
 
-const SCHEMA = `{
-  "scenario_id": "hil_c6",
-  "domain": "C",
-  "persona": "Alex Rivera",
-  "language": "EN",
-  "dimension": "MS-R",
-  "questions": [
+const SCHEMA = `// questions.json — per scenario
+{
+  "id": "hil_c6",
+  "desc": "NexaFlow retention/morale crisis ...",
+  "rounds": [
     {
-      "q_id": "c6_q1",
-      "turn": 1,
-      "instruction": "...",
-      "expected_answer": "...",
-      "eval_type": "mc_em"
+      "id": "q1",
+      "type": "multi_choice",
+      "question": "Based on the workspace documents ...",
+      "eval": {
+        "options": { "A": "...", "B": "...", "C": "...", "D": "..." },
+        "answer": ["A", "C"]
+      },
+      "update_ids": []
+    },
+    {
+      "id": "q7",
+      "type": "exec_check",
+      "question": "Generate a product prioritization matrix ...",
+      "exec_check": {
+        "command": "test -f \${workspace}/report.md && grep -q 'NPS' ..."
+      },
+      "update_ids": ["upd2_sessions", "upd2_workspace"]
     }
   ]
 }`;
@@ -63,8 +75,8 @@ export default function DatasetPage() {
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
           All ClawArena data is publicly available under the{' '}
-          <strong style={{ color: 'var(--text)' }}>CC BY 4.0</strong> license.
-          Download the full benchmark, the 12-scenario subset, or the spec template system.
+          <strong style={{ color: 'var(--text)' }}>MIT</strong> license.
+          The benchmark includes 64 scenarios, 1,879 evaluation rounds, and 365 dynamic updates across 8 domains.
         </p>
       </div>
 
@@ -99,15 +111,17 @@ export default function DatasetPage() {
                     className="font-mono mb-1"
                     style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}
                   >
-                    📄 {f}
+                    {f}
                   </div>
                 ))}
-                <div
-                  className="mt-2 font-semibold"
-                  style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}
-                >
-                  Size: {dl.size}
-                </div>
+                {dl.size !== '—' && (
+                  <div
+                    className="mt-2 font-semibold"
+                    style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}
+                  >
+                    Size: {dl.size}
+                  </div>
+                )}
               </div>
 
               {/* Buttons */}
@@ -158,7 +172,7 @@ export default function DatasetPage() {
           Data Format
         </h2>
         <p className="mb-5" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Each scenario is a JSON object with the following structure:
+          Each scenario has a <code style={{ fontSize: '0.8rem', color: 'var(--primary)' }}>questions.json</code> with evaluation rounds:
         </p>
         <div
           className="rounded-xl overflow-hidden"
@@ -175,7 +189,7 @@ export default function DatasetPage() {
               className="font-semibold"
               style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}
             >
-              questions.json schema
+              questions.json
             </span>
             <span
               className="px-2 py-0.5 rounded text-xs font-mono"
@@ -200,24 +214,14 @@ export default function DatasetPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
-              type: 'mc_em',
-              name: 'Multiple Choice — Exact Match',
-              desc: 'Agent selects from a discrete option set. Scored 0 or 1 per question based on exact match with reference.',
+              type: 'multi_choice',
+              name: 'Multiple Choice',
+              desc: 'Agent selects from a discrete option set. Extract \\bbox{A,B,...} from the response and compute IoU/F1 against the ground truth answer key.',
             },
             {
-              type: 'mc_partial',
-              name: 'Multiple Choice — Partial Credit',
-              desc: 'Ordered preference matching. Partial credit awarded for correct ranking of multi-part answers.',
-            },
-            {
-              type: 'ec_pass',
-              name: 'Executable Code — Pass@1',
-              desc: 'Agent produces code. Scored 0/1 based on whether the code passes all unit tests in a sandboxed environment.',
-            },
-            {
-              type: 'non',
-              name: 'Non-Task Handling',
-              desc: 'Binary evaluation of whether the agent correctly declines, redirects, or escalates out-of-scope requests.',
+              type: 'exec_check',
+              name: 'Execution Check',
+              desc: 'Agent produces files or code. Scored by running shell commands that verify file existence, content matching, and output correctness.',
             },
           ].map(({ type, name, desc }) => (
             <div
