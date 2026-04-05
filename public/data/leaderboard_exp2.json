@@ -10,13 +10,9 @@
     "ec_pass": 0.478,
     "avg_fp": null,
     "avg_fn": null,
-    "rounds": 125,
+    "rounds": null,
     "complete": "12/12",
-    "per_scenario": {
-      "hil_c6": 0.583, "hil_d2": 0.750, "hil_d6": 0.933, "hil_e6": 0.700,
-      "hil_f1": 0.967, "hil_f5": 0.773, "hil_g7": 0.800, "hil_h3": 0.720,
-      "hil_i2": 0.667, "hil_i4": 0.833, "hil_j4": 0.800, "hil_j8": 0.933
-    }
+    "per_scenario": null
   },
   {
     "rank": 2,
@@ -29,13 +25,9 @@
     "ec_pass": 0.489,
     "avg_fp": null,
     "avg_fn": null,
-    "rounds": 136,
+    "rounds": null,
     "complete": "12/12",
-    "per_scenario": {
-      "hil_c6": 0.583, "hil_d2": 0.700, "hil_d6": 0.833, "hil_e6": 0.667,
-      "hil_f1": 0.875, "hil_f5": 0.800, "hil_g7": 0.733, "hil_h3": 0.680,
-      "hil_i2": 0.633, "hil_i4": 0.767, "hil_j4": 0.733, "hil_j8": 1.000
-    }
+    "per_scenario": null
   },
   {
     "rank": 3,
@@ -48,18 +40,14 @@
     "ec_pass": 0.411,
     "avg_fp": null,
     "avg_fn": null,
-    "rounds": 337,
+    "rounds": null,
     "complete": "12/12",
-    "per_scenario": {
-      "hil_c6": 0.333, "hil_d2": 0.667, "hil_d6": 0.267, "hil_e6": 0.733,
-      "hil_f1": 0.567, "hil_f5": 0.633, "hil_g7": 0.400, "hil_h3": 0.640,
-      "hil_i2": 0.600, "hil_i4": 0.800, "hil_j4": 0.700, "hil_j8": 0.967
-    }
+    "per_scenario": null
   },
   {
     "rank": 4,
     "framework": "OpenClaw",
-    "model": "GPT-5.2",
+    "model": "GPT-5.1",
     "provider": "OpenAI",
     "overall": 0.581,
     "mc_em": 0.592,
@@ -67,12 +55,8 @@
     "ec_pass": 0.400,
     "avg_fp": null,
     "avg_fn": null,
-    "rounds": 265,
+    "rounds": null,
     "complete": "12/12",
-    "per_scenario": {
-      "hil_c6": 0.083, "hil_d2": 0.692, "hil_d6": 0.400, "hil_e6": 0.667,
-      "hil_f1": 0.600, "hil_f5": 0.633, "hil_g7": 0.667, "hil_h3": 0.560,
-      "hil_i2": 0.633, "hil_i4": 0.700, "hil_j4": 0.567, "hil_j8": 0.800
-    }
+    "per_scenario": null
   }
 ]
