@@ -48,7 +48,7 @@ export default function LeaderboardPage() {
         }}
       >
         {([
-          { id: 'exp2' as Tab, label: 'Cross-Model (12 scenarios)', badge: `${exp2Data.length}` },
+          { id: 'exp2' as Tab, label: 'Cross-Model', badge: `${exp2Data.length}` },
           { id: 'exp1' as Tab, label: 'Cross-Framework (hil_s1)',   badge: `${exp1Data.length}` },
         ] as { id: Tab; label: string; badge: string }[]).map(({ id, label, badge }) => (
           <button
@@ -92,8 +92,8 @@ export default function LeaderboardPage() {
         {activeTab === 'exp2' ? (
           <span>
             <strong style={{ color: 'var(--text)' }}>Cross-Model Comparison</strong> (Table 4) evaluates
-            four backbone models with the OpenClaw framework on 12 fixed scenarios. Scores include MC EM and
-            EC Pass metrics. Click any row for a per-scenario heatmap.
+            four backbone models with the OpenClaw framework. Scores include MC EM and
+            EC Pass metrics.
           </span>
         ) : (
           <span>

@@ -89,7 +89,6 @@ export default function QuickLeaderboard() {
             <th>Overall</th>
             <th className="hidden sm:table-cell">MC EM</th>
             <th className="hidden md:table-cell">EC Pass</th>
-            <th className="hidden lg:table-cell">Rounds</th>
           </tr>
         </thead>
         <tbody className="table-row-stagger">
@@ -151,11 +150,6 @@ export default function QuickLeaderboard() {
                 ) : (
                   <span style={{ color: 'var(--text-muted)' }}>—</span>
                 )}
-              </td>
-              <td className="hidden lg:table-cell">
-                <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-                  {row.rounds}
-                </span>
               </td>
             </tr>
           ))}

@@ -173,7 +173,7 @@ function ExpandPanel({ row }: { row: Exp2Row }) {
 /* ─── Exp2 Table ─────────────────────────────────────────────── */
 export function Exp2Table({ data }: { data: Exp2Row[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
 
   const columns = useMemo<ColumnDef<Exp2Row>[]>(
     () => [
@@ -204,7 +204,7 @@ export function Exp2Table({ data }: { data: Exp2Row[] }) {
               </span>
             </div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 2 }}>
-              {row.original.provider} · {row.original.complete} scenarios
+              {row.original.provider}
             </div>
           </div>
         ),
@@ -240,34 +240,6 @@ export function Exp2Table({ data }: { data: Exp2Row[] }) {
         header: 'EC Pass',
         accessorKey: 'ec_pass',
         cell: ({ getValue }) => <ScoreBar value={getValue() as number | null} />,
-      },
-      {
-        id: 'avg_fp',
-        header: 'Avg FP',
-        accessorKey: 'avg_fp',
-        cell: ({ getValue }) => {
-          const v = getValue() as number | null;
-          return <span className="tabular-nums font-mono" style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>{fmtNum(v)}</span>;
-        },
-      },
-      {
-        id: 'avg_fn',
-        header: 'Avg FN',
-        accessorKey: 'avg_fn',
-        cell: ({ getValue }) => {
-          const v = getValue() as number | null;
-          return <span className="tabular-nums font-mono" style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>{fmtNum(v)}</span>;
-        },
-      },
-      {
-        id: 'rounds',
-        header: 'Rounds',
-        accessorKey: 'rounds',
-        cell: ({ getValue }) => (
-          <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-            {getValue() as number}
-          </span>
-        ),
       },
     ],
     []
@@ -309,35 +281,15 @@ export function Exp2Table({ data }: { data: Exp2Row[] }) {
             ))}
           </thead>
           <tbody className="table-row-stagger">
-            {table.getRowModel().rows.map((row, i) => {
-              const isExpanded = expandedRow === row.original.rank;
-              return [
-                <tr
-                  key={row.id}
-                  onClick={() =>
-                    setExpandedRow(isExpanded ? null : row.original.rank)
-                  }
-                  style={{ animationDelay: `${i * 20}ms` }}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                  <td style={{ width: 32 }}>
-                    <ChevronRight
-                      size={14}
-                      style={{
-                        color: 'var(--text-muted)',
-                        transform: isExpanded ? 'rotate(90deg)' : 'none',
-                        transition: 'transform 0.2s ease',
-                      }}
-                    />
+            {table.getRowModel().rows.map((row, i) => (
+              <tr key={row.id} style={{ animationDelay: `${i * 20}ms` }}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
-                </tr>,
-                isExpanded ? <ExpandPanel key={`${row.id}-expand`} row={row.original} /> : null,
-              ];
-            })}
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
