@@ -1,46 +1,54 @@
 import { Terminal, GitPullRequest, Package } from 'lucide-react';
 
+const REPO_URL = 'https://github.com/aiming-lab/ClawArena';
+
 const STEPS = [
   {
     number: 1,
     icon: <Package size={20} />,
-    title: 'Install the Evaluator',
-    description: 'Install the ClawArena evaluation harness via pip. Python 3.10+ required.',
-    code: `pip install clawarena-eval
-
-# Verify installation
-clawarena --version`,
+    title: 'Install ClawArena',
+    description: 'Clone the repository and run the setup script. Python 3.10+ required.',
+    code: `git clone ${REPO_URL}.git
+cd ClawArena
+bash scripts/setup.sh`,
   },
   {
     number: 2,
     icon: <Terminal size={20} />,
     title: 'Run Evaluation',
     description:
-      'Point the evaluator at your agent endpoint. Use --subset 12 for the canonical subset or --full for all 64 scenarios.',
-    code: `# Quick eval on 12-scenario subset
-clawarena eval \\
-  --agent your_agent_entrypoint.py \\
-  --subset 12 \\
-  --output results/
+      'Use the CLI to run inference with your agent framework, then score and generate a report.',
+    code: `# Run inference for a single framework
+clawarena infer \\
+  --data data/clawarena/tests.json \\
+  --framework openclaw \\
+  --out results/
 
-# Full evaluation (64 scenarios)
-clawarena eval \\
-  --agent your_agent_entrypoint.py \\
-  --full \\
-  --output results/`,
+# Score results
+clawarena score --infer-dir results/
+
+# Generate report
+clawarena report --score-dir results/ --out report/
+
+# Or run the full pipeline at once
+clawarena run \\
+  --data data/clawarena/tests.json \\
+  --frameworks openclaw,claude-code \\
+  --out output/`,
   },
   {
     number: 3,
     icon: <GitPullRequest size={20} />,
-    title: 'Submit a Pull Request',
+    title: 'Submit Results',
     description:
-      'Fork the leaderboard repo, add your results JSON to data/, and open a PR. We review submissions within 48 hours.',
+      'Open an issue or pull request on the ClawArena repository with your results. We review submissions within 48 hours.',
     code: `# Fork and clone
-git clone https://github.com/clawarena/leaderboard.git
-cd leaderboard
+git clone ${REPO_URL}.git
+cd ClawArena
 
-# Add your results
-cp path/to/results/summary.json data/submissions/
+# Add your results to a new branch
+git checkout -b results/my-framework
+cp -r path/to/results/ results/my-framework/
 
 # Open PR
 gh pr create \\
@@ -50,15 +58,12 @@ gh pr create \\
 ];
 
 const FRAMEWORKS = [
-  { name: 'OpenClaw',     status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/anthropics/openclaw' },
-  { name: 'ZeroClaw',    status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/zeroclaw-labs/zeroclaw' },
-  { name: 'IronClaw',    status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/nearai/ironclaw' },
-  { name: 'Claude Code',status: 'Supported', color: '#c084fc',  bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.2)', url: 'https://docs.anthropic.com/en/docs/claude-code' },
-  { name: 'NanoBot',     status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
-  { name: 'PicoClaw',    status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
-  { name: 'CoPaw',       status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: null },
-  { name: 'Codex CLI',   status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: 'https://github.com/openai/codex' },
-  { name: 'Custom',      status: 'Plugin API',color: '#ff6b35',  bg: 'rgba(255,107,53,0.1)',  border: 'rgba(255,107,53,0.2)', url: null },
+  { name: 'OpenClaw',    status: 'Supported', color: '#60a5fa',  bg: 'rgba(59,130,246,0.1)',  border: 'rgba(59,130,246,0.2)', url: 'https://github.com/openclaw/openclaw' },
+  { name: 'Claude Code', status: 'Supported', color: '#c084fc',  bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.2)', url: 'https://docs.anthropic.com/en/docs/agents-and-tools/claude-code' },
+  { name: 'PicoClaw',   status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: 'https://github.com/sipeed/picoclaw' },
+  { name: 'Nanobot',    status: 'Supported', color: '#4ade80',  bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.2)', url: 'https://github.com/qwibitai/nanoclaw' },
+  { name: 'MetaClaw',   status: 'Supported', color: '#f59e0b',  bg: 'rgba(245,158,11,0.1)',  border: 'rgba(245,158,11,0.2)', url: 'https://github.com/aiming-lab/MetaClaw' },
+  { name: 'Custom',     status: 'Plugin API',color: '#ff6b35',  bg: 'rgba(255,107,53,0.1)',  border: 'rgba(255,107,53,0.2)', url: `${REPO_URL}/blob/main/docs/plugin.md` },
 ];
 
 export default function SubmitPage() {
@@ -73,8 +78,7 @@ export default function SubmitPage() {
           Submit Your Results
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-          Evaluate your AI assistant on ClawArena and add it to the public leaderboard.
-          The process takes about 30 minutes for the 12-scenario subset.
+          Evaluate your AI agent on ClawArena and add it to the public leaderboard.
         </p>
       </div>
 
@@ -176,7 +180,10 @@ export default function SubmitPage() {
           Supported Frameworks
         </h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Any framework that implements the ClawArena agent interface can be evaluated.
+          ClawArena supports these frameworks out of the box. New frameworks can be added via the{' '}
+          <a href={`${REPO_URL}/blob/main/docs/plugin.md`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>
+            plugin system
+          </a>.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {FRAMEWORKS.map((fw) => {
@@ -188,7 +195,7 @@ export default function SubmitPage() {
                 >
                   {fw.name}
                   {fw.url && (
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginLeft: 6 }}>↗</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginLeft: 6 }}>&#8599;</span>
                   )}
                 </span>
                 <span
@@ -236,11 +243,10 @@ export default function SubmitPage() {
         >
           <ul className="space-y-3">
             {[
-              'Results must be generated using the official clawarena-eval harness (v0.3+)',
+              'Results must be generated using the ClawArena CLI pipeline',
               'Agent must be publicly available or described in a preprint/paper',
               'Include the framework name, model name/version, and provider',
-              'EC Pass scores require code to run in the provided sandboxed environment',
-              'ZeroClaw-style entries (no tool access) may omit EC Pass scores',
+              'Both multi_choice and exec_check scores should be reported when applicable',
               'Results are verified by the ClawArena team before appearing on the leaderboard',
             ].map((req) => (
               <li
@@ -248,7 +254,7 @@ export default function SubmitPage() {
                 className="flex items-start gap-2"
                 style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}
               >
-                <span style={{ color: 'var(--primary)', marginTop: 1, flexShrink: 0 }}>✓</span>
+                <span style={{ color: 'var(--primary)', marginTop: 1, flexShrink: 0 }}>&#10003;</span>
                 {req}
               </li>
             ))}
