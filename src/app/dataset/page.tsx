@@ -19,8 +19,8 @@ const DOWNLOADS = [
     description:
       'The 6-layer specification system (L0\u2013L4 + GUIDE) used to author all 64 scenarios. Extend it for new domains or personas.',
     size: '~1 MB',
-    files: ['docs/specs/data-spec/'],
-    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: `${REPO_URL}/tree/main/docs/specs/data-spec` },
+    files: ['docs/data-spec/'],
+    primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: `${REPO_URL}/tree/main/docs/data-spec` },
     secondary: null,
   },
   {
