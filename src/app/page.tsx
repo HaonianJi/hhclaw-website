@@ -242,7 +242,7 @@ export default function LandingPage() {
               Top Rankings
             </h2>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              Cross-Model comparison on 12 scenarios (OpenClaw framework) — sorted by overall score
+              Cross-Model comparison (OpenClaw framework) — sorted by overall score
             </p>
           </div>
           <Link
