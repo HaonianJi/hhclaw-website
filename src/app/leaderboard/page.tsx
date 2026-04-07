@@ -98,7 +98,7 @@ export default function LeaderboardPage() {
         ) : (
           <span>
             <strong style={{ color: 'var(--text)' }}>Cross-Framework Comparison</strong> (Table 2) evaluates
-            multiple agent frameworks on the hil_s1 format across all 64 scenarios. Scores are Overall,
+            multiple agent frameworks. Scores are Overall,
             MC (multiple choice), and EC (executable code) pass rates.
           </span>
         )}
