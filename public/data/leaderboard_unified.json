@@ -1,0 +1,20 @@
+[
+  {"rank":1, "model":"GPT-5.5",          "framework":"OpenClaw",    "tcr":78.34,"mc":75.79,"ec":79.34,"sc":61.24,"fd":95.06,"crs":68.28},
+  {"rank":2, "model":"Claude Opus-4.7",  "framework":"Claude Code", "tcr":76.13,"mc":65.26,"ec":80.58,"sc":60.06,"fd":94.06,"crs":66.31},
+  {"rank":3, "model":"Gemma-4-31B",      "framework":"OpenClaw",    "tcr":75.37,"mc":81.05,"ec":73.14,"sc":56.76,"fd":91.90,"crs":63.80},
+  {"rank":4, "model":"GPT-5.1",          "framework":"OpenClaw",    "tcr":70.33,"mc":75.79,"ec":68.18,"sc":58.96,"fd":95.37,"crs":63.28},
+  {"rank":5, "model":"Claude Sonnet-4.6","framework":"Claude Code", "tcr":73.36,"mc":63.16,"ec":77.69,"sc":54.80,"fd":93.02,"crs":62.16},
+  {"rank":6, "model":"Claude Haiku-4.5", "framework":"Claude Code", "tcr":72.29,"mc":64.21,"ec":75.62,"sc":54.74,"fd":90.54,"crs":60.93},
+  {"rank":7, "model":"GLM-5.1",          "framework":"OpenClaw",    "tcr":72.70,"mc":72.63,"ec":72.73,"sc":52.74,"fd":92.07,"crs":60.63},
+  {"rank":8, "model":"Kimi-K2.5",        "framework":"Claude Code", "tcr":66.77,"mc":56.84,"ec":70.66,"sc":56.26,"fd":93.74,"crs":59.75},
+  {"rank":9, "model":"Mimo-V2.5-Pro",    "framework":"OpenClaw",    "tcr":71.45,"mc":66.32,"ec":73.55,"sc":52.23,"fd":91.62,"crs":59.65},
+  {"rank":10,"model":"GPT-5.4",          "framework":"OpenClaw",    "tcr":71.22,"mc":71.58,"ec":71.07,"sc":51.51,"fd":90.78,"crs":58.99},
+  {"rank":11,"model":"Gemini-3.1-Pro",   "framework":"OpenClaw",    "tcr":69.57,"mc":66.32,"ec":71.07,"sc":50.54,"fd":90.23,"crs":57.59},
+  {"rank":12,"model":"Qwen3.6-27B",      "framework":"OpenClaw",    "tcr":66.63,"mc":65.26,"ec":68.60,"sc":48.40,"fd":93.12,"crs":55.85},
+  {"rank":13,"model":"DeepSeek-V4-Pro",  "framework":"OpenClaw",    "tcr":66.89,"mc":57.89,"ec":70.66,"sc":48.56,"fd":89.82,"crs":55.25},
+  {"rank":14,"model":"Qwen3.6-Plus",     "framework":"OpenClaw",    "tcr":67.06,"mc":71.58,"ec":65.29,"sc":47.89,"fd":90.38,"crs":55.17},
+  {"rank":15,"model":"GPT-5.2",          "framework":"OpenClaw",    "tcr":65.88,"mc":61.05,"ec":67.77,"sc":47.21,"fd":90.01,"crs":54.18},
+  {"rank":16,"model":"Qwen3.6-35B-A3B",  "framework":"OpenClaw",    "tcr":60.24,"mc":51.58,"ec":63.64,"sc":42.17,"fd":88.93,"crs":48.86},
+  {"rank":17,"model":"Ling-2.6",         "framework":"OpenClaw",    "tcr":55.05,"mc":66.32,"ec":50.83,"sc":37.62,"fd":87.94,"crs":44.07},
+  {"rank":18,"model":"GLM-4.7-Flash",    "framework":"OpenClaw",    "tcr":54.10,"mc":42.11,"ec":57.02,"sc":30.55,"fd":77.05,"crs":38.82}
+]
