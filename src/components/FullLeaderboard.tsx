@@ -187,11 +187,6 @@ export default function FullLeaderboard() {
                     <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
                       {row.framework}
                     </span>
-                    {row.note && (
-                      <span className="ml-2" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>
-                        {row.note}
-                      </span>
-                    )}
                   </div>
                 </td>
                 <td><GroupTag group={row.group} /></td>
