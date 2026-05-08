@@ -35,9 +35,9 @@
   --primary-hover:  #c94e25;
   --primary-light:  rgba(255,107,53,0.08);
   --bg:             #fafaf8;
-  --surface:        #f4f4f0;
-  --surface-alt:    #ecece6;
-  --border:         rgba(0,0,0,0.08);
+  --surface:        #ffffff;
+  --surface-alt:    #f0f0ec;
+  --border:         rgba(0,0,0,0.1);
   --border-hover:   rgba(229,90,43,0.35);
   --text:           #1a1a1f;
   --text-secondary: #5a5a6e;

@@ -134,9 +134,9 @@ export default function LandingPage() {
           <div
             className="inline-flex gap-0 mx-auto mt-12 rounded-xl overflow-hidden"
             style={{
-              background: 'var(--surface, rgba(255,255,255,0.04))',
+              background: 'var(--surface)',
               border: '1px solid var(--border)',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+              boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
             }}
           >
             {[
