@@ -91,12 +91,30 @@ export default function FullLeaderboard() {
               <th style={{ width: 36 }}>#</th>
               <th>Model</th>
               <th className="hidden sm:table-cell">Framework</th>
-              <th onClick={() => handleSort('crs')} style={{ cursor: 'pointer' }}>CRS {si('crs')}</th>
-              <th className="hidden sm:table-cell" onClick={() => handleSort('tcr')} style={{ cursor: 'pointer' }}>TCR {si('tcr')}</th>
-              <th className="hidden md:table-cell" onClick={() => handleSort('mc')} style={{ cursor: 'pointer' }}>MC {si('mc')}</th>
-              <th className="hidden md:table-cell" onClick={() => handleSort('ec')} style={{ cursor: 'pointer' }}>EC {si('ec')}</th>
-              <th className="hidden lg:table-cell" onClick={() => handleSort('sc')} style={{ cursor: 'pointer' }}>SC {si('sc')}</th>
-              <th className="hidden lg:table-cell" onClick={() => handleSort('fd')} style={{ cursor: 'pointer' }}>FD {si('fd')}</th>
+              <th onClick={() => handleSort('crs')} style={{ cursor: 'pointer' }} title="Composite Reliability Score = (TCR + Robustness) / 2">
+                <div>CRS {si('crs')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Composite Reliability</div>
+              </th>
+              <th className="hidden sm:table-cell" onClick={() => handleSort('tcr')} style={{ cursor: 'pointer' }} title="Task Completion Rate — per-round mean score macro-averaged across scenarios">
+                <div>TCR {si('tcr')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Task Completion</div>
+              </th>
+              <th className="hidden md:table-cell" onClick={() => handleSort('mc')} style={{ cursor: 'pointer' }} title="Multi-Choice exact-match score">
+                <div>MC {si('mc')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Multi-Choice</div>
+              </th>
+              <th className="hidden md:table-cell" onClick={() => handleSort('ec')} style={{ cursor: 'pointer' }} title="Executable Check pass rate">
+                <div>EC {si('ec')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Exec Check</div>
+              </th>
+              <th className="hidden lg:table-cell" onClick={() => handleSort('sc')} style={{ cursor: 'pointer' }} title="Success Cohesion — how concentrated correct answers are into long runs">
+                <div>SC {si('sc')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Success Cohesion</div>
+              </th>
+              <th className="hidden lg:table-cell" onClick={() => handleSort('fd')} style={{ cursor: 'pointer' }} title="Failure Dispersion — how evenly failures are spread (high = no prolonged collapse)">
+                <div>FD {si('fd')}</div>
+                <div style={{ fontSize: '0.5rem', fontWeight: 400, opacity: 0.6, textTransform: 'none', letterSpacing: 0 }}>Failure Dispersion</div>
+              </th>
             </tr>
           </thead>
           <tbody>
