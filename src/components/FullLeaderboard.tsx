@@ -131,11 +131,14 @@ export default function FullLeaderboard() {
           rob: r.rob, sc: r.sc, fd: r.fd, crs: r.crs, note: r.note,
         });
       });
-      // MetaClaw overlay (only +MetaClaw variants, skip baselines since they're already in cross-model)
+      // MetaClaw overlay (only +MetaClaw variants not already present)
+      const existingConfigs = new Set(all.map((r) => r.config));
       mc.filter((r) => r.config.includes('MetaClaw')).forEach((r) => {
-        const robustness = r.sc * r.fd / 100; // SC and FD are already percentages
+        const key = `${r.model} + MetaClaw`;
+        if (existingConfigs.has(key)) return; // skip duplicates
+        const robustness = r.sc * r.fd / 100;
         all.push({
-          rank: 0, config: `${r.model} + MetaClaw`, model: r.model, framework: 'MetaClaw',
+          rank: 0, config: key, model: r.model, framework: 'MetaClaw',
           group: 'MetaClaw', tcr_avg: r.tcr_avg, tcr_mc: r.tcr_mc, tcr_ec: r.tcr_ec,
           rob: robustness, sc: r.sc, fd: r.fd, crs: r.crs,
           note: r.delta ? `+${r.delta.toFixed(2)} CRS vs baseline` : null,
