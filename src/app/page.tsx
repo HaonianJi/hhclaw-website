@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { ArrowRight, Database, BarChart3, BookOpen } from 'lucide-react';
-import QuickLeaderboard from '@/components/QuickLeaderboard';
+import FullLeaderboard from '@/components/FullLeaderboard';
 
 export default function LandingPage() {
   const revealRefs = useRef<HTMLElement[]>([]);
@@ -257,10 +257,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── Quick Leaderboard Preview ──────────────────────────── */}
+      {/* ─── Full Leaderboard ──────────────────────────────────── */}
       <section
         ref={addRevealRef}
-        className="scroll-reveal max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+        className="scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
       >
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -268,10 +268,10 @@ export default function LandingPage() {
               className="font-bold"
               style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
             >
-              Top Rankings
+              Leaderboard
             </h2>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              Top models by CRS (Composite Reliability Score) — combining accuracy and behavioral consistency
+              All configurations ranked by CRS (Composite Reliability Score) — 18 models × 5 frameworks
             </p>
           </div>
           <Link
@@ -279,12 +279,12 @@ export default function LandingPage() {
             className="inline-flex items-center gap-1.5 font-medium text-sm transition-all duration-150 hover:gap-2"
             style={{ color: 'var(--primary)' }}
           >
-            Full leaderboard
+            Detailed breakdown
             <ArrowRight size={14} />
           </Link>
         </div>
 
-        <QuickLeaderboard />
+        <FullLeaderboard />
       </section>
 
       {/* ─── Key Findings ───────────────────────────────────────── */}
