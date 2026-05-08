@@ -131,8 +131,9 @@ export default function LandingPage() {
           </div>
 
           {/* Stats strip */}
+          <div className="flex justify-center mt-12">
           <div
-            className="inline-flex gap-0 mx-auto mt-12 rounded-xl overflow-hidden"
+            className="inline-flex gap-0 rounded-xl overflow-hidden"
             style={{
               background: 'var(--surface)',
               border: '1px solid var(--border)',
@@ -177,6 +178,7 @@ export default function LandingPage() {
                 </span>
               </div>
             ))}
+          </div>
           </div>
 
           {/* CTA Buttons */}
