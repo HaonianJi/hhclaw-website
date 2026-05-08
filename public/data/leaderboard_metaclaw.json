@@ -1,0 +1,8 @@
+[
+  {"model":"GPT-5.1","config":"Baseline","tcr_avg":70.33,"tcr_mc":75.79,"tcr_ec":68.18,"sc":58.96,"fd":95.37,"crs":63.28},
+  {"model":"GPT-5.1","config":"+MetaClaw skills","tcr_avg":70.62,"tcr_mc":74.74,"tcr_ec":69.01,"sc":59.05,"fd":96.22,"crs":63.72,"delta":0.44},
+  {"model":"GLM-5.1","config":"Baseline","tcr_avg":72.70,"tcr_mc":72.63,"tcr_ec":72.73,"sc":52.74,"fd":92.07,"crs":60.63},
+  {"model":"GLM-5.1","config":"+MetaClaw skills","tcr_avg":73.29,"tcr_mc":69.47,"tcr_ec":74.79,"sc":54.65,"fd":92.19,"crs":61.82,"delta":1.19},
+  {"model":"Qwen3.6-Plus","config":"Baseline","tcr_avg":67.06,"tcr_mc":71.58,"tcr_ec":65.29,"sc":47.89,"fd":90.38,"crs":55.17},
+  {"model":"Qwen3.6-Plus","config":"+MetaClaw skills","tcr_avg":67.06,"tcr_mc":68.42,"tcr_ec":66.53,"sc":48.41,"fd":90.72,"crs":55.50,"delta":0.33}
+]

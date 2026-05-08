@@ -1,27 +1,63 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { type Exp1Row, type Exp2Row, Exp1Table, Exp2Table } from '@/components/LeaderboardTable';
+import {
+  type CrossModelData,
+  type CrossFrameworkData,
+  type MetaClawRow,
+  CrossModelTable,
+  CrossFrameworkTable,
+  MetaClawTable,
+} from '@/components/LeaderboardTable';
 import { Info } from 'lucide-react';
 
-type Tab = 'exp1' | 'exp2';
+type Tab = 'model' | 'framework' | 'metaclaw';
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: 'model', label: 'Cross-Model' },
+  { id: 'framework', label: 'Cross-Framework' },
+  { id: 'metaclaw', label: 'MetaClaw Overlay' },
+];
+
+const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
+  model: {
+    title: 'Cross-Model Comparison',
+    table: 'Table 3',
+    desc: '18 models evaluated on all 12 scenarios (337 rounds). Proprietary and open-weight models use OpenClaw; Anthropic models use Claude Code (not directly comparable).',
+  },
+  framework: {
+    title: 'Cross-Framework Comparison',
+    table: 'Table 4',
+    desc: 'Five agent frameworks evaluated under GPT-5.1, plus three frameworks under Kimi-K2.5 to test generalization.',
+  },
+  metaclaw: {
+    title: 'MetaClaw Overlay Ablation',
+    table: 'Table 5',
+    desc: 'Each pair shares the same model and base OpenClaw configuration. The +MetaClaw variant adds skill injection to isolate the effect of self-evolving skills.',
+  },
+};
 
 export default function LeaderboardPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('exp1');
-  const [exp1Data, setExp1Data] = useState<Exp1Row[]>([]);
-  const [exp2Data, setExp2Data] = useState<Exp2Row[]>([]);
+  const [activeTab, setActiveTab] = useState<Tab>('model');
+  const [modelData, setModelData] = useState<CrossModelData | null>(null);
+  const [frameworkData, setFrameworkData] = useState<CrossFrameworkData | null>(null);
+  const [metaClawData, setMetaClawData] = useState<MetaClawRow[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
-      fetch('/data/leaderboard_exp1.json').then((r) => r.json()),
-      fetch('/data/leaderboard_exp2.json').then((r) => r.json()),
-    ]).then(([d1, d2]) => {
-      setExp1Data(d1);
-      setExp2Data(d2);
+      fetch('/data/leaderboard_cross_model.json').then((r) => r.json()),
+      fetch('/data/leaderboard_cross_framework.json').then((r) => r.json()),
+      fetch('/data/leaderboard_metaclaw.json').then((r) => r.json()),
+    ]).then(([m, f, mc]) => {
+      setModelData(m);
+      setFrameworkData(f);
+      setMetaClawData(mc);
       setLoading(false);
     });
   }, []);
+
+  const info = INFO[activeTab];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -34,51 +70,30 @@ export default function LeaderboardPage() {
           Leaderboard
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginTop: 6 }}>
-          Model rankings on the ClawArena benchmark. Click any row to view per-scenario breakdown.
+          12 scenarios, 337 rounds, 18 models, 5 frameworks. Scored by CRS (Composite Reliability Score).
         </p>
       </div>
 
       {/* Tab switcher */}
       <div
-        className="flex gap-1.5 mb-6 p-1 rounded-xl w-fit"
-        style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid var(--border)',
-          backdropFilter: 'blur(10px)',
-        }}
+        className="flex gap-0 mb-6 border-b"
+        style={{ borderColor: 'var(--border)' }}
       >
-        {([
-          { id: 'exp2' as Tab, label: 'Cross-Model', badge: `${exp2Data.length}` },
-          { id: 'exp1' as Tab, label: 'Cross-Framework', badge: `${exp1Data.length}` },
-        ] as { id: Tab; label: string; badge: string }[]).map(({ id, label, badge }) => (
+        {TABS.map(({ id, label }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200"
+            className="px-4 py-2.5 font-medium transition-all duration-200"
             style={{
               fontSize: '0.875rem',
-              background: activeTab === id
-                ? 'linear-gradient(135deg, #ff6b35, #e2336b)'
-                : 'transparent',
-              color: activeTab === id ? '#fff' : 'var(--text-secondary)',
-              border: 'none',
+              color: activeTab === id ? 'var(--primary)' : 'var(--text-muted)',
+              borderBottom: activeTab === id ? '2px solid var(--primary)' : '2px solid transparent',
+              background: 'none',
               cursor: 'pointer',
-              boxShadow: activeTab === id ? '0 4px 12px rgba(255,107,53,0.25)' : 'none',
+              marginBottom: '-1px',
             }}
           >
             {label}
-            {badge !== '0' && (
-              <span
-                className="rounded-full px-1.5 py-0.5 text-xs font-semibold"
-                style={{
-                  background: activeTab === id ? 'rgba(255,255,255,0.2)' : 'var(--surface-alt)',
-                  color: activeTab === id ? '#fff' : 'var(--text-muted)',
-                  fontSize: '0.65rem',
-                }}
-              >
-                {badge}
-              </span>
-            )}
           </button>
         ))}
       </div>
@@ -89,19 +104,9 @@ export default function LeaderboardPage() {
         style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}
       >
         <Info size={15} style={{ color: 'var(--primary)', flexShrink: 0, marginTop: 1 }} />
-        {activeTab === 'exp2' ? (
-          <span>
-            <strong style={{ color: 'var(--text)' }}>Cross-Model Comparison</strong> (Table 4) evaluates
-            four backbone models with the OpenClaw framework. Scores include MC EM and
-            EC Pass metrics.
-          </span>
-        ) : (
-          <span>
-            <strong style={{ color: 'var(--text)' }}>Cross-Framework Comparison</strong> (Table 2) evaluates
-            multiple agent frameworks. Scores are Overall,
-            MC (multiple choice), and EC (executable code) pass rates.
-          </span>
-        )}
+        <span>
+          <strong style={{ color: 'var(--text)' }}>{info.title}</strong> ({info.table}). {info.desc}
+        </span>
       </div>
 
       {/* Table */}
@@ -122,11 +127,9 @@ export default function LeaderboardPage() {
         </div>
       ) : (
         <div key={activeTab} className="animate-fade-in">
-          {activeTab === 'exp2' ? (
-            <Exp2Table data={exp2Data} />
-          ) : (
-            <Exp1Table data={exp1Data} />
-          )}
+          {activeTab === 'model' && modelData && <CrossModelTable data={modelData} />}
+          {activeTab === 'framework' && frameworkData && <CrossFrameworkTable data={frameworkData} />}
+          {activeTab === 'metaclaw' && metaClawData && <MetaClawTable data={metaClawData} />}
         </div>
       )}
 
@@ -135,22 +138,21 @@ export default function LeaderboardPage() {
         className="flex flex-wrap items-center gap-4 mt-5"
         style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}
       >
-        <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Score color:</span>
+        <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>CRS color:</span>
         {[
-          { color: '#22c55e', label: '≥ 75%' },
-          { color: '#f7c948', label: '55–75%' },
-          { color: '#f59e0b', label: '40–55%' },
-          { color: '#ef4444', label: '< 40%' },
+          { color: '#22c55e', label: '≥ 65' },
+          { color: '#f7c948', label: '55–65' },
+          { color: '#f59e0b', label: '45–55' },
+          { color: '#ef4444', label: '< 45' },
         ].map(({ color, label }) => (
           <span key={label} className="flex items-center gap-1.5">
-            <span
-              className="inline-block w-3 h-3 rounded-sm"
-              style={{ background: color }}
-            />
+            <span className="inline-block w-3 h-3 rounded-sm" style={{ background: color }} />
             {label}
           </span>
         ))}
-        <span className="ml-2">— = not evaluated</span>
+        <span className="ml-4 font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>
+          CRS = (TCR + Robustness) / 2 &nbsp;|&nbsp; Robustness = SC × FD
+        </span>
       </div>
     </div>
   );

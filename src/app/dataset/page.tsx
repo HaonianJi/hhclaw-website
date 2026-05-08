@@ -7,7 +7,7 @@ const DOWNLOADS = [
     icon: '📦',
     title: 'Full Dataset',
     description:
-      'Complete ClawArena benchmark with 64 scenarios across 8 domains, 1,879 evaluation rounds, workspace files, session histories, and dynamic updates.',
+      'Complete ClawArena benchmark with 12 scenarios, 337 evaluation rounds, workspace files, session histories, and 45 dynamic updates.',
     size: '~42 MB',
     files: ['data/clawarena/eval/', 'data/clawarena/openclaw/', 'data/clawarena/tests.json'],
     primary: { label: 'GitHub', icon: <GitBranch size={14} />, href: REPO_URL },
@@ -76,7 +76,7 @@ export default function DatasetPage() {
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
           All ClawArena data is publicly available under the{' '}
           <strong style={{ color: 'var(--text)' }}>MIT</strong> license.
-          The benchmark includes 64 scenarios, 1,879 evaluation rounds, and 365 dynamic updates across 8 domains.
+          The benchmark includes 12 scenarios, 337 evaluation rounds, and 45 dynamic updates across diverse professional contexts.
         </p>
       </div>
 

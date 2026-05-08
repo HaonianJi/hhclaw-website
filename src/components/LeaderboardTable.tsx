@@ -9,72 +9,93 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { useState, useMemo } from 'react';
-import { ChevronUp, ChevronDown, ChevronsUpDown, ChevronRight } from 'lucide-react';
+import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 
 /* ─── Types ─────────────────────────────────────────────────── */
-export interface Exp1Row {
+export interface ModelRow {
   rank: number;
-  framework: string;
   model: string;
-  overall: number;
-  em_rate: number | null;
-  mc_score: number;
-  ec_pass: number;
-  note: string | null;
+  tcr_avg: number;
+  tcr_mc: number;
+  tcr_ec: number;
+  rob: number;
+  sc: number;
+  fd: number;
+  crs: number;
+  note?: string | null;
 }
 
-export interface Exp2Row {
+export interface FrameworkRow {
   rank: number;
   framework: string;
+  tcr_avg: number;
+  tcr_mc: number;
+  tcr_ec: number;
+  rob: number;
+  sc: number;
+  fd: number;
+  crs: number;
+  note?: string | null;
+}
+
+export interface MetaClawRow {
   model: string;
-  provider: string;
-  overall: number;
-  mc_em: number;
-  mc_partial: number | null;
-  ec_pass: number | null;
-  avg_fp: number | null;
-  avg_fn: number | null;
-  rounds: number;
-  complete: string;
-  per_scenario: Record<string, number>;
+  config: string;
+  tcr_avg: number;
+  tcr_mc: number;
+  tcr_ec: number;
+  sc: number;
+  fd: number;
+  crs: number;
+  delta?: number | null;
+}
+
+export interface CrossModelData {
+  proprietary: ModelRow[];
+  open_weight: ModelRow[];
+  provider_native: ModelRow[];
+}
+
+export interface CrossFrameworkData {
+  gpt51: FrameworkRow[];
+  kimi_k25: FrameworkRow[];
 }
 
 /* ─── Helpers ───────────────────────────────────────────────── */
 function scoreColor(v: number): string {
-  if (v >= 0.75) return 'linear-gradient(90deg, #22c55e, #16a34a)';
-  if (v >= 0.55) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
-  if (v >= 0.40) return 'linear-gradient(90deg, #f59e0b, #f97316)';
+  if (v >= 65) return 'linear-gradient(90deg, #22c55e, #16a34a)';
+  if (v >= 55) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
+  if (v >= 45) return 'linear-gradient(90deg, #f59e0b, #f97316)';
   return 'linear-gradient(90deg, #ef4444, #e2336b)';
 }
 
 function fmtNum(v: number | null | undefined) {
   if (v == null) return '—';
-  return v.toFixed(3);
+  return v.toFixed(2);
 }
 
 function RankBadge({ rank }: { rank: number }) {
-  if (rank === 1) return <span className="rank-badge rank-badge-gold">🥇</span>;
-  if (rank === 2) return <span className="rank-badge rank-badge-silver">🥈</span>;
-  if (rank === 3) return <span className="rank-badge rank-badge-bronze">🥉</span>;
+  if (rank === 1) return <span className="rank-badge rank-badge-gold">&#129351;</span>;
+  if (rank === 2) return <span className="rank-badge rank-badge-silver">&#129352;</span>;
+  if (rank === 3) return <span className="rank-badge rank-badge-bronze">&#129353;</span>;
   return <span className="rank-badge rank-badge-plain">{rank}</span>;
 }
 
-function ScoreBar({ value }: { value: number | null }) {
-  if (value == null)
-    return <span style={{ color: 'var(--text-muted)' }}>—</span>;
+function ScoreBar({ value, max = 100 }: { value: number | null; max?: number }) {
+  if (value == null) return <span style={{ color: 'var(--text-muted)' }}>—</span>;
   return (
     <div className="score-bar-wrap">
       <div className="score-bar-track">
         <div
           className="score-bar-fill"
-          style={{ width: `${Math.round(value * 100)}%`, background: scoreColor(value), boxShadow: value >= 0.55 ? '0 0 6px rgba(255,107,53,0.3)' : 'none' }}
+          style={{ width: `${Math.round((value / max) * 100)}%`, background: scoreColor(value), boxShadow: value >= 55 ? '0 0 6px rgba(255,107,53,0.3)' : 'none' }}
         />
       </div>
       <span
         className="tabular-nums font-mono font-semibold"
         style={{ fontSize: '0.8rem', color: 'var(--text)', minWidth: 38 }}
       >
-        {value.toFixed(3)}
+        {value.toFixed(2)}
       </span>
     </div>
   );
@@ -86,154 +107,50 @@ function SortIcon({ sorted }: { sorted: false | 'asc' | 'desc' }) {
   return <ChevronDown size={12} />;
 }
 
-/* ─── Scenario Heatmap ──────────────────────────────────────── */
-const SUBSET_12 = [
-  'hil_c6','hil_d2','hil_d6','hil_e6',
-  'hil_f1','hil_f5','hil_g7','hil_h3',
-  'hil_i2','hil_i4','hil_j4','hil_j8',
-];
-
-function heatColor(v: number | undefined): string {
-  if (v == null) return 'var(--surface-alt)';
-  const r = Math.round(239 - (239 - 34) * v);
-  const g = Math.round(68 + (197 - 68) * v);
-  const b = Math.round(68 + (94 - 68) * v);
-  return `rgb(${r},${g},${b})`;
+function NumCell({ value }: { value: number }) {
+  return (
+    <span className="tabular-nums font-mono" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+      {value.toFixed(2)}
+    </span>
+  );
 }
 
-function ExpandPanel({ row }: { row: Exp2Row }) {
+/* ─── Section Header ───────────────────────────────────────── */
+function SectionHeader({ title }: { title: string }) {
   return (
     <tr>
       <td
-        colSpan={9}
+        colSpan={99}
         style={{
-          background: 'rgba(255,107,53,0.03)',
-          borderBottom: '2px solid rgba(255,107,53,0.4)',
-          padding: '0',
+          background: 'rgba(255,107,53,0.04)',
+          borderBottom: '1px solid var(--border)',
+          padding: '8px 16px',
+          fontSize: '0.75rem',
+          fontWeight: 600,
+          color: 'var(--text-muted)',
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase',
         }}
       >
-        <div
-          className="animate-slide-down px-5 py-4"
-          style={{ borderTop: '1px solid rgba(255,107,53,0.15)' }}
-        >
-          <div
-            className="font-semibold mb-3"
-            style={{ fontSize: '0.875rem', color: 'var(--text)' }}
-          >
-            {row.framework} + {row.model} — Per-Scenario Breakdown
-          </div>
-
-          {/* Heatmap */}
-          <div className="grid gap-1.5" style={{ gridTemplateColumns: 'repeat(6, 1fr)', maxWidth: 480 }}>
-            {SUBSET_12.map((sc) => {
-              const val = row.per_scenario?.[sc];
-              return (
-                <div
-                  key={sc}
-                  className="heatmap-cell"
-                  style={{
-                    background: heatColor(val),
-                    color: val == null ? 'var(--text-muted)' : val > 0.5 ? '#fff' : '#1f2937',
-                    padding: '6px 4px',
-                    borderRadius: 6,
-                    fontSize: '0.65rem',
-                    flexDirection: 'column',
-                    gap: 2,
-                    opacity: val == null ? 0.45 : 1,
-                  }}
-                  title={`${sc}: ${val != null ? (val * 100).toFixed(0) + '%' : 'not run'}`}
-                >
-                  <span style={{ fontWeight: 700 }}>{sc.replace('hil_', '')}</span>
-                  <span>{val != null ? `${(val * 100).toFixed(0)}%` : '—'}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Stats row */}
-          <div
-            className="flex flex-wrap gap-x-6 gap-y-1 mt-3"
-            style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}
-          >
-            {row.avg_fp != null && (
-              <span>Avg FP/q: <strong style={{ color: 'var(--text)' }}>{row.avg_fp.toFixed(2)}</strong></span>
-            )}
-            {row.avg_fn != null && (
-              <span>Avg FN/q: <strong style={{ color: 'var(--text)' }}>{row.avg_fn.toFixed(2)}</strong></span>
-            )}
-            <span>Rounds: <strong style={{ color: 'var(--text)' }}>{row.rounds}</strong></span>
-            <span>Coverage: <strong style={{ color: 'var(--text)' }}>{row.complete}</strong></span>
-          </div>
-        </div>
+        {title}
       </td>
     </tr>
   );
 }
 
-/* ─── Exp2 Table ─────────────────────────────────────────────── */
-export function Exp2Table({ data }: { data: Exp2Row[] }) {
+/* ─── Generic Table Renderer ──────────────────────────────── */
+function DataTable<T>({
+  columns,
+  sections,
+}: {
+  columns: ColumnDef<T>[];
+  sections: { title: string; data: T[] }[];
+}) {
+  const allData = useMemo(() => sections.flatMap((s) => s.data), [sections]);
   const [sorting, setSorting] = useState<SortingState>([]);
 
-
-  const columns = useMemo<ColumnDef<Exp2Row>[]>(
-    () => [
-      {
-        id: 'rank',
-        header: '#',
-        accessorKey: 'rank',
-        cell: ({ row }) => (
-          <div className="flex justify-center">
-            <RankBadge rank={row.original.rank} />
-          </div>
-        ),
-        enableSorting: false,
-        size: 52,
-      },
-      {
-        id: 'config',
-        header: 'Configuration',
-        accessorFn: (r) => `${r.framework} ${r.model}`,
-        cell: ({ row }) => (
-          <div>
-            <div>
-              <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
-                {row.original.framework}
-              </span>
-              <span className="ml-1" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-                + {row.original.model}
-              </span>
-            </div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 2 }}>
-              {row.original.provider}
-            </div>
-          </div>
-        ),
-        enableSorting: false,
-      },
-      {
-        id: 'overall',
-        header: 'Overall ▾',
-        accessorKey: 'overall',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-      {
-        id: 'mc_em',
-        header: 'MC EM',
-        accessorKey: 'mc_em',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-      {
-        id: 'ec_pass',
-        header: 'EC Pass',
-        accessorKey: 'ec_pass',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number | null} />,
-      },
-    ],
-    []
-  );
-
   const table = useReactTable({
-    data,
+    data: allData,
     columns,
     state: { sorting },
     onSortingChange: setSorting,
@@ -241,123 +158,11 @@ export function Exp2Table({ data }: { data: Exp2Row[] }) {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  return (
-    <div className="lb-table-container" style={{ maxHeight: 700, overflowY: 'auto' }}>
-      <div style={{ overflowX: 'auto' }}>
-        <table className="lb-table">
-          <thead>
-            {table.getHeaderGroups().map((hg) => (
-              <tr key={hg.id}>
-                {hg.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    onClick={header.column.getToggleSortingHandler()}
-                    style={{
-                      cursor: header.column.getCanSort() ? 'pointer' : 'default',
-                    }}
-                  >
-                    <div className="flex items-center gap-1">
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {header.column.getCanSort() && (
-                        <SortIcon sorted={header.column.getIsSorted()} />
-                      )}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="table-row-stagger">
-            {table.getRowModel().rows.map((row, i) => (
-              <tr key={row.id} style={{ animationDelay: `${i * 20}ms` }}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Exp1 Table ─────────────────────────────────────────────── */
-export function Exp1Table({ data }: { data: Exp1Row[] }) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const columns = useMemo<ColumnDef<Exp1Row>[]>(
-    () => [
-      {
-        id: 'rank',
-        header: '#',
-        accessorKey: 'rank',
-        cell: ({ row }) => (
-          <div className="flex justify-center">
-            <RankBadge rank={row.original.rank} />
-          </div>
-        ),
-        enableSorting: false,
-        size: 52,
-      },
-      {
-        id: 'config',
-        header: 'Configuration',
-        accessorFn: (r) => `${r.framework} ${r.model}`,
-        cell: ({ row }) => (
-          <div>
-            <div>
-              <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
-                {row.original.framework}
-              </span>
-              <span className="ml-1" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-                + {row.original.model}
-              </span>
-            </div>
-            {row.original.note && (
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 2 }}>
-                {row.original.note}
-              </div>
-            )}
-          </div>
-        ),
-        enableSorting: false,
-      },
-      {
-        id: 'overall',
-        header: 'Overall ▾',
-        accessorKey: 'overall',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-      {
-        id: 'mc_score',
-        header: 'MC Score',
-        accessorKey: 'mc_score',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-      {
-        id: 'ec_pass',
-        header: 'EC Pass',
-        accessorKey: 'ec_pass',
-        cell: ({ getValue }) => <ScoreBar value={getValue() as number} />,
-      },
-    ],
-    []
-  );
-
-  const table = useReactTable({
-    data,
-    columns,
-    state: { sorting },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
+  // When sorting is active, render flat; otherwise render with sections
+  const isSorted = sorting.length > 0;
 
   return (
-    <div className="lb-table-container" style={{ maxHeight: 700, overflowY: 'auto' }}>
+    <div className="lb-table-container" style={{ maxHeight: 800, overflowY: 'auto' }}>
       <div style={{ overflowX: 'auto' }}>
         <table className="lb-table">
           <thead>
@@ -381,15 +186,224 @@ export function Exp1Table({ data }: { data: Exp1Row[] }) {
             ))}
           </thead>
           <tbody className="table-row-stagger">
-            {table.getRowModel().rows.map((row, i) => (
-              <tr key={row.id} style={{ animationDelay: `${i * 20}ms` }}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+            {isSorted
+              ? table.getRowModel().rows.map((row, i) => (
+                  <tr key={row.id} style={{ animationDelay: `${i * 15}ms` }}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              : sections.map((section) => {
+                  const sectionRows = table
+                    .getRowModel()
+                    .rows.filter((row) =>
+                      section.data.includes(row.original)
+                    );
+                  return [
+                    <SectionHeader key={`section-${section.title}`} title={section.title} />,
+                    ...sectionRows.map((row, i) => (
+                      <tr key={row.id} style={{ animationDelay: `${i * 15}ms` }}>
+                        {row.getVisibleCells().map((cell) => (
+                          <td key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                        ))}
+                      </tr>
+                    )),
+                  ];
+                })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Cross-Model Table ────────────────────────────────────── */
+export function CrossModelTable({ data }: { data: CrossModelData }) {
+  const columns = useMemo<ColumnDef<ModelRow>[]>(
+    () => [
+      {
+        id: 'rank', header: '#', accessorKey: 'rank', enableSorting: false, size: 48,
+        cell: ({ getValue }) => <div className="flex justify-center"><RankBadge rank={getValue() as number} /></div>,
+      },
+      {
+        id: 'model', header: 'Model', accessorKey: 'model', enableSorting: false,
+        cell: ({ row }) => (
+          <div>
+            <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
+              {row.original.model}
+            </span>
+            {row.original.note && (
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 2 }}>{row.original.note}</div>
+            )}
+          </div>
+        ),
+      },
+      { id: 'crs', header: 'CRS', accessorKey: 'crs', cell: ({ getValue }) => <ScoreBar value={getValue() as number} /> },
+      { id: 'tcr_avg', header: 'TCR', accessorKey: 'tcr_avg', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_mc', header: 'MC', accessorKey: 'tcr_mc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_ec', header: 'EC', accessorKey: 'tcr_ec', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'rob', header: 'Robustness', accessorKey: 'rob', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'sc', header: 'SC', accessorKey: 'sc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'fd', header: 'FD', accessorKey: 'fd', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+    ],
+    []
+  );
+
+  const sections = [
+    { title: 'Proprietary (OpenClaw)', data: data.proprietary },
+    { title: 'Open-Weight (OpenClaw)', data: data.open_weight },
+    { title: 'Provider-Native (Claude Code)', data: data.provider_native },
+  ];
+
+  return <DataTable columns={columns} sections={sections} />;
+}
+
+/* ─── Cross-Framework Table ────────────────────────────────── */
+export function CrossFrameworkTable({ data }: { data: CrossFrameworkData }) {
+  const columns = useMemo<ColumnDef<FrameworkRow>[]>(
+    () => [
+      {
+        id: 'rank', header: '#', accessorKey: 'rank', enableSorting: false, size: 48,
+        cell: ({ getValue }) => <div className="flex justify-center"><RankBadge rank={getValue() as number} /></div>,
+      },
+      {
+        id: 'framework', header: 'Framework', accessorKey: 'framework', enableSorting: false,
+        cell: ({ row }) => (
+          <div>
+            <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
+              {row.original.framework}
+            </span>
+            {row.original.note && (
+              <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 2 }}>{row.original.note}</div>
+            )}
+          </div>
+        ),
+      },
+      { id: 'crs', header: 'CRS', accessorKey: 'crs', cell: ({ getValue }) => <ScoreBar value={getValue() as number} /> },
+      { id: 'tcr_avg', header: 'TCR', accessorKey: 'tcr_avg', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_mc', header: 'MC', accessorKey: 'tcr_mc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_ec', header: 'EC', accessorKey: 'tcr_ec', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'rob', header: 'Robustness', accessorKey: 'rob', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'sc', header: 'SC', accessorKey: 'sc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'fd', header: 'FD', accessorKey: 'fd', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+    ],
+    []
+  );
+
+  const sections = [
+    { title: 'GPT-5.1', data: data.gpt51 },
+    { title: 'Kimi-K2.5', data: data.kimi_k25 },
+  ];
+
+  return <DataTable columns={columns} sections={sections} />;
+}
+
+/* ─── MetaClaw Overlay Table ──────────────────────────────── */
+export function MetaClawTable({ data }: { data: MetaClawRow[] }) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
+  const columns = useMemo<ColumnDef<MetaClawRow>[]>(
+    () => [
+      {
+        id: 'model', header: 'Model', accessorKey: 'model', enableSorting: false,
+        cell: ({ getValue }) => (
+          <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.875rem' }}>
+            {getValue() as string}
+          </span>
+        ),
+      },
+      {
+        id: 'config', header: 'Config', accessorKey: 'config', enableSorting: false,
+        cell: ({ row }) => {
+          const isMetaClaw = row.original.config.includes('MetaClaw');
+          return (
+            <span style={{
+              fontSize: '0.8rem',
+              color: isMetaClaw ? 'var(--primary)' : 'var(--text-secondary)',
+              fontWeight: isMetaClaw ? 600 : 400,
+            }}>
+              {row.original.config}
+            </span>
+          );
+        },
+      },
+      { id: 'crs', header: 'CRS', accessorKey: 'crs',
+        cell: ({ row }) => {
+          const d = row.original.delta;
+          return (
+            <div className="flex items-center gap-2">
+              <ScoreBar value={row.original.crs} />
+              {d != null && (
+                <span style={{ fontSize: '0.7rem', color: '#22c55e', fontWeight: 600 }}>
+                  +{d.toFixed(2)}
+                </span>
+              )}
+            </div>
+          );
+        },
+      },
+      { id: 'tcr_avg', header: 'TCR', accessorKey: 'tcr_avg', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_mc', header: 'MC', accessorKey: 'tcr_mc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'tcr_ec', header: 'EC', accessorKey: 'tcr_ec', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'sc', header: 'SC', accessorKey: 'sc', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+      { id: 'fd', header: 'FD', accessorKey: 'fd', cell: ({ getValue }) => <NumCell value={getValue() as number} /> },
+    ],
+    []
+  );
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: { sorting },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  // Group by model pairs
+  const models = ['GPT-5.1', 'GLM-5.1', 'Qwen3.6-Plus'];
+
+  return (
+    <div className="lb-table-container" style={{ maxHeight: 600, overflowY: 'auto' }}>
+      <div style={{ overflowX: 'auto' }}>
+        <table className="lb-table">
+          <thead>
+            {table.getHeaderGroups().map((hg) => (
+              <tr key={hg.id}>
+                {hg.headers.map((header) => (
+                  <th key={header.id} style={{ cursor: 'default' }}>
+                    <div className="flex items-center gap-1">
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </div>
+                  </th>
                 ))}
               </tr>
             ))}
+          </thead>
+          <tbody className="table-row-stagger">
+            {models.map((modelName, mi) => {
+              const rows = table.getRowModel().rows.filter((r) => r.original.model === modelName);
+              return rows.map((row, i) => (
+                <tr
+                  key={row.id}
+                  style={{
+                    animationDelay: `${(mi * 2 + i) * 15}ms`,
+                    borderTop: i === 0 && mi > 0 ? '2px solid var(--border)' : undefined,
+                  }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ));
+            })}
           </tbody>
         </table>
       </div>

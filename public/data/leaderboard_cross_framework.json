@@ -1,0 +1,14 @@
+{
+  "gpt51": [
+    {"rank":1,"framework":"PicoClaw","tcr_avg":71.51,"tcr_mc":73.68,"tcr_ec":70.66,"rob":56.86,"sc":59.90,"fd":94.90,"crs":64.18},
+    {"rank":2,"framework":"MetaClaw","tcr_avg":70.62,"tcr_mc":74.74,"tcr_ec":69.01,"rob":56.83,"sc":59.05,"fd":96.22,"crs":63.72,"note":"skills-only mode"},
+    {"rank":3,"framework":"OpenClaw","tcr_avg":70.33,"tcr_mc":75.79,"tcr_ec":68.18,"rob":56.24,"sc":58.96,"fd":95.37,"crs":63.28},
+    {"rank":4,"framework":"NanoBot","tcr_avg":67.95,"tcr_mc":73.68,"tcr_ec":65.70,"rob":51.80,"sc":55.09,"fd":94.04,"crs":59.88},
+    {"rank":5,"framework":"Claude Code","tcr_avg":55.19,"tcr_mc":65.26,"tcr_ec":51.24,"rob":39.95,"sc":43.66,"fd":91.54,"crs":47.57}
+  ],
+  "kimi_k25": [
+    {"rank":1,"framework":"Claude Code","tcr_avg":66.77,"tcr_mc":56.84,"tcr_ec":70.66,"rob":52.73,"sc":56.26,"fd":93.74,"crs":59.75},
+    {"rank":2,"framework":"PicoClaw","tcr_avg":65.58,"tcr_mc":65.26,"tcr_ec":65.70,"rob":49.64,"sc":53.72,"fd":92.41,"crs":57.61},
+    {"rank":3,"framework":"NanoBot","tcr_avg":45.99,"tcr_mc":49.47,"tcr_ec":44.63,"rob":29.18,"sc":32.97,"fd":88.50,"crs":37.58}
+  ]
+}

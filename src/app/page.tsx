@@ -126,17 +126,17 @@ export default function LandingPage() {
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>multi-source conflicts</strong>,{' '}
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>dynamic belief revision</strong>, and{' '}
               <strong style={{ color: 'var(--text)', fontWeight: 600 }}>implicit personalization</strong> across
-              64 evolving scenarios in 8 professional domains.
+              12 multi-turn scenarios spanning diverse professional contexts.
             </p>
           </div>
 
           {/* Stat Cards — glass morphism */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mt-12">
             {[
-              { value: '64',    label: 'Scenarios',    sublabel: 'across 8 domains' },
-              { value: '8',     label: 'Domains',      sublabel: 'professional settings' },
-              { value: '1,879', label: 'Eval Rounds',  sublabel: 'evaluation turns' },
-              { value: '365',   label: 'Updates',      sublabel: 'dynamic spec changes' },
+              { value: '12',    label: 'Scenarios',    sublabel: 'diverse contexts' },
+              { value: '337',   label: 'Eval Rounds',  sublabel: 'multi-turn interactions' },
+              { value: '18',    label: 'Models',       sublabel: 'proprietary + open-weight' },
+              { value: '5',     label: 'Frameworks',   sublabel: 'agent architectures' },
             ].map(({ value, label, sublabel }, i) => (
               <div
                 key={label}
@@ -242,7 +242,7 @@ export default function LandingPage() {
               Top Rankings
             </h2>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              Cross-Model comparison (OpenClaw framework) — sorted by overall score
+              Top models by CRS (Composite Reliability Score) — combining accuracy and behavioral consistency
             </p>
           </div>
           <Link
@@ -371,17 +371,17 @@ const KEY_FINDINGS = [
   {
     num: '01',
     title: 'Model capability dominates framework design',
-    description: 'Across four frameworks and five models, model choice accounts for a 15.4% performance range while framework design accounts for 6.8%. The right model matters roughly twice as much as the right framework.',
+    description: 'Model choice accounts for a 29-point CRS range across 18 models, while framework design accounts for 17 points across 5 frameworks. The right model matters nearly twice as much as the right framework.',
   },
   {
     num: '02',
-    title: 'Belief revision depends on update design, not volume',
-    description: 'Concentrated, targeted updates cause 0.28–0.36 score drops. Distributed updates across 12 scenarios show only +1.7% change. How updates are structured matters far more than how many there are.',
+    title: 'MetaClaw improves robustness without degrading accuracy',
+    description: 'Skill-based self-evolution consistently improves CRS by 0.33–1.19 across all three tested model families. The mechanism is behavioral consistency (SC and FD both rise), not raw accuracy.',
   },
   {
     num: '03',
-    title: 'Aggregate scores mask divergent failures',
-    description: 'Two configurations scoring 0.833 on the same question fail on structurally opposite options — one misses a genuine conflict, the other over-flags a non-conflict. Per-option diagnostics are essential.',
+    title: 'Belief revision difficulty is governed by update design',
+    description: 'Updates that force re-interpretation of earlier claims cause clustered failures, while updates that merely extend prior evidence are handled reliably. Update specificity, not volume, determines difficulty.',
   },
 ];
 
@@ -395,7 +395,7 @@ const DIMENSIONS = [
   {
     tag: 'DU',
     title: 'Dynamic Belief Revision',
-    description: 'New evidence can invalidate previously correct conclusions. 365 staged update packages test whether agents revise rather than simply accumulate.',
+    description: 'New evidence can invalidate previously correct conclusions. 45 staged updates across 12 scenarios test whether agents revise rather than simply accumulate.',
     color: '#f7c948',
   },
   {

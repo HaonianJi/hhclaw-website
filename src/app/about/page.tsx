@@ -63,21 +63,26 @@ const SPEC_LAYERS = [
 ];
 
 const PIPELINE_STEPS = [
-  { step: '01', label: 'Seed Construction',    desc: 'Domain experts author canonical scenario seeds with ground-truth world models (L0 Narrative Bible).' },
-  { step: '02', label: 'Meta-Spec Induction',  desc: 'Structured meta-specifications are induced from seeds to define the generation space for each scenario.' },
-  { step: '03', label: 'Batch Generation',     desc: 'LLM-assisted generation populates workspace files (L1), session histories (L2), questions (L3), and update packages (L4) at scale.' },
-  { step: '04', label: 'Validation',           desc: 'Automated consistency checks and human review ensure factual accuracy, conflict fidelity, and evaluation quality.' },
+  { step: '01', label: 'Seed Construction',    desc: 'Domain experts author scenario seeds with cross-validation until all four contradiction types are present and every answer requires multiple sources.' },
+  { step: '02', label: 'Meta-Spec Induction',  desc: 'Structural invariants distilled from seeds: narrative patterns, contradiction-type ratios, bias-phrase rules, and update-question binding constraints.' },
+  { step: '03', label: 'Batch Generation',     desc: 'LLM-assisted generation grounded in 200+ published empirical distributions (email volume, commit patterns, messaging activity, social network structure).' },
+  { step: '04', label: 'Validation',           desc: 'Three-level checks: structural (schema, files), semantic (contradiction coverage, answer keys), and control (bias-phrase placement, non-conflict consistency).' },
+  { step: '05', label: 'Refinement',           desc: 'Scenarios failing validation are removed; answer keys rewritten for clarity; MC/EC ratio rebalanced. The released 12 scenarios satisfy all design constraints.' },
 ];
 
-const DOMAINS = [
-  { id: 'C', name: 'Tech/HR Startup',  persona: 'Alex Rivera (CEO)',         lang: 'EN', scenarios: 8, rounds: 204, icon: '💼' },
-  { id: 'D', name: 'Hospital Admin',   persona: 'Dr. Kenji Tanaka',          lang: 'EN', scenarios: 8, rounds: 240, icon: '🏥' },
-  { id: 'E', name: 'Nonprofit/NGO',    persona: 'Sarah Chen',                lang: 'EN', scenarios: 8, rounds: 240, icon: '🌱' },
-  { id: 'F', name: 'Family/Personal',  persona: '赵磊 (Quant Trader)',        lang: 'ZH', scenarios: 8, rounds: 240, icon: '🏠' },
-  { id: 'G', name: 'Tech Corporate',   persona: '陈静 (HR Manager)',          lang: 'ZH', scenarios: 8, rounds: 240, icon: '🏢' },
-  { id: 'H', name: 'Campus/Student',   persona: '王明 (CS Undergrad)',        lang: 'ZH', scenarios: 8, rounds: 235, icon: '🎓' },
-  { id: 'I', name: 'Clinical/Medical', persona: '林逸 (ER Attending)',        lang: 'ZH', scenarios: 8, rounds: 240, icon: '🩺' },
-  { id: 'J', name: 'Community/MCN',    persona: '周芳 (Food Blogger)',        lang: 'ZH', scenarios: 8, rounds: 240, icon: '📱' },
+const SCENARIOS = [
+  { id: 'hil_s1', rounds: 24, mc: 8, ec: 16, context: 'Startup outage & engineering incident' },
+  { id: 'hil_c7', rounds: 28, mc: 8, ec: 20, context: 'Retail analytics' },
+  { id: 'hil_d3', rounds: 30, mc: 8, ec: 22, context: 'Finance' },
+  { id: 'hil_e4', rounds: 24, mc: 7, ec: 17, context: 'Healthcare' },
+  { id: 'hil_g4', rounds: 27, mc: 8, ec: 19, context: 'Information security' },
+  { id: 'hil_g1', rounds: 30, mc: 8, ec: 22, context: 'HR' },
+  { id: 'hil_h3', rounds: 27, mc: 8, ec: 19, context: 'Education' },
+  { id: 'hil_j1', rounds: 30, mc: 8, ec: 22, context: 'Research integrity' },
+  { id: 'hil_f3', rounds: 30, mc: 8, ec: 22, context: 'Professional services' },
+  { id: 'hil_i2', rounds: 30, mc: 8, ec: 22, context: 'Clinical/Medical' },
+  { id: 'hil_g3', rounds: 30, mc: 8, ec: 22, context: 'Enterprise' },
+  { id: 'hil_f7', rounds: 27, mc: 8, ec: 19, context: 'E-commerce' },
 ];
 
 /* ─── Page ──────────────────────────────────────────────────── */
@@ -118,13 +123,15 @@ export default function AboutPage() {
             changes — requiring <em style={{ color: 'var(--text)', fontStyle: 'normal', fontWeight: 500 }}>multi-source conflict reasoning</em>,{' '}
             <em style={{ color: 'var(--text)', fontStyle: 'normal', fontWeight: 500 }}>dynamic belief revision</em>,
             and <em style={{ color: 'var(--text)', fontStyle: 'normal', fontWeight: 500 }}>implicit personalization</em>{' '}
-            across 64 professional scenarios in 8 domains.
+            across 12 multi-turn scenarios spanning diverse professional contexts.
           </p>
           <p className="mt-4" style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.75 }}>
-            The benchmark comprises <strong style={{ color: 'var(--text)' }}>64 scenarios</strong>,{' '}
-            <strong style={{ color: 'var(--text)' }}>1,879 evaluation rounds</strong>,{' '}
-            <strong style={{ color: 'var(--text)' }}>365 dynamic updates</strong>, and a
-            hierarchical 6-layer specification system (L0 Narrative Bible → L1–L4 → Guide) that ensures
+            The benchmark comprises <strong style={{ color: 'var(--text)' }}>12 scenarios</strong>,{' '}
+            <strong style={{ color: 'var(--text)' }}>337 evaluation rounds</strong>,{' '}
+            <strong style={{ color: 'var(--text)' }}>45 dynamic updates</strong>, evaluated across{' '}
+            <strong style={{ color: 'var(--text)' }}>5 frameworks</strong> and{' '}
+            <strong style={{ color: 'var(--text)' }}>18 language models</strong>. A hierarchical
+            6-layer specification system and the Composite Reliability Score (CRS) ensure
             consistent, auditable evaluation across all configurations.{' '}
           </p>
         </div>
@@ -332,12 +339,12 @@ export default function AboutPage() {
 
       {/* Construction Pipeline */}
       <section className="mb-14">
-        <h2 className="section-heading mb-2">Construction Pipeline (Section 2.4)</h2>
+        <h2 className="section-heading mb-2">Construction Pipeline</h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          ClawArena scenarios are constructed via a four-stage pipeline that balances expert authorship
-          with LLM-assisted generation.
+          ClawArena scenarios are constructed via a five-stage pipeline combining expert authorship,
+          empirical grounding (200+ published distributions), and automated validation.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {PIPELINE_STEPS.map((ps) => (
             <div
               key={ps.step}
@@ -369,57 +376,51 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 8 Domain Cards */}
+      {/* 12 Scenarios */}
       <section className="mb-14">
-        <h2 className="section-heading mb-2">8 Evaluation Domains</h2>
+        <h2 className="section-heading mb-2">12 Scenarios</h2>
         <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-          Four English and four Chinese domains, each with a distinct professional persona and real-world context.
+          Spanning retail analytics, finance, healthcare, information security, HR, education, research integrity, and more.
+          337 total rounds (95 MC + 242 EC) with 45 dynamic updates.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {DOMAINS.map((domain) => (
+        <div
+          className="rounded-xl overflow-hidden"
+          style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}
+        >
+          <div
+            className="grid font-semibold px-4 py-3"
+            style={{
+              gridTemplateColumns: '1fr 80px 60px 60px 1.5fr',
+              background: 'rgba(255,107,53,0.06)',
+              borderBottom: '1px solid var(--border)',
+              fontSize: '0.7rem',
+              color: 'var(--text-secondary)',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase' as const,
+            }}
+          >
+            <span>Scenario</span>
+            <span>Rounds</span>
+            <span>MC</span>
+            <span>EC</span>
+            <span>Context</span>
+          </div>
+          {SCENARIOS.map((s, idx) => (
             <div
-              key={domain.id}
-              className="glass-card rounded-xl p-4"
+              key={s.id}
+              className="grid px-4 py-2.5"
+              style={{
+                gridTemplateColumns: '1fr 80px 60px 60px 1.5fr',
+                background: idx % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)',
+                borderBottom: idx < SCENARIOS.length - 1 ? '1px solid var(--border)' : 'none',
+                fontSize: '0.8125rem',
+              }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl">{domain.icon}</span>
-                <span
-                  className="font-bold font-mono text-xs px-2 py-0.5 rounded-md"
-                  style={{
-                    background: 'rgba(255,107,53,0.1)',
-                    color: 'var(--primary)',
-                    border: '1px solid rgba(255,107,53,0.15)',
-                  }}
-                >
-                  Domain {domain.id}
-                </span>
-              </div>
-              <div
-                className="font-semibold mb-1"
-                style={{ fontSize: '0.875rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
-              >
-                {domain.name}
-              </div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 8 }}>
-                {domain.persona}
-              </div>
-              <div className="flex items-center justify-between">
-                <span
-                  className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold"
-                  style={{
-                    background: domain.lang === 'EN'
-                      ? 'rgba(59,130,246,0.12)'
-                      : 'rgba(168,85,247,0.12)',
-                    color: domain.lang === 'EN' ? '#60a5fa' : '#c084fc',
-                    border: `1px solid ${domain.lang === 'EN' ? 'rgba(59,130,246,0.2)' : 'rgba(168,85,247,0.2)'}`,
-                  }}
-                >
-                  {domain.lang}
-                </span>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                  {domain.scenarios} scenarios · {domain.rounds} rounds
-                </span>
-              </div>
+              <span className="font-mono font-semibold" style={{ color: 'var(--primary)' }}>{s.id}</span>
+              <span style={{ color: 'var(--text)' }}>{s.rounds}</span>
+              <span style={{ color: 'var(--text-muted)' }}>{s.mc}</span>
+              <span style={{ color: 'var(--text-muted)' }}>{s.ec}</span>
+              <span style={{ color: 'var(--text-secondary)' }}>{s.context}</span>
             </div>
           ))}
         </div>

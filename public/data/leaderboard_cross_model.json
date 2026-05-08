@@ -1,0 +1,25 @@
+{
+  "proprietary": [
+    {"rank":1,"model":"GPT-5.5","tcr_avg":78.34,"tcr_mc":75.79,"tcr_ec":79.34,"rob":58.22,"sc":61.24,"fd":95.06,"crs":68.28},
+    {"rank":2,"model":"GPT-5.1","tcr_avg":70.33,"tcr_mc":75.79,"tcr_ec":68.18,"rob":56.24,"sc":58.96,"fd":95.37,"crs":63.28},
+    {"rank":3,"model":"GPT-5.4","tcr_avg":71.22,"tcr_mc":71.58,"tcr_ec":71.07,"rob":46.77,"sc":51.51,"fd":90.78,"crs":58.99},
+    {"rank":4,"model":"Gemini-3.1-Pro","tcr_avg":69.57,"tcr_mc":66.32,"tcr_ec":71.07,"rob":45.62,"sc":50.54,"fd":90.23,"crs":57.59},
+    {"rank":5,"model":"Qwen3.6-Plus","tcr_avg":67.06,"tcr_mc":71.58,"tcr_ec":65.29,"rob":43.29,"sc":47.89,"fd":90.38,"crs":55.17},
+    {"rank":6,"model":"GPT-5.2","tcr_avg":65.88,"tcr_mc":61.05,"tcr_ec":67.77,"rob":42.49,"sc":47.21,"fd":90.01,"crs":54.18}
+  ],
+  "open_weight": [
+    {"rank":1,"model":"Gemma-4-31B","tcr_avg":75.37,"tcr_mc":81.05,"tcr_ec":73.14,"rob":52.22,"sc":56.76,"fd":91.90,"crs":63.80,"note":"self-hosted vLLM"},
+    {"rank":2,"model":"GLM-5.1","tcr_avg":72.70,"tcr_mc":72.63,"tcr_ec":72.73,"rob":48.57,"sc":52.74,"fd":92.07,"crs":60.63},
+    {"rank":3,"model":"Mimo-V2.5-Pro","tcr_avg":71.45,"tcr_mc":66.32,"tcr_ec":73.55,"rob":47.85,"sc":52.23,"fd":91.62,"crs":59.65},
+    {"rank":4,"model":"Qwen3.6-27B","tcr_avg":66.63,"tcr_mc":65.26,"tcr_ec":68.60,"rob":45.07,"sc":48.40,"fd":93.12,"crs":55.85,"note":"self-hosted vLLM"},
+    {"rank":5,"model":"DeepSeek-V4-Pro","tcr_avg":66.89,"tcr_mc":57.89,"tcr_ec":70.66,"rob":43.60,"sc":48.56,"fd":89.82,"crs":55.25},
+    {"rank":6,"model":"Qwen3.6-35B-A3B","tcr_avg":60.24,"tcr_mc":51.58,"tcr_ec":63.64,"rob":37.49,"sc":42.17,"fd":88.93,"crs":48.86,"note":"self-hosted vLLM"},
+    {"rank":7,"model":"Ling-2.6","tcr_avg":55.05,"tcr_mc":66.32,"tcr_ec":50.83,"rob":33.09,"sc":37.62,"fd":87.94,"crs":44.07},
+    {"rank":8,"model":"GLM-4.7-Flash","tcr_avg":54.10,"tcr_mc":42.11,"tcr_ec":57.02,"rob":23.54,"sc":30.55,"fd":77.05,"crs":38.82}
+  ],
+  "provider_native": [
+    {"rank":1,"model":"Claude Opus-4.7","tcr_avg":76.13,"tcr_mc":65.26,"tcr_ec":80.58,"rob":57.47,"sc":60.06,"fd":94.06,"crs":66.31,"note":"Claude Code harness"},
+    {"rank":2,"model":"Claude Sonnet-4.6","tcr_avg":73.36,"tcr_mc":63.16,"tcr_ec":77.69,"rob":52.40,"sc":54.80,"fd":93.02,"crs":62.16,"note":"Claude Code harness"},
+    {"rank":3,"model":"Claude Haiku-4.5","tcr_avg":72.29,"tcr_mc":64.21,"tcr_ec":75.62,"rob":50.61,"sc":54.74,"fd":90.54,"crs":60.93,"note":"Claude Code harness"}
+  ]
+}

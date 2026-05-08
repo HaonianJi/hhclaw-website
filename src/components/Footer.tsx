@@ -71,7 +71,7 @@ export default function Footer() {
               </Link>
             ))}
             <a
-              href="https://github.com"
+              href="https://github.com/aiming-lab/ClawArena"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors duration-150"
@@ -91,7 +91,7 @@ export default function Footer() {
             color: 'var(--text-muted)',
           }}
         >
-          <span>© 2026 ClawArena Project. Released under CC BY 4.0.</span>
+          <span>© 2026 ClawArena Project. Released under MIT License.</span>
           <div className="flex items-center gap-1.5">
             <span
               className="w-1.5 h-1.5 rounded-full"

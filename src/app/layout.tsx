@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'ClawArena Benchmark',
   description:
-    'ClawArena: Benchmarking AI Agents in Evolving Information Environments — 64 scenarios, 8 domains, 1,879 evaluation rounds.',
+    'ClawArena: Benchmarking AI Agents in Evolving Information Environments — 12 scenarios, 337 rounds, 18 models, 5 frameworks.',
   keywords: ['AI benchmark', 'agentic evaluation', 'evolving information', 'LLM', 'ClawArena'],
   icons: {
     icon: '/favicon.ico',

@@ -2,35 +2,32 @@
 
 import { useEffect, useState } from 'react';
 
-interface Exp2Row {
+interface ModelRow {
   rank: number;
-  framework: string;
   model: string;
-  provider: string;
-  overall: number;
-  mc_em: number;
-  mc_partial: number | null;
-  ec_pass: number | null;
-  rounds: number | null;
-  complete: string;
-  note: string | null;
+  crs: number;
+  tcr_avg: number;
+  rob: number;
+  note?: string | null;
+}
+
+interface CrossModelData {
+  proprietary: ModelRow[];
+  open_weight: ModelRow[];
+  provider_native: ModelRow[];
 }
 
 function scoreColor(v: number): string {
-  if (v >= 0.7) return 'linear-gradient(90deg, #22c55e, #16a34a)';
-  if (v >= 0.5) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
+  if (v >= 65) return 'linear-gradient(90deg, #22c55e, #16a34a)';
+  if (v >= 55) return 'linear-gradient(90deg, #ff6b35, #f7c948)';
   return 'linear-gradient(90deg, #ef4444, #e2336b)';
 }
 
 function RankBadge({ rank }: { rank: number }) {
-  if (rank === 1) return <span className="rank-badge rank-badge-gold">🥇</span>;
-  if (rank === 2) return <span className="rank-badge rank-badge-silver">🥈</span>;
-  if (rank === 3) return <span className="rank-badge rank-badge-bronze">🥉</span>;
-  return (
-    <span className="rank-badge rank-badge-plain">
-      {rank}
-    </span>
-  );
+  if (rank === 1) return <span className="rank-badge rank-badge-gold">&#129351;</span>;
+  if (rank === 2) return <span className="rank-badge rank-badge-silver">&#129352;</span>;
+  if (rank === 3) return <span className="rank-badge rank-badge-bronze">&#129353;</span>;
+  return <span className="rank-badge rank-badge-plain">{rank}</span>;
 }
 
 function ScoreBar({ value }: { value: number }) {
@@ -40,7 +37,7 @@ function ScoreBar({ value }: { value: number }) {
         <div
           className="score-bar-fill"
           style={{
-            width: `${Math.round(value * 100)}%`,
+            width: `${Math.round(value)}%`,
             background: scoreColor(value),
           }}
         />
@@ -49,19 +46,29 @@ function ScoreBar({ value }: { value: number }) {
         className="tabular-nums font-mono font-semibold"
         style={{ fontSize: '0.8125rem', color: 'var(--text)', minWidth: 38 }}
       >
-        {value.toFixed(3)}
+        {value.toFixed(2)}
       </span>
     </div>
   );
 }
 
 export default function QuickLeaderboard() {
-  const [rows, setRows] = useState<Exp2Row[]>([]);
+  const [rows, setRows] = useState<ModelRow[]>([]);
 
   useEffect(() => {
-    fetch('/data/leaderboard_exp1.json')
+    fetch('/data/leaderboard_cross_model.json')
       .then((r) => r.json())
-      .then((data: Exp2Row[]) => setRows(data));
+      .then((data: CrossModelData) => {
+        // Merge all groups and sort by CRS, take top 6
+        const all = [
+          ...data.proprietary,
+          ...data.open_weight,
+          ...data.provider_native,
+        ].sort((a, b) => b.crs - a.crs);
+        // Re-rank
+        const ranked = all.slice(0, 6).map((r, i) => ({ ...r, rank: i + 1 }));
+        setRows(ranked);
+      });
   }, []);
 
   if (rows.length === 0) {
@@ -86,10 +93,10 @@ export default function QuickLeaderboard() {
         <thead>
           <tr>
             <th style={{ width: 52 }}>#</th>
-            <th>Configuration</th>
-            <th>Overall</th>
-            <th className="hidden sm:table-cell">MC EM</th>
-            <th className="hidden md:table-cell">EC Pass</th>
+            <th>Model</th>
+            <th>CRS</th>
+            <th className="hidden sm:table-cell">TCR</th>
+            <th className="hidden md:table-cell">Robustness</th>
           </tr>
         </thead>
         <tbody className="table-row-stagger">
@@ -109,13 +116,7 @@ export default function QuickLeaderboard() {
                     className="font-semibold"
                     style={{ color: 'var(--text)', fontSize: '0.875rem' }}
                   >
-                    {row.framework}
-                  </span>
-                  <span
-                    className="ml-1"
-                    style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}
-                  >
-                    + {row.model}
+                    {row.model}
                   </span>
                 </div>
                 {row.note && (
@@ -128,31 +129,23 @@ export default function QuickLeaderboard() {
                 )}
               </td>
               <td>
-                <ScoreBar value={row.overall} />
+                <ScoreBar value={row.crs} />
               </td>
               <td className="hidden sm:table-cell">
-                {row.mc_em != null ? (
-                  <span
-                    className="tabular-nums font-mono"
-                    style={{ fontSize: '0.8125rem', color: 'var(--text)' }}
-                  >
-                    {row.mc_em.toFixed(3)}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--text-muted)' }}>—</span>
-                )}
+                <span
+                  className="tabular-nums font-mono"
+                  style={{ fontSize: '0.8125rem', color: 'var(--text)' }}
+                >
+                  {row.tcr_avg.toFixed(2)}
+                </span>
               </td>
               <td className="hidden md:table-cell">
-                {row.ec_pass != null ? (
-                  <span
-                    className="tabular-nums font-mono"
-                    style={{ fontSize: '0.8125rem', color: 'var(--text)' }}
-                  >
-                    {row.ec_pass.toFixed(3)}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--text-muted)' }}>—</span>
-                )}
+                <span
+                  className="tabular-nums font-mono"
+                  style={{ fontSize: '0.8125rem', color: 'var(--text)' }}
+                >
+                  {row.rob.toFixed(2)}
+                </span>
               </td>
             </tr>
           ))}
