@@ -133,7 +133,7 @@ export default function LandingPage() {
           {/* Stats strip */}
           <div className="flex justify-center mt-12">
           <div
-            className="inline-flex gap-0 rounded-xl overflow-hidden"
+            className="inline-grid grid-cols-3 sm:inline-flex sm:gap-0 rounded-xl overflow-hidden"
             style={{
               background: 'var(--surface)',
               border: '1px solid var(--border)',
@@ -149,15 +149,15 @@ export default function LandingPage() {
             ].map(({ value, label }, i, arr) => (
               <div
                 key={label}
-                className="flex flex-col items-center py-4 px-5 sm:px-7"
+                className="flex flex-col items-center py-3 px-4 sm:py-4 sm:px-7"
                 style={{
-                  borderRight: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
+                  borderRight: (i + 1) % 3 !== 0 && i < arr.length - 1 ? '1px solid var(--border)' : 'none',
                 }}
               >
                 <span
                   className="font-bold tabular-nums"
                   style={{
-                    fontSize: '1.5rem',
+                    fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
                     color: 'var(--primary)',
                     lineHeight: 1,
                     letterSpacing: '-0.02em',
@@ -168,7 +168,7 @@ export default function LandingPage() {
                 <span
                   className="mt-1 font-medium"
                   style={{
-                    fontSize: '0.65rem',
+                    fontSize: '0.6rem',
                     color: 'var(--text-muted)',
                     letterSpacing: '0.04em',
                     textTransform: 'uppercase' as const,

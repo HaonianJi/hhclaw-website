@@ -76,8 +76,8 @@ export default function LeaderboardPage() {
 
       {/* Tab switcher */}
       <div
-        className="flex gap-0 mb-6 border-b"
-        style={{ borderColor: 'var(--border)' }}
+        className="flex gap-0 mb-6 border-b overflow-x-auto"
+        style={{ borderColor: 'var(--border)', WebkitOverflowScrolling: 'touch' }}
       >
         {TABS.map(({ id, label }) => (
           <button

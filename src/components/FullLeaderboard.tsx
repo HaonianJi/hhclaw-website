@@ -80,8 +80,12 @@ function GroupTag({ group }: { group: string }) {
   );
 }
 
+type SortKey = 'crs' | 'tcr_avg' | 'tcr_mc' | 'tcr_ec' | 'rob' | 'sc' | 'fd';
+
 export default function FullLeaderboard() {
   const [rows, setRows] = useState<Row[]>([]);
+  const [sortKey, setSortKey] = useState<SortKey>('crs');
+  const [sortAsc, setSortAsc] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -144,6 +148,25 @@ export default function FullLeaderboard() {
     });
   }, []);
 
+  const sortedRows = [...rows].sort((a, b) => {
+    const diff = (a[sortKey] as number) - (b[sortKey] as number);
+    return sortAsc ? diff : -diff;
+  }).map((r, i) => ({ ...r, rank: i + 1 }));
+
+  const handleSort = (key: SortKey) => {
+    if (key === sortKey) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortKey(key);
+      setSortAsc(false);
+    }
+  };
+
+  const sortIndicator = (key: SortKey) => {
+    if (key !== sortKey) return <span style={{ opacity: 0.3, marginLeft: 2 }}>↕</span>;
+    return <span style={{ marginLeft: 2 }}>{sortAsc ? '↑' : '↓'}</span>;
+  };
+
   if (rows.length === 0) {
     return (
       <div className="rounded-xl p-12 text-center" style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
@@ -155,23 +178,23 @@ export default function FullLeaderboard() {
   return (
     <div className="lb-table-container" style={{ maxHeight: 'none' }}>
       <div style={{ overflowX: 'auto' }}>
-        <table className="lb-table" style={{ minWidth: 900 }}>
+        <table className="lb-table">
           <thead>
             <tr>
-              <th style={{ width: 44 }}>#</th>
+              <th style={{ width: 36 }}>#</th>
               <th>Configuration</th>
-              <th>Source</th>
-              <th>CRS</th>
-              <th>TCR</th>
-              <th>MC</th>
-              <th>EC</th>
-              <th>Robustness</th>
-              <th>SC</th>
-              <th>FD</th>
+              <th className="hidden sm:table-cell">Source</th>
+              <th onClick={() => handleSort('crs')} style={{ cursor: 'pointer' }}>CRS {sortIndicator('crs')}</th>
+              <th className="hidden sm:table-cell" onClick={() => handleSort('tcr_avg')} style={{ cursor: 'pointer' }}>TCR {sortIndicator('tcr_avg')}</th>
+              <th className="hidden md:table-cell" onClick={() => handleSort('tcr_mc')} style={{ cursor: 'pointer' }}>MC {sortIndicator('tcr_mc')}</th>
+              <th className="hidden md:table-cell" onClick={() => handleSort('tcr_ec')} style={{ cursor: 'pointer' }}>EC {sortIndicator('tcr_ec')}</th>
+              <th className="hidden lg:table-cell" onClick={() => handleSort('rob')} style={{ cursor: 'pointer' }}>Robustness {sortIndicator('rob')}</th>
+              <th className="hidden lg:table-cell" onClick={() => handleSort('sc')} style={{ cursor: 'pointer' }}>SC {sortIndicator('sc')}</th>
+              <th className="hidden lg:table-cell" onClick={() => handleSort('fd')} style={{ cursor: 'pointer' }}>FD {sortIndicator('fd')}</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, i) => (
+            {sortedRows.map((row, i) => (
               <tr key={`${row.config}-${i}`} style={{ animationDelay: `${i * 25}ms`, cursor: 'default' }}>
                 <td>
                   <span className="font-mono font-bold" style={{ color: row.rank <= 3 ? 'var(--primary)' : 'var(--text-muted)', fontSize: '0.85rem' }}>
@@ -183,35 +206,36 @@ export default function FullLeaderboard() {
                     <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.85rem' }}>
                       {row.model}
                     </span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}> + </span>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
+                    <span className="hidden sm:inline" style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}> + </span>
+                    <span className="hidden sm:inline" style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
                       {row.framework}
                     </span>
+                    <div className="sm:hidden" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 1 }}>
+                      {row.framework}
+                    </div>
                   </div>
                 </td>
-                <td><GroupTag group={row.group} /></td>
+                <td className="hidden sm:table-cell"><GroupTag group={row.group} /></td>
                 <td>{crsBar(row.crs)}</td>
-                <td>{num(row.tcr_avg)}</td>
-                <td>{num(row.tcr_mc)}</td>
-                <td>{num(row.tcr_ec)}</td>
-                <td>{num(row.rob)}</td>
-                <td>{num(row.sc, true)}</td>
-                <td>{num(row.fd, true)}</td>
+                <td className="hidden sm:table-cell">{num(row.tcr_avg)}</td>
+                <td className="hidden md:table-cell">{num(row.tcr_mc)}</td>
+                <td className="hidden md:table-cell">{num(row.tcr_ec)}</td>
+                <td className="hidden lg:table-cell">{num(row.rob)}</td>
+                <td className="hidden lg:table-cell">{num(row.sc, true)}</td>
+                <td className="hidden lg:table-cell">{num(row.fd, true)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <div
-        className="px-4 py-3 flex flex-wrap items-center gap-4"
-        style={{ borderTop: '1px solid var(--border)', fontSize: '0.7rem', color: 'var(--text-muted)' }}
+        className="px-4 py-3 flex flex-wrap items-center gap-2 sm:gap-4"
+        style={{ borderTop: '1px solid var(--border)', fontSize: '0.65rem', color: 'var(--text-muted)' }}
       >
         <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>CRS = (TCR + Robustness) / 2</span>
-        <span>|</span>
-        <span>Robustness = SC × FD</span>
-        <span>|</span>
-        <span>TCR = Task Completion Rate (macro-avg across 12 scenarios, 337 rounds)</span>
-        <span className="ml-auto flex items-center gap-3">
+        <span className="hidden sm:inline">|</span>
+        <span className="hidden sm:inline">12 scenarios, 337 rounds</span>
+        <div className="flex items-center gap-2 sm:gap-3 sm:ml-auto">
           {[
             { color: '#22c55e', label: '≥65' },
             { color: '#f7c948', label: '58–65' },
@@ -220,11 +244,11 @@ export default function FullLeaderboard() {
             { color: '#ef4444', label: '<42' },
           ].map(({ color, label }) => (
             <span key={label} className="flex items-center gap-1">
-              <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ background: color }} />
+              <span className="inline-block w-2 h-2 rounded-sm" style={{ background: color }} />
               {label}
             </span>
           ))}
-        </span>
+        </div>
       </div>
     </div>
   );
