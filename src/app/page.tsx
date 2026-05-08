@@ -227,6 +227,36 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ─── Overview Figure ──────────────────────────────────────── */}
+      <section
+        ref={addRevealRef}
+        className="scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+      >
+        <div className="text-center mb-6">
+          <h2
+            className="font-bold"
+            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
+          >
+            Overview
+          </h2>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
+            An evolving information environment with conflicting and progressively updated evidence,
+            structured along three coupled evaluation dimensions.
+          </p>
+        </div>
+        <div
+          className="rounded-xl overflow-hidden"
+          style={{ border: '1px solid var(--border)', background: '#fff' }}
+        >
+          <img
+            src="/overview.png"
+            alt="ClawArena Overview"
+            className="w-full"
+            style={{ display: 'block' }}
+          />
+        </div>
+      </section>
+
       {/* ─── Quick Leaderboard Preview ──────────────────────────── */}
       <section
         ref={addRevealRef}

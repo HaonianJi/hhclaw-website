@@ -332,6 +332,12 @@ export default function AboutPage() {
           ClawArena scenarios are constructed via a five-stage pipeline combining expert authorship,
           empirical grounding (200+ published distributions), and automated validation.
         </p>
+        <div
+          className="rounded-xl overflow-hidden mb-6"
+          style={{ border: '1px solid var(--border)', background: '#fff' }}
+        >
+          <img src="/pipeline.png" alt="Construction Pipeline" className="w-full" style={{ display: 'block', maxWidth: 600, margin: '0 auto' }} />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {PIPELINE_STEPS.map((ps) => (
             <div
@@ -410,6 +416,54 @@ export default function AboutPage() {
               <span style={{ color: 'var(--text-muted)' }}>{s.ec}</span>
               <span style={{ color: 'var(--text-secondary)' }}>{s.context}</span>
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Domain Gallery */}
+      <section className="mb-14">
+        <h2 className="section-heading mb-2">Cross-Domain Data Samples</h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Each tile presents one scenario in a distinct professional context, highlighting the workspace,
+          session sources, evaluation question, and an evidence chain.
+        </p>
+        <div
+          className="rounded-xl overflow-hidden"
+          style={{ border: '1px solid var(--border)', background: '#fff' }}
+        >
+          <img src="/domain-gallery.png" alt="Cross-domain data sample gallery" className="w-full" style={{ display: 'block' }} />
+        </div>
+      </section>
+
+      {/* Case Studies */}
+      <section className="mb-14">
+        <h2 className="section-heading mb-2">Case Studies</h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Per-option diagnostics across MS, DU, P, and exec_check dimensions. Click to expand.
+        </p>
+        <div className="flex flex-col gap-4">
+          {[
+            { src: '/case_01_02.png', label: 'Case 1-2: Multi-Source Conflict Reasoning & Framework-Induced Divergence' },
+            { src: '/case_03_04.png', label: 'Case 3-4: Self-Diagnostic Accuracy & Authority-Influenced Revision' },
+            { src: '/case_05_06.png', label: 'Case 5-6: Preference Compliance & Compound Format Ceiling' },
+            { src: '/case_07_08.png', label: 'Case 7-8: Update-Specific Failure & JSON Schema Adherence' },
+            { src: '/case_09_10.png', label: 'Case 9-10: Compound Claims & Pipeline Authorship' },
+          ].map(({ src, label }) => (
+            <details
+              key={src}
+              className="rounded-xl overflow-hidden"
+              style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}
+            >
+              <summary
+                className="px-5 py-3 cursor-pointer font-semibold"
+                style={{ fontSize: '0.875rem', color: 'var(--text)' }}
+              >
+                {label}
+              </summary>
+              <div style={{ background: '#fff', borderTop: '1px solid var(--border)' }}>
+                <img src={src} alt={label} className="w-full" style={{ display: 'block' }} />
+              </div>
+            </details>
           ))}
         </div>
       </section>
