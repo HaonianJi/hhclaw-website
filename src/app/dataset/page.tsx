@@ -89,7 +89,6 @@ export default function DatasetPage() {
               className="glass-card rounded-xl p-5 flex flex-col"
               style={{}}
             >
-              <div className="text-4xl mb-4">{dl.icon}</div>
               <h3
                 className="font-bold mb-2"
                 style={{ fontSize: '1rem', color: 'var(--text)' }}

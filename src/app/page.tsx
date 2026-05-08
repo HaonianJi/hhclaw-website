@@ -133,7 +133,7 @@ export default function LandingPage() {
           {/* Stats strip */}
           <div className="flex justify-center mt-12">
           <div
-            className="inline-grid grid-cols-3 sm:inline-flex sm:gap-0 rounded-xl overflow-hidden"
+            className="inline-grid grid-cols-5 rounded-xl overflow-hidden"
             style={{
               background: 'var(--surface)',
               border: '1px solid var(--border)',
@@ -149,9 +149,9 @@ export default function LandingPage() {
             ].map(({ value, label }, i, arr) => (
               <div
                 key={label}
-                className="flex flex-col items-center py-3 px-4 sm:py-4 sm:px-7"
+                className="flex flex-col items-center py-3 px-2 sm:py-4 sm:px-7"
                 style={{
-                  borderRight: (i + 1) % 3 !== 0 && i < arr.length - 1 ? '1px solid var(--border)' : 'none',
+                  borderRight: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
                 }}
               >
                 <span
