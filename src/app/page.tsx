@@ -130,52 +130,51 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Stat Cards — glass morphism */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mt-12">
+          {/* Stats strip */}
+          <div
+            className="inline-flex gap-0 mx-auto mt-12 rounded-xl overflow-hidden"
+            style={{
+              background: 'var(--surface, rgba(255,255,255,0.04))',
+              border: '1px solid var(--border)',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+            }}
+          >
             {[
-              { value: '12',    label: 'Scenarios',    sublabel: 'diverse contexts' },
-              { value: '337',   label: 'Eval Rounds',  sublabel: 'multi-turn interactions' },
-              { value: '18',    label: 'Models',       sublabel: 'proprietary + open-weight' },
-              { value: '5',     label: 'Frameworks',   sublabel: 'agent architectures' },
-            ].map(({ value, label, sublabel }, i) => (
+              { value: '12',  label: 'Scenarios' },
+              { value: '337', label: 'Rounds' },
+              { value: '18',  label: 'Models' },
+              { value: '5',   label: 'Frameworks' },
+              { value: '45',  label: 'Updates' },
+            ].map(({ value, label }, i, arr) => (
               <div
                 key={label}
-                className="text-center rounded-xl p-4 sm:p-5"
+                className="flex flex-col items-center py-4 px-5 sm:px-7"
                 style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
-                  animationDelay: `${i * 80}ms`,
+                  borderRight: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
                 }}
               >
-                <div
-                  className="font-bold stat-number tabular-nums"
+                <span
+                  className="font-bold tabular-nums"
                   style={{
-                    fontSize: 'clamp(1.375rem, 3vw, 2rem)',
-                    background: 'linear-gradient(135deg, #ff6b35, #f7c948)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    lineHeight: 1.1,
-                    fontFeatureSettings: '"tnum"',
+                    fontSize: '1.5rem',
+                    color: 'var(--primary)',
+                    lineHeight: 1,
+                    letterSpacing: '-0.02em',
                   }}
                 >
                   {value}
-                </div>
-                <div
-                  className="font-semibold mt-1"
-                  style={{ fontSize: '0.8rem', color: 'var(--text)' }}
+                </span>
+                <span
+                  className="mt-1 font-medium"
+                  style={{
+                    fontSize: '0.65rem',
+                    color: 'var(--text-muted)',
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase' as const,
+                  }}
                 >
                   {label}
-                </div>
-                <div
-                  className="hidden sm:block mt-0.5"
-                  style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}
-                >
-                  {sublabel}
-                </div>
+                </span>
               </div>
             ))}
           </div>

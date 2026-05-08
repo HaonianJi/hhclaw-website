@@ -7,30 +7,21 @@ const EVAL_DIMS = [
   {
     id: 'MS',
     name: 'Multi-Source Conflict Reasoning',
-    icon: '⚡',
-    color: '#a78bfa',
-    bg: 'rgba(167,139,250,0.1)',
-    border: 'rgba(167,139,250,0.2)',
+    color: '#ff6b35',
     description:
       'Evaluates the agent\'s ability to reconcile contradictory information from multiple sources. Covers four conflict types: C1 (factual), C2 (authority), C3 (non-conflict), and C4 (temporal/process).',
   },
   {
     id: 'DU',
     name: 'Dynamic Belief Revision',
-    icon: '🔄',
-    color: '#22d3ee',
-    bg: 'rgba(34,211,238,0.1)',
-    border: 'rgba(34,211,238,0.2)',
+    color: '#f7c948',
     description:
       'Measures how well agents update their beliefs when workspace files and session histories are modified via dynamic update packages. Difficulty is governed by update design strategy, not volume.',
   },
   {
     id: 'P',
     name: 'Implicit Personalization',
-    icon: '👤',
-    color: '#4ade80',
-    bg: 'rgba(74,222,128,0.1)',
-    border: 'rgba(74,222,128,0.2)',
+    color: '#e2336b',
     description:
       'Tests whether agents can infer unstated user preferences from behavioral patterns in session histories — explicit preferences alone are insufficient for top performance.',
   },
@@ -147,28 +138,25 @@ export default function AboutPage() {
           {EVAL_DIMS.map((dim) => (
             <div
               key={dim.id}
-              className="glass-card rounded-xl p-5"
+              className="rounded-xl p-5"
+              style={{
+                background: 'var(--surface, rgba(255,255,255,0.03))',
+                border: '1px solid var(--border)',
+                borderLeft: `3px solid ${dim.color}`,
+              }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: dim.bg, border: `1px solid ${dim.border}` }}
+              <div className="mb-3">
+                <span
+                  className="font-mono font-bold text-xs"
+                  style={{ color: dim.color, letterSpacing: '0.06em' }}
                 >
-                  {dim.icon}
-                </div>
-                <div>
-                  <span
-                    className="inline-block px-2 py-0.5 rounded-full text-xs font-bold font-mono"
-                    style={{ background: dim.bg, color: dim.color, border: `1px solid ${dim.border}` }}
-                  >
-                    {dim.id}
-                  </span>
-                  <div
-                    className="font-semibold mt-0.5"
-                    style={{ fontSize: '0.875rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
-                  >
-                    {dim.name}
-                  </div>
+                  {dim.id}
+                </span>
+                <div
+                  className="font-semibold mt-1"
+                  style={{ fontSize: '0.9rem', color: 'var(--text)', letterSpacing: '-0.01em' }}
+                >
+                  {dim.name}
                 </div>
               </div>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
