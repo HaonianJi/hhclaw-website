@@ -402,7 +402,7 @@ const KEY_FINDINGS = [
   {
     num: '01',
     title: 'Model capability dominates framework design',
-    description: 'Model choice accounts for a 29-point CRS range across 18 models, while framework design accounts for 17 points across 5 frameworks. The right model matters nearly twice as much as the right framework.',
+    description: 'Model choice accounts for a 29-point CRS range across 18 models, while framework design accounts for up to 24 points across 4 frameworks. Model capability still dominates, but framework choice is more consequential than previously reported.',
   },
   {
     num: '02',

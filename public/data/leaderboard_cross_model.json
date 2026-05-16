@@ -11,11 +11,12 @@
     {"rank":1,"model":"Gemma-4-31B","tcr_avg":75.37,"tcr_mc":81.05,"tcr_ec":73.14,"rob":52.22,"sc":56.76,"fd":91.90,"crs":63.80,"note":"self-hosted vLLM"},
     {"rank":2,"model":"GLM-5.1","tcr_avg":72.70,"tcr_mc":72.63,"tcr_ec":72.73,"rob":48.57,"sc":52.74,"fd":92.07,"crs":60.63},
     {"rank":3,"model":"Mimo-V2.5-Pro","tcr_avg":71.45,"tcr_mc":66.32,"tcr_ec":73.55,"rob":47.85,"sc":52.23,"fd":91.62,"crs":59.65},
-    {"rank":4,"model":"Qwen3.6-27B","tcr_avg":66.63,"tcr_mc":65.26,"tcr_ec":68.60,"rob":45.07,"sc":48.40,"fd":93.12,"crs":55.85,"note":"self-hosted vLLM"},
-    {"rank":5,"model":"DeepSeek-V4-Pro","tcr_avg":66.89,"tcr_mc":57.89,"tcr_ec":70.66,"rob":43.60,"sc":48.56,"fd":89.82,"crs":55.25},
-    {"rank":6,"model":"Qwen3.6-35B-A3B","tcr_avg":60.24,"tcr_mc":51.58,"tcr_ec":63.64,"rob":37.49,"sc":42.17,"fd":88.93,"crs":48.86,"note":"self-hosted vLLM"},
-    {"rank":7,"model":"Ling-2.6","tcr_avg":55.05,"tcr_mc":66.32,"tcr_ec":50.83,"rob":33.09,"sc":37.62,"fd":87.94,"crs":44.07},
-    {"rank":8,"model":"GLM-4.7-Flash","tcr_avg":54.10,"tcr_mc":42.11,"tcr_ec":57.02,"rob":23.54,"sc":30.55,"fd":77.05,"crs":38.82}
+    {"rank":4,"model":"Kimi-K2.5","tcr_avg":69.44,"tcr_mc":60.00,"tcr_ec":73.14,"rob":45.08,"sc":48.86,"fd":90.02,"crs":57.24},
+    {"rank":5,"model":"Qwen3.6-27B","tcr_avg":66.63,"tcr_mc":65.26,"tcr_ec":68.60,"rob":45.07,"sc":48.40,"fd":93.12,"crs":55.85,"note":"self-hosted vLLM"},
+    {"rank":6,"model":"DeepSeek-V4-Pro","tcr_avg":66.89,"tcr_mc":57.89,"tcr_ec":70.66,"rob":43.60,"sc":48.56,"fd":89.82,"crs":55.25},
+    {"rank":7,"model":"Qwen3.6-35B-A3B","tcr_avg":60.24,"tcr_mc":51.58,"tcr_ec":63.64,"rob":37.49,"sc":42.17,"fd":88.93,"crs":48.86,"note":"self-hosted vLLM"},
+    {"rank":8,"model":"Ling-2.6","tcr_avg":55.05,"tcr_mc":66.32,"tcr_ec":50.83,"rob":33.09,"sc":37.62,"fd":87.94,"crs":44.07},
+    {"rank":9,"model":"GLM-4.7-Flash","tcr_avg":54.10,"tcr_mc":42.11,"tcr_ec":57.02,"rob":23.54,"sc":30.55,"fd":77.05,"crs":38.82}
   ],
   "provider_native": [
     {"rank":1,"model":"Claude Opus-4.7","tcr_avg":76.13,"tcr_mc":65.26,"tcr_ec":80.58,"rob":57.47,"sc":60.06,"fd":94.06,"crs":66.31,"note":"Claude Code harness"},

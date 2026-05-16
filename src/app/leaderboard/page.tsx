@@ -28,7 +28,7 @@ const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
   framework: {
     title: 'Cross-Framework Comparison',
     table: 'Table 4',
-    desc: 'Five agent frameworks evaluated under GPT-5.1, plus three frameworks under Kimi-K2.5 to test generalization.',
+    desc: 'Four frameworks evaluated under three models (GPT-5.5, GPT-5.1, Kimi-K2.5) spanning two providers, testing whether framework effects generalize.',
   },
   metaclaw: {
     title: 'MetaClaw Overlay Ablation',

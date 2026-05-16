@@ -1,4 +1,6 @@
 [
+  {"model":"GPT-5.5","config":"Baseline","tcr_avg":78.34,"tcr_mc":75.79,"tcr_ec":79.34,"sc":61.24,"fd":95.06,"crs":68.28},
+  {"model":"GPT-5.5","config":"+MetaClaw skills","tcr_avg":78.86,"tcr_mc":75.79,"tcr_ec":80.58,"sc":61.90,"fd":95.19,"crs":68.89,"delta":0.61},
   {"model":"GPT-5.1","config":"Baseline","tcr_avg":70.33,"tcr_mc":75.79,"tcr_ec":68.18,"sc":58.96,"fd":95.37,"crs":63.28},
   {"model":"GPT-5.1","config":"+MetaClaw skills","tcr_avg":70.62,"tcr_mc":74.74,"tcr_ec":69.01,"sc":59.05,"fd":96.22,"crs":63.72,"delta":0.44},
   {"model":"GLM-5.1","config":"Baseline","tcr_avg":72.70,"tcr_mc":72.63,"tcr_ec":72.73,"sc":52.74,"fd":92.07,"crs":60.63},

@@ -57,6 +57,7 @@ export interface CrossModelData {
 }
 
 export interface CrossFrameworkData {
+  gpt55: FrameworkRow[];
   gpt51: FrameworkRow[];
   kimi_k25: FrameworkRow[];
 }
@@ -296,6 +297,7 @@ export function CrossFrameworkTable({ data }: { data: CrossFrameworkData }) {
   );
 
   const sections = [
+    { title: 'GPT-5.5', data: data.gpt55 },
     { title: 'GPT-5.1', data: data.gpt51 },
     { title: 'Kimi-K2.5', data: data.kimi_k25 },
   ];
@@ -366,7 +368,7 @@ export function MetaClawTable({ data }: { data: MetaClawRow[] }) {
   });
 
   // Group by model pairs
-  const models = ['GPT-5.1', 'GLM-5.1', 'Qwen3.6-Plus'];
+  const models = ['GPT-5.5', 'GPT-5.1', 'GLM-5.1', 'Qwen3.6-Plus'];
 
   return (
     <div className="lb-table-container" style={{ maxHeight: 600, overflowY: 'auto' }}>
