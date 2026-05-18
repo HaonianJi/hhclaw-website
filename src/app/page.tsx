@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import { ArrowRight, Database, BarChart3, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, Database, ExternalLink } from 'lucide-react';
 import FullLeaderboard from '@/components/FullLeaderboard';
 
 export default function LandingPage() {
@@ -12,383 +12,161 @@ export default function LandingPage() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+          if (entry.isIntersecting) entry.target.classList.add('visible');
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
-
-    revealRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
+    revealRefs.current.forEach((el) => { if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, []);
 
   const addRevealRef = (el: HTMLElement | null) => {
-    if (el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el);
-    }
+    if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el);
   };
 
   return (
     <div>
-      {/* ─── Hero ──────────────────────────────────────────────────── */}
-      <section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          background:
-            'radial-gradient(ellipse at 30% 0%, rgba(120,50,255,0.15) 0%, transparent 50%), ' +
-            'radial-gradient(ellipse at 70% 0%, rgba(255,100,50,0.10) 0%, transparent 50%), ' +
-            'var(--bg)',
-          borderBottom: '1px solid var(--border)',
-        }}
-      >
-        {/* Animated background orbs */}
-        <div className="hero-orb hero-orb-1" />
-        <div className="hero-orb hero-orb-2" />
-        <div className="hero-orb hero-orb-3" />
-
-        {/* Dot grid */}
-        <div className="hero-grid" />
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32" style={{ position: 'relative', zIndex: 1 }}>
-          {/* Live badge */}
-          <div className="flex justify-center mb-8">
-            <span
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold pulse-badge-anim"
-              style={{
-                background: 'rgba(255,107,53,0.1)',
-                color: '#ff6b35',
-                border: '1px solid rgba(255,107,53,0.3)',
-                letterSpacing: '0.02em',
-              }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{
-                  background: '#ff6b35',
-                  boxShadow: '0 0 6px rgba(255,107,53,0.8)',
-                  animation: 'pulse-dot 2s ease-in-out infinite',
-                }}
-              />
-              Benchmark for AI Agents in Evolving Environments
-            </span>
-          </div>
-
-          {/* Title */}
-          <div className="text-center mb-8">
-            <h1
-              className="font-bold tracking-tight leading-tight mb-4"
-              style={{
-                fontSize: 'clamp(3rem, 7vw, 5rem)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.05,
-              }}
-            >
-              <img
-                src="/clawarena-logo.png"
-                alt="ClawArena"
-                width={120}
-                height={120}
-                style={{
-                  display: 'inline-block',
-                  marginRight: '0.2em',
-                  verticalAlign: 'middle',
-                  borderRadius: '12px',
-                  filter: 'drop-shadow(0 0 16px rgba(255,107,53,0.5))',
-                }}
-              />
-              <span className="gradient-text">ClawArena</span>
-            </h1>
-            <p
-              className="mx-auto max-w-2xl font-semibold"
-              style={{
-                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-                color: 'var(--text-secondary)',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Benchmarking AI Agents in Evolving Information Environments
-            </p>
-            <p
-              className="mt-5 mx-auto max-w-2xl leading-relaxed"
-              style={{
-                fontSize: '1rem',
-                color: 'var(--text-secondary)',
-                lineHeight: 1.75,
-              }}
-            >
-              A rigorous evaluation framework for AI agents — measuring reasoning under{' '}
-              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>multi-source conflicts</strong>,{' '}
-              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>dynamic belief revision</strong>, and{' '}
-              <strong style={{ color: 'var(--text)', fontWeight: 600 }}>implicit personalization</strong> across
-              12 multi-turn scenarios spanning diverse professional contexts.
-            </p>
-          </div>
-
-          {/* Stats strip */}
-          <div className="flex justify-center mt-12">
-          <div
-            className="inline-grid grid-cols-5 rounded-xl overflow-hidden"
-            style={{
-              background: 'var(--surface)',
-              border: '1px solid var(--border)',
-              boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
-            }}
-          >
-            {[
-              { value: '12',  label: 'Scenarios' },
-              { value: '337', label: 'Rounds' },
-              { value: '18',  label: 'Models' },
-              { value: '5',   label: 'Frameworks' },
-              { value: '45',  label: 'Updates' },
-            ].map(({ value, label }, i, arr) => (
-              <div
-                key={label}
-                className="flex flex-col items-center py-3 px-2 sm:py-4 sm:px-7"
-                style={{
-                  borderRight: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
-                }}
-              >
-                <span
-                  className="font-bold tabular-nums"
-                  style={{
-                    fontSize: 'clamp(1.25rem, 3vw, 1.5rem)',
-                    color: 'var(--primary)',
-                    lineHeight: 1,
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {value}
-                </span>
-                <span
-                  className="mt-1 font-medium"
-                  style={{
-                    fontSize: '0.6rem',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.04em',
-                    textTransform: 'uppercase' as const,
-                  }}
-                >
-                  {label}
-                </span>
+      {/* ─── Compact Hero ─────────────────────────────────────────── */}
+      <section style={{ borderBottom: '1px solid var(--border)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <img
+              src="/clawarena-logo.png"
+              alt="ClawArena"
+              width={72}
+              height={72}
+              style={{ borderRadius: 12, flexShrink: 0 }}
+            />
+            <div className="flex-1">
+              <h1 className="font-bold tracking-tight" style={{ fontSize: '1.75rem', color: 'var(--text)', letterSpacing: '-0.03em' }}>
+                ClawArena
+              </h1>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.6 }}>
+                Benchmarking AI agents in evolving information environments — <strong style={{ color: 'var(--text)' }}>multi-source conflicts</strong>,{' '}
+                <strong style={{ color: 'var(--text)' }}>dynamic belief revision</strong>, and{' '}
+                <strong style={{ color: 'var(--text)' }}>implicit personalization</strong>.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 mt-4">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold" style={{ background: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}>12 scenarios</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold" style={{ background: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}>337 rounds</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold" style={{ background: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}>18 models</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold" style={{ background: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}>5 frameworks</span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold" style={{ background: 'var(--primary-light)', color: 'var(--primary)', border: '1px solid rgba(255,107,53,0.2)' }}>45 updates</span>
               </div>
-            ))}
+            </div>
+            <div className="flex flex-wrap gap-2 sm:flex-col">
+              <a href="https://arxiv.org/abs/2604.04202" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors" style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
+                <BookOpen size={13} /> Paper
+              </a>
+              <a href="https://github.com/aiming-lab/ClawArena" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors" style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
+                <ExternalLink size={13} /> GitHub
+              </a>
+              <a href="https://huggingface.co/datasets/Haonian/ClawArena" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors" style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
+                <Database size={13} /> Dataset
+              </a>
+            </div>
           </div>
-          </div>
+        </div>
+      </section>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10">
+      {/* ─── Comparison Table ─────────────────────────────────────── */}
+      <section ref={addRevealRef} className="scroll-reveal" style={{ borderBottom: '1px solid var(--border)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-bold" style={{ fontSize: '1.125rem', color: 'var(--text)', letterSpacing: '-0.02em' }}>
+              Comparison with Agent Benchmarks
+            </h2>
+          </div>
+          <div className="lb-table-container" style={{ maxHeight: 'none' }}>
+            <div style={{ overflowX: 'auto' }}>
+              <table className="lb-table" style={{ fontSize: '0.8rem' }}>
+                <thead>
+                  <tr>
+                    <th>Benchmark</th>
+                    <th style={{ textAlign: 'center' }}>MSC</th>
+                    <th style={{ textAlign: 'center' }}>DU</th>
+                    <th style={{ textAlign: 'center' }}>MU</th>
+                    <th style={{ textAlign: 'center' }}>Pref.</th>
+                    <th className="hidden sm:table-cell">Verification</th>
+                    <th className="hidden sm:table-cell" style={{ textAlign: 'center' }}>Frmw.</th>
+                    <th className="hidden md:table-cell">Scale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BENCHMARKS.map((b) => (
+                    <tr key={b.name} style={{ cursor: 'default', background: b.ours ? 'rgba(255,107,53,0.05)' : undefined }}>
+                      <td style={{ fontWeight: b.ours ? 700 : 500, color: b.ours ? 'var(--primary)' : 'var(--text)' }}>{b.name}</td>
+                      <td style={{ textAlign: 'center' }}>{_mark(b.msc)}</td>
+                      <td style={{ textAlign: 'center' }}>{_mark(b.du)}</td>
+                      <td style={{ textAlign: 'center' }}>{_mark(b.mu)}</td>
+                      <td style={{ textAlign: 'center' }}>{_mark(b.pref)}</td>
+                      <td className="hidden sm:table-cell" style={{ color: 'var(--text-muted)', fontWeight: b.ours ? 600 : 400 }}>{b.verify}</td>
+                      <td className="hidden sm:table-cell" style={{ textAlign: 'center', fontWeight: b.ours ? 700 : 400, color: b.ours ? 'var(--primary)' : 'var(--text-secondary)' }}>{b.fw}</td>
+                      <td className="hidden md:table-cell" style={{ color: 'var(--text-muted)', fontWeight: b.ours ? 600 : 400 }}>{b.scale}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="px-4 py-2" style={{ borderTop: '1px solid var(--border)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+              MSC: multi-source conflict · DU: dynamic updates · MU: multi-turn user · Pref: implicit preferences · &#9989; supported · &#10060; unsupported · &#128993; partial
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Leaderboard ──────────────────────────────────────────── */}
+      <section ref={addRevealRef} className="scroll-reveal">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-bold" style={{ fontSize: '1.125rem', color: 'var(--text)', letterSpacing: '-0.02em' }}>
+                Leaderboard
+              </h2>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: 2 }}>
+                18 models ranked by CRS. Click column headers to sort.
+              </p>
+            </div>
             <Link
               href="/leaderboard"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 hover:scale-[1.03] hover:shadow-xl"
-              style={{
-                background: 'linear-gradient(135deg, #ff6b35, #e2336b)',
-                fontSize: '0.9375rem',
-                boxShadow: '0 4px 16px rgba(255,107,53,0.35)',
-                letterSpacing: '-0.01em',
-              }}
+              className="inline-flex items-center gap-1.5 font-medium text-xs transition-all hover:gap-2"
+              style={{ color: 'var(--primary)' }}
             >
-              <BarChart3 size={16} />
-              View Leaderboard
-              <ArrowRight size={14} />
-            </Link>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-[1.03]"
-              style={{
-                border: '1px solid rgba(255,107,53,0.35)',
-                color: '#ff6b35',
-                background: 'rgba(255,107,53,0.06)',
-                fontSize: '0.9375rem',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              <BookOpen size={16} />
-              Read Paper
-            </Link>
-            <Link
-              href="/dataset"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:scale-[1.03]"
-              style={{
-                border: '1px solid var(--border)',
-                color: 'var(--text-secondary)',
-                background: 'rgba(255,255,255,0.03)',
-                fontSize: '0.9375rem',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              <Database size={16} />
-              Get Dataset
+              Model &amp; Harness breakdown
+              <ArrowRight size={13} />
             </Link>
           </div>
+          <FullLeaderboard />
         </div>
       </section>
 
       {/* ─── Overview Figure ──────────────────────────────────────── */}
-      <section
-        ref={addRevealRef}
-        className="scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
-      >
-        <div className="text-center mb-6">
-          <h2
-            className="font-bold"
-            style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
-          >
-            Overview
+      <section ref={addRevealRef} className="scroll-reveal" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <h2 className="font-bold mb-4" style={{ fontSize: '1.125rem', color: 'var(--text)', letterSpacing: '-0.02em' }}>
+            How it works
           </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-            An evolving information environment with conflicting and progressively updated evidence,
-            structured along three coupled evaluation dimensions.
-          </p>
-        </div>
-        <div
-          className="rounded-xl overflow-hidden"
-          style={{ border: '1px solid var(--border)', background: '#fff' }}
-        >
-          <img
-            src="/overview.png"
-            alt="ClawArena Overview"
-            className="w-full"
-            style={{ display: 'block' }}
-          />
-        </div>
-      </section>
-
-      {/* ─── Full Leaderboard ──────────────────────────────────── */}
-      <section
-        ref={addRevealRef}
-        className="scroll-reveal max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2
-              className="font-bold"
-              style={{ fontSize: '1.5rem', color: 'var(--text)', letterSpacing: '-0.02em' }}
-            >
-              Leaderboard
-            </h2>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              All configurations ranked by CRS (Composite Reliability Score) — 18 models × 5 frameworks
-            </p>
-          </div>
-          <Link
-            href="/leaderboard"
-            className="inline-flex items-center gap-1.5 font-medium text-sm transition-all duration-150 hover:gap-2"
-            style={{ color: 'var(--primary)' }}
-          >
-            Detailed breakdown
-            <ArrowRight size={14} />
-          </Link>
-        </div>
-
-        <FullLeaderboard />
-      </section>
-
-      {/* ─── Key Findings ───────────────────────────────────────── */}
-      <section
-        style={{
-          borderTop: '1px solid var(--border)',
-          borderBottom: '1px solid var(--border)',
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h2
-            ref={addRevealRef}
-            className="scroll-reveal font-bold mb-12"
-            style={{ fontSize: '1.75rem', color: 'var(--text)', letterSpacing: '-0.03em' }}
-          >
-            What we found
-          </h2>
-          <div className="flex flex-col gap-0">
-            {KEY_FINDINGS.map((f, i) => (
-              <div
-                key={f.num}
-                ref={addRevealRef}
-                className="scroll-reveal flex gap-6 py-6"
-                style={{
-                  transitionDelay: `${i * 80}ms`,
-                  borderBottom: i < KEY_FINDINGS.length - 1 ? '1px solid var(--border)' : 'none',
-                }}
-              >
-                <span
-                  className="font-mono font-bold shrink-0"
-                  style={{ fontSize: '3rem', lineHeight: 1, color: 'rgba(255,107,53,0.2)', width: 60, textAlign: 'right' }}
-                >
-                  {f.num}
-                </span>
-                <div>
-                  <h3 className="font-semibold mb-1" style={{ fontSize: '1.05rem', color: 'var(--text)', letterSpacing: '-0.01em' }}>
-                    {f.title}
-                  </h3>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-                    {f.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--border)', background: '#fff' }}>
+            <img src="/overview.png" alt="ClawArena Overview" className="w-full" style={{ display: 'block' }} />
           </div>
         </div>
       </section>
 
-      {/* ─── Evaluation Dimensions ──────────────────────────────── */}
-      <section>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <h2
-            ref={addRevealRef}
-            className="scroll-reveal font-bold mb-4"
-            style={{ fontSize: '1.75rem', color: 'var(--text)', letterSpacing: '-0.03em' }}
-          >
-            Three coupled challenges
+      {/* ─── Key Findings (compact) ───────────────────────────────── */}
+      <section ref={addRevealRef} className="scroll-reveal" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <h2 className="font-bold mb-6" style={{ fontSize: '1.125rem', color: 'var(--text)', letterSpacing: '-0.02em' }}>
+            Key findings
           </h2>
-          <p
-            ref={addRevealRef}
-            className="scroll-reveal mb-10"
-            style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: 560 }}
-          >
-            Real information environments are multi-source, dynamic, and personalized. ClawArena evaluates all three jointly.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: 'var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-            {DIMENSIONS.map((d, i) => (
-              <div
-                key={d.tag}
-                ref={addRevealRef}
-                className="scroll-reveal"
-                style={{
-                  background: 'var(--bg)',
-                  padding: '28px 24px',
-                  transitionDelay: `${i * 60}ms`,
-                }}
-              >
-                <span
-                  className="font-mono font-bold"
-                  style={{ fontSize: '0.7rem', color: d.color, letterSpacing: '0.08em', textTransform: 'uppercase' as const }}
-                >
-                  {d.tag}
-                </span>
-                <h3 className="font-semibold mt-2 mb-2" style={{ fontSize: '1rem', color: 'var(--text)' }}>
-                  {d.title}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {KEY_FINDINGS.map((f) => (
+              <div key={f.num} className="rounded-xl p-4" style={{ border: '1px solid var(--border)', background: 'var(--surface)' }}>
+                <span className="font-mono font-bold text-xs" style={{ color: 'var(--primary)' }}>{f.num}</span>
+                <h3 className="font-semibold mt-1 mb-2" style={{ fontSize: '0.875rem', color: 'var(--text)', lineHeight: 1.4 }}>
+                  {f.title}
                 </h3>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', lineHeight: 1.65 }}>
-                  {d.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Additional capabilities - compact list */}
-          <div
-            ref={addRevealRef}
-            className="scroll-reveal mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6"
-          >
-            {EXTRAS.map((e) => (
-              <div key={e.title}>
-                <h4 className="font-semibold mb-1" style={{ fontSize: '0.875rem', color: 'var(--text)' }}>{e.title}</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{e.description}</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{f.description}</p>
               </div>
             ))}
           </div>
@@ -398,56 +176,40 @@ export default function LandingPage() {
   );
 }
 
+function _mark(v: string) {
+  if (v === 'true') return '\u2705';
+  if (v === 'partial') return '\uD83D\uDFE1';
+  return '\u274C';
+}
+
+const BENCHMARKS = [
+  { name: 'ClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 8, scale: '283 / 144 sites' },
+  { name: 'Claw-Eval', msc: 'false', du: 'false', mu: 'true', pref: 'false', verify: 'rule+llm', fw: 1, scale: '300 / 9 cats' },
+  { name: 'Claw-Eval-Live', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '105 / 17 fam.' },
+  { name: 'ClawMark', msc: 'true', du: 'true', mu: 'true', pref: 'false', verify: 'rule-based', fw: 1, scale: '100 / 13 scen.' },
+  { name: 'ClawsBench', msc: 'true', du: 'false', mu: 'false', pref: 'false', verify: 'rule-based', fw: 4, scale: '44 / 5 svc.' },
+  { name: 'MetaClawBench', msc: 'partial', du: 'true', mu: 'true', pref: 'partial', verify: 'rule-based', fw: 1, scale: '346 / 30 days' },
+  { name: 'PinchBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '23 / 8 cats' },
+  { name: 'QwenClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'partial', verify: 'rule+llm', fw: 1, scale: '100 / 8 dom.' },
+  { name: 'WildClawBench', msc: 'true', du: 'false', mu: 'false', pref: 'partial', verify: 'rule+llm', fw: 1, scale: '60 / 6 cats' },
+  { name: 'ZClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '116 / 6 cats' },
+  { name: 'ClawArena (Ours)', msc: 'true', du: 'true', mu: 'true', pref: 'true', verify: 'rule-based', fw: 5, scale: '337 / 12 scen.', ours: true },
+];
+
 const KEY_FINDINGS = [
   {
     num: '01',
-    title: 'Model capability dominates framework design',
-    description: 'Model choice accounts for a 29-point CRS range across 18 models, while framework design accounts for up to 24 points across 4 frameworks. Model capability still dominates, but framework choice is more consequential than previously reported.',
+    title: 'Model > Framework',
+    description: '29-point CRS range across models vs up to 24 points across frameworks. Model capability still dominates.',
   },
   {
     num: '02',
-    title: 'MetaClaw improves robustness without degrading accuracy',
-    description: 'Skill-based self-evolution consistently improves CRS by 0.33–1.19 across all three tested model families. The mechanism is behavioral consistency (SC and FD both rise), not raw accuracy.',
+    title: 'MetaClaw improves robustness',
+    description: 'Skill injection improves CRS by 0.33–1.19 across all four tested families through behavioral consistency, not accuracy.',
   },
   {
     num: '03',
-    title: 'Belief revision difficulty is governed by update design',
-    description: 'Updates that force re-interpretation of earlier claims cause clustered failures, while updates that merely extend prior evidence are handled reliably. Update specificity, not volume, determines difficulty.',
-  },
-];
-
-const DIMENSIONS = [
-  {
-    tag: 'MS',
-    title: 'Multi-Source Conflict',
-    description: 'Evidence is scattered across heterogeneous sources that may contradict each other. The agent must judge source reliability across four canonical conflict types.',
-    color: '#ff6b35',
-  },
-  {
-    tag: 'DU',
-    title: 'Dynamic Belief Revision',
-    description: 'New evidence can invalidate previously correct conclusions. 45 staged updates across 12 scenarios test whether agents revise rather than simply accumulate.',
-    color: '#f7c948',
-  },
-  {
-    tag: 'P',
-    title: 'Implicit Personalization',
-    description: 'User preferences surface through corrections and behavioral patterns, not explicit instructions. A four-stage protocol ends in silent-exam rounds.',
-    color: '#e2336b',
-  },
-];
-
-const EXTRAS = [
-  {
-    title: '14-category taxonomy',
-    description: '7 dimension combinations × 2 types (Recall, Reasoning) prevent systems from scoring well by solving only one dimension.',
-  },
-  {
-    title: 'Executable checks',
-    description: 'Shell-based verification of workspace file state. Agents must produce working artifacts, not just text answers.',
-  },
-  {
-    title: '6-layer specifications',
-    description: 'Hidden ground truth (L0) is never shown to agents. Observable layers are noisy, partial reflections of the same underlying reality.',
+    title: 'Update design > update volume',
+    description: 'Updates forcing re-interpretation cause clustered failures. Updates that merely extend evidence are handled reliably.',
   },
 ];
