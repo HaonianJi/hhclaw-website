@@ -128,6 +128,68 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Comparison with Other Benchmarks */}
+      <section className="mb-14">
+        <h2 className="section-heading mb-2">Comparison with Other Benchmarks</h2>
+        <p className="mb-6" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+          Four design axes that drive evolving information environments: multi-source conflict (MSC),
+          dynamic updates (DU), multi-turn user engagement (MU), and implicit preferences (Pref).
+        </p>
+        <div className="lb-table-container" style={{ maxHeight: 'none' }}>
+          <div style={{ overflowX: 'auto' }}>
+            <table className="lb-table" style={{ fontSize: '0.8rem' }}>
+              <thead>
+                <tr>
+                  <th>Benchmark</th>
+                  <th>MSC</th>
+                  <th>DU</th>
+                  <th>MU</th>
+                  <th>Pref.</th>
+                  <th className="hidden sm:table-cell">Verification</th>
+                  <th className="hidden sm:table-cell">Frmw.</th>
+                  <th className="hidden md:table-cell">Scale</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { name: 'ClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 8, scale: '283 / 144 sites' },
+                  { name: 'Claw-Eval', msc: 'false', du: 'false', mu: 'true', pref: 'false', verify: 'rule+llm', fw: 1, scale: '300 / 9 cats' },
+                  { name: 'Claw-Eval-Live', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '105 / 17 fam.' },
+                  { name: 'ClawMark', msc: 'true', du: 'true', mu: 'true', pref: 'false', verify: 'rule-based', fw: 1, scale: '100 / 13 scen.' },
+                  { name: 'ClawsBench', msc: 'true', du: 'false', mu: 'false', pref: 'false', verify: 'rule-based', fw: 4, scale: '44 / 5 svc.' },
+                  { name: 'MetaClawBench', msc: 'partial', du: 'true', mu: 'true', pref: 'partial', verify: 'rule-based', fw: 1, scale: '346 / 30 days' },
+                  { name: 'PinchBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '23 / 8 cats' },
+                  { name: 'QwenClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'partial', verify: 'rule+llm', fw: 1, scale: '100 / 8 dom.' },
+                  { name: 'WildClawBench', msc: 'true', du: 'false', mu: 'false', pref: 'partial', verify: 'rule+llm', fw: 1, scale: '60 / 6 cats' },
+                  { name: 'ZClawBench', msc: 'false', du: 'false', mu: 'false', pref: 'false', verify: 'rule+llm', fw: 1, scale: '116 / 6 cats' },
+                ].map((b) => (
+                  <tr key={b.name} style={{ cursor: 'default' }}>
+                    <td style={{ fontWeight: 500 }}>{b.name}</td>
+                    <td>{b.msc === 'true' ? '\u2705' : b.msc === 'partial' ? '\uD83D\uDFE1' : '\u274C'}</td>
+                    <td>{b.du === 'true' ? '\u2705' : b.du === 'partial' ? '\uD83D\uDFE1' : '\u274C'}</td>
+                    <td>{b.mu === 'true' ? '\u2705' : b.mu === 'partial' ? '\uD83D\uDFE1' : '\u274C'}</td>
+                    <td>{b.pref === 'true' ? '\u2705' : b.pref === 'partial' ? '\uD83D\uDFE1' : '\u274C'}</td>
+                    <td className="hidden sm:table-cell" style={{ color: 'var(--text-muted)' }}>{b.verify}</td>
+                    <td className="hidden sm:table-cell">{b.fw}</td>
+                    <td className="hidden md:table-cell" style={{ color: 'var(--text-muted)' }}>{b.scale}</td>
+                  </tr>
+                ))}
+                <tr style={{ cursor: 'default', background: 'rgba(255,107,53,0.06)' }}>
+                  <td style={{ fontWeight: 700, color: 'var(--primary)' }}>ClawArena (Ours)</td>
+                  <td>{'\u2705'}</td>
+                  <td>{'\u2705'}</td>
+                  <td>{'\u2705'}</td>
+                  <td>{'\u2705'}</td>
+                  <td className="hidden sm:table-cell" style={{ fontWeight: 600 }}>rule-based</td>
+                  <td className="hidden sm:table-cell" style={{ fontWeight: 700, color: 'var(--primary)' }}>5</td>
+                  <td className="hidden md:table-cell" style={{ fontWeight: 600 }}>337 / 12 scen.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* 3 Evaluation Dimensions */}
       <section className="mb-14">
         <h2 className="section-heading mb-2">3 Evaluation Dimensions</h2>

@@ -11,12 +11,12 @@ import {
 } from '@/components/LeaderboardTable';
 import { Info } from 'lucide-react';
 
-type Tab = 'model' | 'framework' | 'metaclaw';
+type Tab = 'model' | 'framework' /* | 'metaclaw' */;
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: 'model', label: 'Cross-Model' },
-  { id: 'framework', label: 'Cross-Framework' },
-  { id: 'metaclaw', label: 'MetaClaw Overlay' },
+  { id: 'model', label: 'Model' },
+  { id: 'framework', label: 'Harness' },
+  // { id: 'metaclaw', label: 'MetaClaw' },
 ];
 
 const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
@@ -30,11 +30,11 @@ const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
     table: 'Table 4',
     desc: 'Four frameworks evaluated under three models (GPT-5.5, GPT-5.1, Kimi-K2.5) spanning two providers, testing whether framework effects generalize.',
   },
-  metaclaw: {
-    title: 'MetaClaw Overlay Ablation',
-    table: 'Table 5',
-    desc: 'Each pair shares the same model and base OpenClaw configuration. The +MetaClaw variant adds skill injection to isolate the effect of self-evolving skills.',
-  },
+  // metaclaw: {
+  //   title: 'MetaClaw Overlay Ablation',
+  //   table: 'Table 5',
+  //   desc: 'Each pair shares the same model and base OpenClaw configuration. The +MetaClaw variant adds skill injection to isolate the effect of self-evolving skills.',
+  // },
 };
 
 export default function LeaderboardPage() {
@@ -48,11 +48,11 @@ export default function LeaderboardPage() {
     Promise.all([
       fetch('/data/leaderboard_cross_model.json').then((r) => r.json()),
       fetch('/data/leaderboard_cross_framework.json').then((r) => r.json()),
-      fetch('/data/leaderboard_metaclaw.json').then((r) => r.json()),
-    ]).then(([m, f, mc]) => {
+      // fetch('/data/leaderboard_metaclaw.json').then((r) => r.json()),
+    ]).then(([m, f]) => {
       setModelData(m);
       setFrameworkData(f);
-      setMetaClawData(mc);
+      // setMetaClawData(mc);
       setLoading(false);
     });
   }, []);
@@ -129,7 +129,7 @@ export default function LeaderboardPage() {
         <div key={activeTab} className="animate-fade-in">
           {activeTab === 'model' && modelData && <CrossModelTable data={modelData} />}
           {activeTab === 'framework' && frameworkData && <CrossFrameworkTable data={frameworkData} />}
-          {activeTab === 'metaclaw' && metaClawData && <MetaClawTable data={metaClawData} />}
+          {/* {activeTab === 'metaclaw' && metaClawData && <MetaClawTable data={metaClawData} />} */}
         </div>
       )}
 

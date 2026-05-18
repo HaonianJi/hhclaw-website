@@ -2,6 +2,27 @@
 
 import { useEffect, useState } from 'react';
 
+const MODEL_LOGOS: Record<string, string> = {
+  'GPT-5.5': 'https://cdn.simpleicons.org/openai/fff',
+  'GPT-5.4': 'https://cdn.simpleicons.org/openai/fff',
+  'GPT-5.2': 'https://cdn.simpleicons.org/openai/fff',
+  'GPT-5.1': 'https://cdn.simpleicons.org/openai/fff',
+  'Claude Opus-4.7': 'https://cdn.simpleicons.org/anthropic/fff',
+  'Claude Sonnet-4.6': 'https://cdn.simpleicons.org/anthropic/fff',
+  'Claude Haiku-4.5': 'https://cdn.simpleicons.org/anthropic/fff',
+  'Gemma-4-31B': 'https://cdn.simpleicons.org/google/fff',
+  'Gemini-3.1-Pro': 'https://cdn.simpleicons.org/google/fff',
+  'GLM-5.1': 'https://cdn.simpleicons.org/zhihu/fff',
+  'GLM-4.7-Flash': 'https://cdn.simpleicons.org/zhihu/fff',
+  'Qwen3.6-Plus': 'https://cdn.simpleicons.org/alibabadotcom/fff',
+  'Qwen3.6-27B': 'https://cdn.simpleicons.org/alibabadotcom/fff',
+  'Qwen3.6-35B-A3B': 'https://cdn.simpleicons.org/alibabadotcom/fff',
+  'DeepSeek-V4-Pro': 'https://cdn.simpleicons.org/deepnote/fff',
+  'Kimi-K2.5': 'https://cdn.simpleicons.org/moonsweep/fff',
+  'Mimo-V2.5-Pro': 'https://cdn.simpleicons.org/xiaomi/fff',
+  'Ling-2.6': 'https://cdn.simpleicons.org/inclusionai/fff',
+};
+
 interface Row {
   rank: number;
   model: string;
@@ -126,11 +147,25 @@ export default function FullLeaderboard() {
                   </span>
                 </td>
                 <td>
-                  <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.85rem' }}>
-                    {row.model}
-                  </span>
-                  <div className="sm:hidden" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 1 }}>
-                    {row.framework}
+                  <div className="flex items-center gap-2">
+                    {MODEL_LOGOS[row.model] && (
+                      <img
+                        src={MODEL_LOGOS[row.model]}
+                        alt=""
+                        width={16}
+                        height={16}
+                        style={{ opacity: 0.6, flexShrink: 0 }}
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    )}
+                    <div>
+                      <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.85rem' }}>
+                        {row.model}
+                      </span>
+                      <div className="sm:hidden" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 1 }}>
+                        {row.framework}
+                      </div>
+                    </div>
                   </div>
                 </td>
                 <td className="hidden sm:table-cell">
