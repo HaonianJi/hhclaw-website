@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import {
-  type CrossModelData,
   type CrossFrameworkData,
-  type MetaClawRow,
-  CrossModelTable,
   CrossFrameworkTable,
-  MetaClawTable,
 } from '@/components/LeaderboardTable';
+import FullLeaderboard from '@/components/FullLeaderboard';
 import { Info } from 'lucide-react';
 
 type Tab = 'model' | 'framework' /* | 'metaclaw' */;
@@ -39,22 +36,16 @@ const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
 
 export default function LeaderboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>('model');
-  const [modelData, setModelData] = useState<CrossModelData | null>(null);
   const [frameworkData, setFrameworkData] = useState<CrossFrameworkData | null>(null);
-  const [metaClawData, setMetaClawData] = useState<MetaClawRow[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch('/data/leaderboard_cross_model.json').then((r) => r.json()),
-      fetch('/data/leaderboard_cross_framework.json').then((r) => r.json()),
-      // fetch('/data/leaderboard_metaclaw.json').then((r) => r.json()),
-    ]).then(([m, f]) => {
-      setModelData(m);
-      setFrameworkData(f);
-      // setMetaClawData(mc);
-      setLoading(false);
-    });
+    fetch('/data/leaderboard_cross_framework.json')
+      .then((r) => r.json())
+      .then((f) => {
+        setFrameworkData(f);
+        setLoading(false);
+      });
   }, []);
 
   const info = INFO[activeTab];
@@ -127,9 +118,8 @@ export default function LeaderboardPage() {
         </div>
       ) : (
         <div key={activeTab} className="animate-fade-in">
-          {activeTab === 'model' && modelData && <CrossModelTable data={modelData} />}
+          {activeTab === 'model' && <FullLeaderboard />}
           {activeTab === 'framework' && frameworkData && <CrossFrameworkTable data={frameworkData} />}
-          {/* {activeTab === 'metaclaw' && metaClawData && <MetaClawTable data={metaClawData} />} */}
         </div>
       )}
 
