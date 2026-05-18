@@ -155,7 +155,7 @@ export default function FullLeaderboard() {
                         width={18}
                         height={18}
                         className="flex-shrink-0"
-                        style={{ opacity: 0.7 }}
+                        style={{ opacity: 0.85 }}
                       />
                     )}
                     <div>
