@@ -23,6 +23,14 @@ const MODEL_ICON: Record<string, string> = {
   'Ling-2.6': '/logos/inclusion.png',
 };
 
+const FRAMEWORK_ICON: Record<string, string> = {
+  'OpenClaw': '/logos/openclaw.png',
+  'Claude Code': '/logos/anthropic.svg',
+  'MetaClaw': '/logos/metaclaw.png',
+  'PicoClaw': '/logos/picoclaw.png',
+  'NanoBot': '/logos/nanobot.png',
+};
+
 interface Row {
   rank: number;
   model: string;
@@ -152,10 +160,8 @@ export default function FullLeaderboard() {
                       <img
                         src={MODEL_ICON[row.model]}
                         alt=""
-                        width={18}
-                        height={18}
                         className="flex-shrink-0"
-                        style={{ opacity: 0.85 }}
+                        style={{ width: 20, height: 20, objectFit: 'contain' }}
                       />
                     )}
                     <div>
