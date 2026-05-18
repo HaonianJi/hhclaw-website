@@ -2,48 +2,26 @@
 
 import { useEffect, useState } from 'react';
 
-const MODEL_PROVIDER: Record<string, { label: string; color: string }> = {
-  'GPT-5.5': { label: 'OAI', color: '#10a37f' },
-  'GPT-5.4': { label: 'OAI', color: '#10a37f' },
-  'GPT-5.2': { label: 'OAI', color: '#10a37f' },
-  'GPT-5.1': { label: 'OAI', color: '#10a37f' },
-  'Claude Opus-4.7': { label: 'ANT', color: '#d97706' },
-  'Claude Sonnet-4.6': { label: 'ANT', color: '#d97706' },
-  'Claude Haiku-4.5': { label: 'ANT', color: '#d97706' },
-  'Gemma-4-31B': { label: 'GOO', color: '#4285f4' },
-  'Gemini-3.1-Pro': { label: 'GOO', color: '#4285f4' },
-  'GLM-5.1': { label: 'ZAI', color: '#0066ff' },
-  'GLM-4.7-Flash': { label: 'ZAI', color: '#0066ff' },
-  'Qwen3.6-Plus': { label: 'ALI', color: '#ff6a00' },
-  'Qwen3.6-27B': { label: 'ALI', color: '#ff6a00' },
-  'Qwen3.6-35B-A3B': { label: 'ALI', color: '#ff6a00' },
-  'DeepSeek-V4-Pro': { label: 'DSK', color: '#536dfe' },
-  'Kimi-K2.5': { label: 'MON', color: '#6366f1' },
-  'Mimo-V2.5-Pro': { label: 'XMI', color: '#ff6900' },
-  'Ling-2.6': { label: 'INC', color: '#22c55e' },
+const MODEL_ICON: Record<string, string> = {
+  'GPT-5.5': '/logos/openai.svg',
+  'GPT-5.4': '/logos/openai.svg',
+  'GPT-5.2': '/logos/openai.svg',
+  'GPT-5.1': '/logos/openai.svg',
+  'Claude Opus-4.7': '/logos/anthropic.svg',
+  'Claude Sonnet-4.6': '/logos/anthropic.svg',
+  'Claude Haiku-4.5': '/logos/anthropic.svg',
+  'Gemma-4-31B': '/logos/google.svg',
+  'Gemini-3.1-Pro': '/logos/google.svg',
+  'GLM-5.1': '/logos/zhipu.svg',
+  'GLM-4.7-Flash': '/logos/zhipu.svg',
+  'Qwen3.6-Plus': '/logos/alibaba.svg',
+  'Qwen3.6-27B': '/logos/alibaba.svg',
+  'Qwen3.6-35B-A3B': '/logos/alibaba.svg',
+  'DeepSeek-V4-Pro': '/logos/deepseek.svg',
+  'Kimi-K2.5': '/logos/moonshot.svg',
+  'Mimo-V2.5-Pro': '/logos/xiaomi.svg',
+  'Ling-2.6': '/logos/inclusion.svg',
 };
-
-function ProviderBadge({ model }: { model: string }) {
-  const p = MODEL_PROVIDER[model];
-  if (!p) return null;
-  return (
-    <span
-      className="font-mono font-bold"
-      style={{
-        fontSize: '0.55rem',
-        color: p.color,
-        background: `${p.color}15`,
-        border: `1px solid ${p.color}30`,
-        padding: '1px 4px',
-        borderRadius: 3,
-        lineHeight: 1.4,
-        flexShrink: 0,
-      }}
-    >
-      {p.label}
-    </span>
-  );
-}
 
 interface Row {
   rank: number;
@@ -169,8 +147,17 @@ export default function FullLeaderboard() {
                   </span>
                 </td>
                 <td>
-                  <div className="flex items-center gap-2">
-                    <ProviderBadge model={row.model} />
+                  <div className="flex items-center gap-2.5">
+                    {MODEL_ICON[row.model] && (
+                      <img
+                        src={MODEL_ICON[row.model]}
+                        alt=""
+                        width={18}
+                        height={18}
+                        className="flex-shrink-0"
+                        style={{ opacity: 0.7 }}
+                      />
+                    )}
                     <div>
                       <span className="font-semibold" style={{ color: 'var(--text)', fontSize: '0.85rem' }}>
                         {row.model}
