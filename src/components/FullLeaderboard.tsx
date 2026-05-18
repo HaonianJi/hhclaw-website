@@ -20,7 +20,7 @@ const MODEL_ICON: Record<string, string> = {
   'DeepSeek-V4-Pro': '/logos/deepseek.svg',
   'Kimi-K2.5': '/logos/moonshot.svg',
   'Mimo-V2.5-Pro': '/logos/xiaomi.svg',
-  'Ling-2.6': '/logos/inclusion.svg',
+  'Ling-2.6': '/logos/inclusion.png',
 };
 
 interface Row {
