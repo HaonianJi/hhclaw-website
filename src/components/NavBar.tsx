@@ -94,6 +94,17 @@ export default function NavBar() {
             })}
             <div className="flex items-center gap-1.5 ml-3">
               <a
+                href="https://arxiv.org/abs/2604.04202"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all duration-150"
+                style={{ color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = 'var(--primary)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+              >
+                arXiv
+              </a>
+              <a
                 href="https://github.com/aiming-lab/ClawArena"
                 target="_blank"
                 rel="noopener noreferrer"

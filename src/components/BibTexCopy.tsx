@@ -6,7 +6,7 @@ import { Copy, Check } from 'lucide-react';
 const BIBTEX = `@article{ji2026clawarena,
   title={ClawArena: Benchmarking AI Agents in Evolving Information Environments},
   author={Ji, Haonian and Xiong, Kaiwen and Han, Siwei and Xia, Peng and Qiu, Shi and Zhou, Yiyang and Liu, Jiaqi and Li, Jinlong and Li, Bingzhou and Zheng, Zeyu and Xie, Cihang and Yao, Huaxiu},
-  journal={arXiv preprint arXiv:26XX.XXXXX},
+  journal={arXiv preprint arXiv:2604.04202},
   year={2026}
 }`;
 
