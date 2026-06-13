@@ -273,7 +273,7 @@ export default function LandingPage() {
               Leaderboard
             </h2>
             <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: 4 }}>
-              All configurations ranked by CRS (Composite Reliability Score) — 18 models × 5 frameworks
+              All configurations ranked by CRS (Composite Reliability Score) — 20 models × 5 frameworks
             </p>
           </div>
           <Link
