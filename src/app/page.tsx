@@ -143,7 +143,7 @@ export default function LandingPage() {
             {[
               { value: '12',  label: 'Scenarios' },
               { value: '337', label: 'Rounds' },
-              { value: '18',  label: 'Models' },
+              { value: '20',  label: 'Models' },
               { value: '5',   label: 'Frameworks' },
               { value: '45',  label: 'Updates' },
             ].map(({ value, label }, i, arr) => (
@@ -467,12 +467,12 @@ const KEY_FINDINGS = [
   {
     num: '01',
     title: 'Model capability dominates framework design',
-    description: 'Model choice accounts for a 29-point CRS range across 18 models, while framework design accounts for up to 24 points across 4 frameworks. Model capability still dominates, but framework choice is more consequential than previously reported.',
+    description: 'Model choice accounts for a 31-point CRS range across 20 models, while framework design accounts for up to 24 points across 4 frameworks. Model capability still dominates, but framework choice is more consequential than previously reported.',
   },
   {
     num: '02',
     title: 'MetaClaw improves robustness without degrading accuracy',
-    description: 'Skill-based self-evolution consistently improves CRS by 0.33–1.19 across all three tested model families. The mechanism is behavioral consistency (SC and FD both rise), not raw accuracy.',
+    description: 'Skill-based self-evolution consistently improves CRS by 0.33–1.19 across all four tested model families. The mechanism is behavioral consistency (SC and FD both rise), not raw accuracy.',
   },
   {
     num: '03',

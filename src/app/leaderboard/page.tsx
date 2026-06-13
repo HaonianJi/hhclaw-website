@@ -20,7 +20,7 @@ const INFO: Record<Tab, { title: string; table: string; desc: string }> = {
   model: {
     title: 'Cross-Model Comparison',
     table: 'Table 3',
-    desc: '18 models evaluated on all 12 scenarios (337 rounds). Proprietary and open-weight models use OpenClaw; Anthropic models use Claude Code (not directly comparable).',
+    desc: '20 models evaluated on all 12 scenarios (337 rounds). Proprietary and open-weight models use OpenClaw; Anthropic models use Claude Code (not directly comparable).',
   },
   framework: {
     title: 'Cross-Framework Comparison',
@@ -61,7 +61,7 @@ export default function LeaderboardPage() {
           Leaderboard
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginTop: 6 }}>
-          12 scenarios, 337 rounds, 18 models, 5 frameworks. Scored by CRS (Composite Reliability Score).
+          12 scenarios, 337 rounds, 20 models, 5 frameworks. Scored by CRS (Composite Reliability Score).
         </p>
       </div>
 

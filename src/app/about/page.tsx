@@ -121,7 +121,7 @@ export default function AboutPage() {
             <strong style={{ color: 'var(--text)' }}>337 evaluation rounds</strong>,{' '}
             <strong style={{ color: 'var(--text)' }}>45 dynamic updates</strong>, evaluated across{' '}
             <strong style={{ color: 'var(--text)' }}>5 frameworks</strong> and{' '}
-            <strong style={{ color: 'var(--text)' }}>18 language models</strong>. A hierarchical
+            <strong style={{ color: 'var(--text)' }}>20 language models</strong>. A hierarchical
             6-layer specification system and the Composite Reliability Score (CRS) ensure
             consistent, auditable evaluation across all configurations.{' '}
           </p>
